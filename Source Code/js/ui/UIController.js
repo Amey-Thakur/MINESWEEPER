@@ -177,6 +177,7 @@ export class UIController {
                 win.classList.add('maximized');
                 maximizeBtn.textContent = '❐';
             }
+            if (window.renderer) window.renderer.resize();
         };
 
         const closeWindow = () => {

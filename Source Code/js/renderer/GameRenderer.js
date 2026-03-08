@@ -99,15 +99,19 @@ export class GameRenderer {
         const boardW = this.board.cols * CELL_SIZE;
         const boardH = this.board.rows * CELL_SIZE;
 
-        const zoomX = this.canvas.width / boardW;
-        const zoomY = this.canvas.height / boardH;
+        // Use logical dimensions for zoom calculation
+        const logicalW = parseFloat(this.canvas.style.width);
+        const logicalH = parseFloat(this.canvas.style.height);
+
+        const zoomX = logicalW / boardW;
+        const zoomY = logicalH / boardH;
 
         // Use the smaller coefficient to ensure the whole board fits, but scales up to touch edges
         this.camera.zoom = Math.min(zoomX, zoomY);
 
         // Center the board within the larger canvas
-        this.camera.x = (boardW - (this.canvas.width / this.camera.zoom)) / 2;
-        this.camera.y = (boardH - (this.canvas.height / this.camera.zoom)) / 2;
+        this.camera.x = (boardW - (logicalW / this.camera.zoom)) / 2;
+        this.camera.y = (boardH - (logicalH / this.camera.zoom)) / 2;
 
         this.camera.updateConstraints();
     }

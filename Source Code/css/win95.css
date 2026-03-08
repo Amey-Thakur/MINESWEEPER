@@ -100,6 +100,52 @@
     align-items: center;
     user-select: none;
     position: relative;
+    /* Old monitor turn on animation */
+    animation: crt-turn-on 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crt-turn-on {
+    0% {
+        transform: scale(1, 0.001);
+        filter: brightness(0);
+        opacity: 0;
+    }
+
+    40% {
+        transform: scale(1, 0.001);
+        filter: brightness(2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+}
+
+@keyframes crt-turn-off {
+    0% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+
+    60% {
+        transform: scale(1, 0.001);
+        filter: brightness(2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1, 0.001);
+        filter: brightness(0);
+        opacity: 0;
+    }
+}
+
+.win95-desktop.turning-off {
+    animation: crt-turn-off 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 /* ===========================================================
@@ -208,7 +254,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 2px 8px;
+    padding: 8px 12px;
     background: none;
     border: none;
     cursor: default;
@@ -412,6 +458,21 @@
     max-height: calc(100vh - var(--taskbar-h) - 20px);
     overflow: hidden;
     z-index: 100;
+
+    /* App open animation */
+    animation: window-open 0.2s ease-out;
+}
+
+@keyframes window-open {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 
@@ -870,11 +931,7 @@
     max-width: none !important;
     max-height: none !important;
     transform: none !important;
-    border: none !important;
-    box-shadow: none !important;
     z-index: 1000 !important;
-    display: flex !important;
-    /* Ensure it stays flex to fill height */
 }
 
 .tab-icon-img,

@@ -99,7 +99,7 @@ export class SpriteSheet {
         // 6: Crossed Mine (Wrongly flagged)
         this.drawFlat(6 * CELL_SIZE);
         this.drawMine(6 * CELL_SIZE);
-        this.drawCross(6 * CELL_SIZE);
+        // Cross deleted as requested
 
         // 7-14: Numbers 1 through 8
         for (let i = 1; i <= 8; i++) {

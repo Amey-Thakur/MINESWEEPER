@@ -171,22 +171,39 @@ function triggerShutdown() {
     const desktop = document.getElementById('desktop');
     const overlay = document.getElementById('shutdown-overlay');
 
-    desktop.style.display = 'none';
-    overlay.classList.remove('hidden');
+    // Trigger turn off animation
+    if (desktop) desktop.classList.add('turning-off');
 
-    const wakeUp = () => {
-        document.removeEventListener('click', wakeUp);
-        document.removeEventListener('keydown', wakeUp);
-
-        overlay.classList.add('hidden');
-        desktop.style.display = 'flex';
-        playSystemSound('startup');
-    };
-
+    // Wait for the CSS animation (0.6s) to finish before showing the text screen
     setTimeout(() => {
-        document.addEventListener('click', wakeUp);
-        document.addEventListener('keydown', wakeUp);
-    }, 500);
+        if (desktop) desktop.style.display = 'none';
+        if (overlay) overlay.classList.remove('hidden');
+
+        // Setup the one-time wake-up listener
+        const wakeUp = () => {
+            document.removeEventListener('click', wakeUp);
+            document.removeEventListener('keydown', wakeUp);
+
+            if (overlay) overlay.classList.add('hidden');
+            if (desktop) {
+                desktop.style.display = 'flex';
+                // Re-trigger the turn on animation
+                desktop.classList.remove('turning-off');
+                desktop.style.animation = 'none';
+                void desktop.offsetWidth; // Trigger reflow
+                desktop.style.animation = null;
+            }
+
+            playSystemSound('startup');
+        };
+
+        // Delay slightly
+        setTimeout(() => {
+            document.addEventListener('click', wakeUp);
+            document.addEventListener('keydown', wakeUp);
+        }, 500);
+
+    }, 600);
 }
 
 function playSystemSound(type) {
@@ -204,19 +221,32 @@ function playSystemSound(type) {
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(300, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.6);
+
         gain.gain.setValueAtTime(0.3, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+
         osc.start();
         osc.stop(ctx.currentTime + 0.6);
     } else if (type === 'startup') {
         osc.type = 'square';
         osc.frequency.setValueAtTime(150, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.5);
+
         gain.gain.setValueAtTime(0, ctx.currentTime);
         gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.1);
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+
+        // Add a second harmonic oscillator for richness
+        const osc2 = ctx.createOscillator();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(200, ctx.currentTime);
+        osc2.frequency.linearRampToValueAtTime(600, ctx.currentTime + 0.8);
+        osc2.connect(gain);
+
         osc.start();
+        osc2.start();
         osc.stop(ctx.currentTime + 1.5);
+        osc2.stop(ctx.currentTime + 1.5);
     }
 }
 
