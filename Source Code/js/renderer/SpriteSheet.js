@@ -57,6 +57,17 @@ export class SpriteSheet {
             '#808080'   // 8: Gray
         ];
 
+        this.numberPaths = {
+            1: "M0 105.758v-11.75H23.502V47.003H0V35.253H11.751V23.502H23.502V11.75H35.253V0H58.755v94.007H82.256v23.502H0Z",
+            2: "M0 99.883V82.256H11.751V70.505H35.253v-11.75H58.755V47.004H82.256V23.502H35.253V35.253H0V11.75H11.751V0h94.007V11.751H117.51v35.253H105.758V58.755H94.007v11.75H70.505V82.256H47.004V94.007h70.505v23.502H0Z",
+            3: "M0 105.758v-11.75h82.256V70.505H35.253V47.003h47.003V23.502H0V0h105.759V11.751h11.75v35.253H105.758V70.505H117.51v35.253H105.758V117.51H0Z",
+            4: "M70.505 94.007V70.505H0V47.004H11.751V23.502H23.502V0h35.253V23.502H47.004V47.004H70.505V0h35.253v47.004H117.51V70.505H105.758v47.004H70.505Z",
+            5: "M0 105.758v-11.75h82.256V70.505H0V0h117.509V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H0Z",
+            6: "M11.75 111.634v-5.876H0V11.751H11.751V0h94.007V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H11.751Zm70.506-29.378v-11.75H35.253V94.006h47.003z",
+            7: "M47.004 105.758v-11.75H58.755V70.505h11.75V47.003H82.256V23.502H0V0h117.509v47.004H105.758V70.505H94.007v23.502H82.256v23.502H47.004Z",
+            8: "M11.75 111.634v-5.876H0V70.505H11.751V47.004H0V11.75H11.751V0h94.007V11.751H117.51v35.253H105.758V70.505H117.51v35.253H105.758V117.51H11.751zm70.506-29.378v-11.75H35.253V94.006h47.003zm0-47.003V23.502H35.253V47.004h47.003z"
+        };
+
         this.generateSprites();
     }
 
@@ -91,10 +102,10 @@ export class SpriteSheet {
         this.drawCross(6 * CELL_SIZE);
 
         // 7-14: Numbers 1 through 8
-        for (let i = 1; i <= 7; i++) {
+        for (let i = 1; i <= 8; i++) {
             const x = (i + 6) * CELL_SIZE;
             this.drawFlat(x);
-            this.drawText(x, i.toString(), this.colors[i]);
+            this.drawSVGNumber(x, i);
         }
     }
 
@@ -127,6 +138,28 @@ export class SpriteSheet {
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
         this.ctx.fillText(text, x + CELL_SIZE / 2, CELL_SIZE / 2 + 1);
+    }
+
+    drawSVGNumber(x, num) {
+        const ctx = this.ctx;
+        const pathData = this.numberPaths[num];
+        if (!pathData) return;
+
+        // ViewBox is either 82.256x117.509 (for '1') or 117.509x117.509 (others)
+        const isOne = num === 1;
+        const vW = isOne ? 82.256 : 117.509;
+        const vH = 117.509;
+
+        const scale = (CELL_SIZE * 0.7) / vH; // 70% of cell height
+        const offsetX = x + (CELL_SIZE - vW * scale) / 2;
+        const offsetY = (CELL_SIZE - vH * scale) / 2;
+
+        ctx.save();
+        ctx.translate(offsetX, offsetY);
+        ctx.scale(scale, scale);
+        ctx.fillStyle = this.colors[num];
+        ctx.fill(new Path2D(pathData));
+        ctx.restore();
     }
 
     drawMine(x) {
