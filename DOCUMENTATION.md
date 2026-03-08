@@ -337,4 +337,28 @@ Phase 5 introduces our intelligent mathematical Constraint Satisfaction Problem 
 
 ---
 
+## Phase 5: Constraint Satisfaction Solver
+
+### 5.1 Overview
+
+A major frustration of random-generation Minesweeper is the infamous 50/50 guessing scenario. This occurs when two hidden cells lay equally within the bounds of neighboring clue requirements, forcing the player strictly to gamble.
+
+Phase 5 resolves this through the Constraint Satisfaction Problem (CSP) mathematical model. The `CSPSolver` evaluates the raw numeric equations across the visible field boundaries.
+
+The deliverable for this phase is:
+- `js/engine/CSPSolver.js`
+
+### 5.2 Basic CSP Reductions
+
+The algorithm loops through exposed perimeter cells. For each tile `(n)`, it registers the surrounding unknown variables alongside the required mine limit count. The two fundamental mathematical rules deployed are:
+
+1. **All Hidden Equal Mines (Rule 1):** If the equation computes exactly that remaining isolated blank spaces mathematically match the unresolved mine clues bordering them natively, they are guaranteed `mines`.
+2. **Safe Remaining Subsets (Rule 2):** If the requisite mines are already successfully locked via neighboring flags directly fulfilling the cell's requirements, all residual surrounding blank cells evaluate as perfectly `safe`.
+
+### 5.3 What Comes Next
+
+Now that the logic engine safely hosts data securely underneath through quadtrees, flood-fills, bit-packing, and mathematical proofs, we finally render visual sprites during Phase 6 utilizing the high-performance HTML5 Canvas Renderer interface natively built upon standard rendering loops.
+
+---
+
 *Document continues in subsequent phases.*
