@@ -432,4 +432,25 @@ With the window properly bound across the entire logical layout, mechanics, math
 
 ---
 
+## Phase 9: Seed-Based URL Sharing
+
+### 9.1 Overview
+
+A massive element for multiplayer rivalry requires allowing users to challenge each other exactly upon the identical layout constraints. By utilizing our deterministic Mulberry PRNG algorithm built successfully earlier in Phase 3, we simply need to capture the exact initialization variables to force map cloning anywhere.
+
+The deliverable for this phase is:
+- `js/ui/UIController.js`
+
+### 9.2 URL Parameter Syncing
+
+The `UIController` implements dynamic DOM hooks utilizing `window.history.pushState()`. When a map initializes natively, its raw PRNG seed limits are securely concatenated directly onto the `window.location.search` strings (`?w=9&h=9&m=10&s=724021`). 
+
+Opponents bypassing simple local sessions merely paste that specific URL text verbatim out of the Address bar straight to friends. When the receiving browser unpacks `parseInitialConfig()`, the identical board structurally generates perfectly bypassing standard randomization logic!
+
+### 9.3 What Comes Next
+
+All functionality, styling, boundaries, logic mechanisms, and parameters are fully online! Phase 10 implements our singular concluding integration: stitching each individual component flawlessly together under `main.js` and pushing through our final polish passes.
+
+---
+
 *Document continues in subsequent phases.*
