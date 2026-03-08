@@ -75,6 +75,8 @@
 .lcd-digit {
     width: 13px;
     height: 23px;
+    flex-shrink: 0;
+    image-rendering: pixelated;
 }
 
 
@@ -113,6 +115,13 @@
     border-left-color: var(--win95-dark-shadow);
     border-bottom-color: var(--win95-highlight);
     border-right-color: var(--win95-highlight);
+}
+
+#smiley-icon {
+    width: 26px;
+    height: 26px;
+    image-rendering: pixelated;
+    display: block;
 }
 
 

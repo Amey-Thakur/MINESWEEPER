@@ -401,6 +401,14 @@
 }
 
 
+.sm-arrow-icon {
+    width: 8px;
+    height: 8px;
+    margin-left: auto;
+    filter: brightness(0.5);
+    /* Subtle dark arrow */
+}
+
 /* ===========================================================
    WINDOW
    
@@ -428,6 +436,7 @@
 
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - var(--taskbar-h) - 20px);
+    overflow: hidden;
 }
 
 
