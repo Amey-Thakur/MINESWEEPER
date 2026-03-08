@@ -414,10 +414,7 @@
     z-index: 100;
 }
 
-/* Hide desktop icons if a window is maximized to keep a clean look */
-.win95-desktop:has(.win95-window.maximized) .desktop-icons {
-    display: none;
-}
+
 
 
 /* ===========================================================

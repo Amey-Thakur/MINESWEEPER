@@ -96,9 +96,10 @@ export class SpriteSheet {
         this.drawFlat(5 * CELL_SIZE, '#ff0000');
         this.drawMine(5 * CELL_SIZE);
 
-        // 6: Crossed Mine (Wrongly flagged - making it a standard mine for now as cross is deleted)
+        // 6: Crossed Mine (Wrongly flagged)
         this.drawFlat(6 * CELL_SIZE);
         this.drawMine(6 * CELL_SIZE);
+        this.drawCross(6 * CELL_SIZE);
 
         // 7-14: Numbers 1 through 8
         for (let i = 1; i <= 8; i++) {
@@ -106,6 +107,42 @@ export class SpriteSheet {
             this.drawFlat(x);
             this.drawSVGNumber(x, i);
         }
+    }
+
+    drawCross(x) {
+        const ctx = this.ctx;
+        const scale = (CELL_SIZE * 0.70) / 117.509;
+        const offset = (CELL_SIZE - 117.509 * scale) / 2;
+
+        ctx.save();
+        ctx.translate(x + offset, offset);
+        ctx.scale(scale, scale);
+
+        ctx.fillStyle = "red";
+
+        // Classic red cross paths
+        const paths = [
+            "M0 0h9.048v9.048H0z", "M17.628 9.048h9.516v9.048h-9.516z", "M26.395 18.096h9.796v9.048h-9.796z",
+            "M27.144 26.536h9.048v9.656h-9.048z", "M35.35 27.144h9.89v9.048h-9.89z", "M45.124 44.632h9.163v9.987h-9.163z",
+            "M53.68 45.24h9.656v9.048H53.68z", "M81.327 72.384h9.037v9.703h-9.037z", "M72.383 71.458h9.048v9.974h-9.048z",
+            "M54.288 53.633h9.048v9.703h-9.048z", "M62.727 54.288h9.656v9.048h-9.656z", "M63.336 62.542h9.048v9.842h-9.048z",
+            "M71.722 63.336h9.709v9.048h-9.709z", "M81.316 81.316h9.048v9.048h-9.048z", "M89.99 81.316h9.422v9.048H89.99z",
+            "M90.364 89.195h9.048v10.217h-9.048z", "M98.71 90.364h9.75v9.048h-9.75z", "M99.412 98.477h9.048v9.983h-9.048z",
+            "M107.712 99.412h9.796v9.048h-9.796z", "M108.46 107.712h9.048v9.796h-9.048z", "M44.678 36.192h9.609v9.048h-9.609z",
+            "M36.192 35.116h9.048V45.24h-9.048z", "M18.096 17.769h9.048v9.375h-9.048z", "M9.048 8.767h9.048v9.329H9.048z",
+            "M9.048 0h9.048v9.048H9.048z"
+        ];
+
+        paths.forEach(p => ctx.fill(new Path2D(p)));
+
+        // Other diagonal
+        ctx.save();
+        ctx.translate(117.509, 0);
+        ctx.scale(-1, 1);
+        paths.forEach(p => ctx.fill(new Path2D(p)));
+        ctx.restore();
+
+        ctx.restore();
     }
 
     drawBevel(x, raised) {

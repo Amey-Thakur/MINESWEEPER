@@ -42,12 +42,15 @@ export class GameRenderer {
     resize() {
         const win = this.container.closest('.win95-window');
         const isMaximized = win && win.classList.contains('maximized');
+        const dpr = window.devicePixelRatio || 1;
 
         if (isMaximized) {
             // Fill available screen space
             const rect = this.container.getBoundingClientRect();
-            this.canvas.width = Math.max(rect.width, 100);
-            this.canvas.height = Math.max(rect.height, 100);
+            this.canvas.style.width = `${rect.width}px`;
+            this.canvas.style.height = `${rect.height}px`;
+            this.canvas.width = rect.width * dpr;
+            this.canvas.height = rect.height * dpr;
         } else {
             // Restore classic behavior: wrap the board exactly
             const idealW = this.board.cols * CELL_SIZE;
@@ -57,15 +60,24 @@ export class GameRenderer {
             const maxW = window.innerWidth - 40;
             const maxH = window.innerHeight - 140;
 
-            this.canvas.width = Math.min(idealW, maxW);
-            this.canvas.height = Math.min(idealH, maxH);
+            const w = Math.min(idealW, maxW);
+            const h = Math.min(idealH, maxH);
+
+            this.canvas.style.width = `${w}px`;
+            this.canvas.style.height = `${h}px`;
+            this.canvas.width = w * dpr;
+            this.canvas.height = h * dpr;
         }
 
+        // HD Scaling
+        this.ctx.scale(dpr, dpr);
+        this.ctx.imageSmoothingEnabled = false;
+
         if (!this.camera) {
-            this.camera = new Camera(this.canvas.width, this.canvas.height, this.board.cols, this.board.rows);
+            this.camera = new Camera(parseFloat(this.canvas.style.width), parseFloat(this.canvas.style.height), this.board.cols, this.board.rows);
         } else {
-            this.camera.vpW = this.canvas.width;
-            this.camera.vpH = this.canvas.height;
+            this.camera.vpW = parseFloat(this.canvas.style.width);
+            this.camera.vpH = parseFloat(this.canvas.style.height);
             this.camera.updateConstraints();
         }
     }

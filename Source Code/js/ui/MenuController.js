@@ -145,6 +145,14 @@ export function initMenus(callbacks) {
 
 
 
+        const smShutdown = document.getElementById('sm-shutdown');
+        if (smShutdown) {
+            smShutdown.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                resetStartMenu();
+                triggerShutdown();
+            });
+        }
 
         // Hide the menu if any internal button (like GitHub) is clicked
         const smItems = startMenu.querySelectorAll('.start-menu-item');
@@ -155,6 +163,60 @@ export function initMenus(callbacks) {
                 resetStartMenu();
             });
         });
+    }
+}
+
+function triggerShutdown() {
+    playSystemSound('shutdown');
+    const desktop = document.getElementById('desktop');
+    const overlay = document.getElementById('shutdown-overlay');
+
+    desktop.style.display = 'none';
+    overlay.classList.remove('hidden');
+
+    const wakeUp = () => {
+        document.removeEventListener('click', wakeUp);
+        document.removeEventListener('keydown', wakeUp);
+
+        overlay.classList.add('hidden');
+        desktop.style.display = 'flex';
+        playSystemSound('startup');
+    };
+
+    setTimeout(() => {
+        document.addEventListener('click', wakeUp);
+        document.addEventListener('keydown', wakeUp);
+    }, 500);
+}
+
+function playSystemSound(type) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === 'shutdown') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.6);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.6);
+    } else if (type === 'startup') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(150, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+        osc.start();
+        osc.stop(ctx.currentTime + 1.5);
     }
 }
 
