@@ -1,23 +1,23 @@
 <!--
   index.html
 
-  Author:       Amey Thakur
-  GitHub:       https://github.com/Amey-Thakur
-  Repository:   https://github.com/Amey-Thakur/MINESWEEPER
-  Release Date: March 5, 2026
-  License:      MIT
+  Author       : Amey Thakur
+  GitHub       : https://github.com/Amey-Thakur
+  Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+  Release Date : March 5, 2026
+  License      : MIT
 
-  Tech Stack:   HTML5, CSS3 (Custom Properties), ES6 Modules, Canvas API
+  Tech Stack   : HTML5, CSS3 (Custom Properties), ES6 Modules, Canvas API
 
-  Description:  Entry point for a high-performance Minesweeper engine that
-                uses QuadTree spatial indexing for viewport culling on boards
-                up to 1,000,000 cells, a Constraint Satisfaction Problem (CSP)
-                solver for guaranteed no-guess board generation, BFS-based
-                flood-fill with bitmask state tracking, and bit-packed
-                TypedArrays for cache-friendly memory layout. The interface
-                is a pixel-perfect recreation of the Windows 95 aesthetic,
-                rendered entirely on HTML5 Canvas with zero runtime
-                dependencies. Deployed as a static site on GitHub Pages.
+  Description  : Entry point for a high-performance Minesweeper engine that
+                 uses QuadTree spatial indexing for viewport culling on boards
+                 up to 1,000,000 cells, a Constraint Satisfaction Problem (CSP)
+                 solver for guaranteed no-guess board generation, BFS-based
+                 flood-fill with bitmask state tracking, and bit-packed
+                 TypedArrays for cache-friendly memory layout. The interface
+                 is a pixel-perfect recreation of the Windows 95 aesthetic,
+                 rendered entirely on HTML5 Canvas with zero runtime
+                 dependencies. Deployed as a static site on GitHub Pages.
 -->
 
 <!DOCTYPE html>
@@ -68,6 +68,12 @@
          ================================================= -->
         <div id="taskbar" class="win95-taskbar">
             <button id="start-button" class="win95-start-button">
+                <svg class="start-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+                    <path fill="#f03020" d="M1 2.5l5-1v5H1z" />
+                    <path fill="#50a020" d="M1 9h5v5l-5-1z" />
+                    <path fill="#1080d0" d="M7 1.2l7-1.2v6.5H7z" />
+                    <path fill="#f0c020" d="M7 9h7v6.5l-7-1.2z" />
+                </svg>
                 <span class="start-text">Start</span>
             </button>
             <div class="taskbar-divider"></div>

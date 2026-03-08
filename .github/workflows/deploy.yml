@@ -1,16 +1,16 @@
 # deploy.yml
 #
-# Author:       Amey Thakur
-# GitHub:       https://github.com/Amey-Thakur
-# Repository:   https://github.com/Amey-Thakur/MINESWEEPER
-# Release Date: March 5, 2026
-# License:      MIT
+# Author       : Amey Thakur
+# GitHub       : https://github.com/Amey-Thakur
+# Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+# Release Date : March 5, 2026
+# License      : MIT
 #
-# Tech Stack:   GitHub Actions, GitHub Pages
+# Tech Stack   : GitHub Actions, GitHub Pages
 #
-# Description:  CI/CD workflow that deploys the static site to GitHub Pages
-#               on every push to the main branch. No build step is needed
-#               because the project uses plain HTML, CSS, and ES6 modules.
+# Description  : CI/CD workflow that deploys the static site to GitHub Pages
+#                on every push to the main branch. No build step is needed
+#                because the project uses plain HTML, CSS, and ES6 modules.
 
 name: Deploy to GitHub Pages
 

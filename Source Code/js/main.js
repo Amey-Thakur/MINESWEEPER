@@ -1,19 +1,19 @@
 /*
  * main.js
  *
- * Author:       Amey Thakur
- * GitHub:       https://github.com/Amey-Thakur
- * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
- * Release Date: March 5, 2026
- * License:      MIT
+ * Author       : Amey Thakur
+ * GitHub       : https://github.com/Amey-Thakur
+ * Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date : March 5, 2026
+ * License      : MIT
  *
- * Tech Stack:   Vanilla JavaScript (ES6 Modules), Canvas API, Web Workers
+ * Tech Stack   : Vanilla JavaScript (ES6 Modules), Canvas API, Web Workers
  *
- * Description:  Application entry point that wires together the game engine,
- *               the Canvas renderer, and the Win95 UI shell. Handles menu
- *               interactions, dialog management, timer/counter display, URL
- *               parameter parsing for shareable game seeds, and the core
- *               game lifecycle (new game, win, loss).
+ * Description  : Application entry point that wires together the game engine,
+ *                the Canvas renderer, and the Win95 UI shell. Handles menu
+ *                interactions, dialog management, timer/counter display, URL
+ *                parameter parsing for shareable game seeds, and the core
+ *                game lifecycle (new game, win, loss).
  *
  * Architecture overview:
  *

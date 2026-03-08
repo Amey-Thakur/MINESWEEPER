@@ -1,20 +1,20 @@
 /*
  * win95.css
  *
- * Author:       Amey Thakur
- * GitHub:       https://github.com/Amey-Thakur
- * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
- * Release Date: March 5, 2026
- * License:      MIT
+ * Author       : Amey Thakur
+ * GitHub       : https://github.com/Amey-Thakur
+ * Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date : March 5, 2026
+ * License      : MIT
  *
- * Tech Stack:   CSS3, CSS Custom Properties (Variables)
+ * Tech Stack   : CSS3, CSS Custom Properties (Variables)
  *
- * Description:  Complete design system recreating the Microsoft Windows 95
- *               visual language. All color values, border widths, and font
- *               choices are derived from the original Win95 system metrics.
- *               Uses CSS custom properties for a single-source theming
- *               approach, making the palette easy to maintain or extend
- *               to other Windows-era themes (98, XP, etc.).
+ * Description  : Complete design system recreating the Microsoft Windows 95
+ *                visual language. All color values, border widths, and font
+ *                choices are derived from the original Win95 system metrics.
+ *                Uses CSS custom properties for a single-source theming
+ *                approach, making the palette easy to maintain or extend
+ *                to other Windows-era themes (98, XP, etc.).
  *
  * The signature "3D" look is done with asymmetric borders:
  *   - Top and left edges get the highlight (light) color.
@@ -88,6 +88,10 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--win95-desktop);
+    background-image: url('../img/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     font-family: var(--font-system);
     font-size: var(--fs-base);
     color: var(--win95-text);
@@ -96,6 +100,28 @@
     align-items: center;
     user-select: none;
     position: relative;
+    /* Old monitor turn on animation */
+    animation: crt-turn-on 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crt-turn-on {
+    0% {
+        transform: scale(1, 0.001);
+        filter: brightness(0);
+        opacity: 0;
+    }
+
+    40% {
+        transform: scale(1, 0.001);
+        filter: brightness(2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
 }
 
 

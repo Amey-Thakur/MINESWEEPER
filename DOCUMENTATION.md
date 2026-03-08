@@ -152,4 +152,123 @@ With the skeleton in place, Phase 2 will implement the QuadTree data structure. 
 
 ---
 
+## Phase 2: QuadTree Spatial Index
+
+### 2.1 Overview
+
+Phase 2 introduces the QuadTree, the foundational data structure that makes this project more than a toy. Without it, every frame of the renderer would need to iterate over every cell on the board to decide what to draw. On a 9x9 beginner board, that is 81 cells and takes microseconds. On a 1000x1000 board, that is 1,000,000 cells, and the frame rate would collapse.
+
+The QuadTree solves this by organizing cells in a tree structure that partitions 2D space into quadrants. A "viewport query" (give me all cells visible on screen) only visits the branches of the tree that overlap with the visible area, skipping entire subtrees that are off-screen.
+
+The deliverable for this phase is a single file: `js/engine/QuadTree.js`.
+
+### 2.2 What Is a QuadTree?
+
+A QuadTree is a tree data structure where each internal node has exactly four children, corresponding to the four quadrants of a 2D plane:
+
+```
+    NW  |  NE
+   -----------
+    SW  |  SE
+```
+
+Each node represents a rectangular region of space. When a node accumulates more points than its capacity (a configurable threshold), it "subdivides" by splitting its rectangle into four equal sub-rectangles and distributing its points among the resulting child nodes.
+
+This process repeats recursively. The result is a tree where densely populated regions have more subdivision depth, and sparse regions remain as single leaf nodes. This adaptive granularity is what gives QuadTrees their efficiency.
+
+### 2.3 Why a QuadTree? (And Why Not Something Else?)
+
+This is the question that matters most in a technical interview. There are several spatial data structures that could serve the same purpose. Here is a comparison of the options that were evaluated:
+
+#### Option 1: Flat 2D Array
+
+The simplest approach. Store all cells in a `rows x cols` array and iterate over the visible range using index arithmetic.
+
+- **Pros:** O(1) access by (row, col). Simple. Cache-friendly for sequential access.
+- **Cons:** Viewport queries still require calculating the visible row/col range manually. Works fine for fixed grids but does not generalize to non-uniform distributions or dynamic insertions.
+- **Verdict:** This is actually what the BoardEngine uses internally for cell state (Phase 3). But the renderer needs a spatial index that can answer "what is in this rectangle?" without knowing the grid dimensions ahead of time, which is where the QuadTree comes in.
+
+#### Option 2: KD-Tree
+
+A binary space partition tree that alternates splitting along the X and Y axes.
+
+- **Pros:** Better worst-case performance for nearest-neighbor queries.
+- **Cons:** More complex to implement. Rebalancing after insertions is non-trivial. Not significantly better than a QuadTree for rectangle queries on a uniform grid.
+- **Verdict:** Overkill for this use case. QuadTrees are simpler and perform just as well on uniformly distributed 2D data.
+
+#### Option 3: R-Tree
+
+A balanced tree designed for indexing rectangles (not just points).
+
+- **Pros:** Optimal for overlapping rectangles and dynamic datasets.
+- **Cons:** Significantly more complex. Insertion requires node splitting with heuristics (e.g., Guttman's algorithm). The cells in Minesweeper are points on a grid, not overlapping rectangles, so the added complexity is not justified.
+- **Verdict:** Too complex for point data on a regular grid.
+
+#### Option 4: Spatial Hashing
+
+Divide space into a fixed grid of "buckets" and hash each point into its bucket.
+
+- **Pros:** O(1) insertion and lookup for fixed cell sizes.
+- **Cons:** The bucket size must be tuned. If the board is 1000x1000 but the viewport only shows 20x20, there is no hierarchical pruning. Also does not handle zoom levels gracefully.
+- **Verdict:** A viable alternative for fixed-zoom scenarios, but the QuadTree handles arbitrary zoom levels naturally because of its hierarchical structure.
+
+**Conclusion:** The QuadTree was chosen because it strikes the best balance between simplicity, performance, and flexibility for this specific use case (uniform 2D point data with rectangle queries at variable zoom levels).
+
+### 2.4 How the Implementation Works
+
+The implementation consists of two classes: `Rectangle` and `QuadTree`.
+
+#### 2.4.1 Rectangle
+
+A simple axis-aligned bounding box with two core methods:
+
+- `contains(px, py)`: Returns true if a point is inside the rectangle. Used during insertion to route a point to the correct child.
+- `intersects(range)`: Returns true if two rectangles overlap. Used during queries to skip subtrees that are entirely outside the query region.
+
+The overlap check uses the "separating axis" test: two rectangles do NOT overlap if one is entirely to the left, right, above, or below the other. If none of these four conditions hold, the rectangles overlap.
+
+#### 2.4.2 QuadTree
+
+Each node stores:
+
+- `boundary`: The Rectangle defining this node's spatial extent.
+- `capacity`: Maximum points before subdivision (default: 4).
+- `points`: Array of points stored in this leaf.
+- `divided`: Boolean flag indicating whether this node has children.
+- `nw, ne, sw, se`: Child nodes (null until subdivision).
+
+**Insert:** Check if the point is within the boundary. If yes and the node has room, store it. If the node is full, subdivide and delegate to children.
+
+**Subdivide:** Split the boundary into four equal rectangles. Create four child QuadTree nodes. Redistribute all existing points into the appropriate children. Mark the node as divided.
+
+**Query:** Given a search rectangle, return all points within it. If the search rectangle does not overlap the node's boundary, return immediately (this is the pruning step that gives the O(log N) speedup). Otherwise, check each local point and recursively query all children.
+
+### 2.5 Complexity Analysis
+
+| Operation | Average Case | Worst Case | Notes |
+|-----------|-------------|------------|-------|
+| Insert | O(log N) | O(N) | Worst case happens if all points share the same coordinates |
+| Query | O(log N + k) | O(N) | k = number of results. Worst case if all points are in the query region |
+| Clear | O(1) | O(1) | Just reset the root node |
+| Size | O(N) | O(N) | Traverses the entire tree |
+
+For a uniformly distributed grid (which is exactly what Minesweeper is), the average case applies. The worst case requires pathological input that does not occur in practice.
+
+### 2.6 How This Connects to the Renderer
+
+In Phase 6, the game renderer will use the QuadTree as follows:
+
+1. On game start, insert all cell positions into the QuadTree.
+2. On each frame, compute the visible rectangle from the camera position and zoom level.
+3. Query the QuadTree with that rectangle.
+4. Draw only the returned cells.
+
+This means the rendering cost is proportional to the number of visible cells, not the total board size. A 1000x1000 board renders at the same speed as a 9x9 board, because only around 500 cells are visible at any given time (depending on the viewport size and zoom level).
+
+### 2.7 What Comes Next
+
+Phase 3 will implement the BoardEngine: the core game state that tracks which cells contain mines, which are revealed, which are flagged, and how many neighboring mines each cell has. It will use a Uint8Array with bit-packing to store all of this information in a single byte per cell.
+
+---
+
 *Document continues in subsequent phases.*

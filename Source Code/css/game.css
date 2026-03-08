@@ -1,19 +1,19 @@
 /*
  * game.css
  *
- * Author:       Amey Thakur
- * GitHub:       https://github.com/Amey-Thakur
- * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
- * Release Date: March 5, 2026
- * License:      MIT
+ * Author       : Amey Thakur
+ * GitHub       : https://github.com/Amey-Thakur
+ * Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date : March 5, 2026
+ * License      : MIT
  *
- * Tech Stack:   CSS3
+ * Tech Stack   : CSS3
  *
- * Description:  Styling for the Minesweeper game interface components:
- *               the LCD counters (mine count and timer), the smiley
- *               reset button, and the Canvas container. The game board
- *               itself is rendered via the Canvas API in JavaScript;
- *               this stylesheet only controls the surrounding chrome.
+ * Description  : Styling for the Minesweeper game interface components:
+ *                the LCD counters (mine count and timer), the smiley
+ *                reset button, and the Canvas container. The game board
+ *                itself is rendered via the Canvas API in JavaScript;
+ *                this stylesheet only controls the surrounding chrome.
  */
 
 

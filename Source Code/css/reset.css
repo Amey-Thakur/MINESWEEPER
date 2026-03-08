@@ -1,18 +1,18 @@
 /*
  * reset.css
  *
- * Author:       Amey Thakur
- * GitHub:       https://github.com/Amey-Thakur
- * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
- * Release Date: March 5, 2026
- * License:      MIT
+ * Author       : Amey Thakur
+ * GitHub       : https://github.com/Amey-Thakur
+ * Repository   : https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date : March 5, 2026
+ * License      : MIT
  *
- * Tech Stack:   CSS3
+ * Tech Stack   : CSS3
  *
- * Description:  Browser normalization layer that strips default margins,
- *               paddings, and box model inconsistencies across Chrome,
- *               Firefox, Safari, and Edge. Establishes a predictable
- *               baseline for the Win95 design system to build on top of.
+ * Description  : Browser normalization layer that strips default margins,
+ *                paddings, and box model inconsistencies across Chrome,
+ *                Firefox, Safari, and Edge. Establishes a predictable
+ *                baseline for the Win95 design system to build on top of.
  */
 
 
