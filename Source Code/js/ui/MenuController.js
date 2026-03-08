@@ -164,11 +164,29 @@ export function initMenus(callbacks) {
     }
 }
 
-function showHowToPlay() {
+export function showHowToPlay() {
     const dialog = document.getElementById('howtoplay-dialog');
     const overlay = document.getElementById('dialog-overlay');
     const okBtn = document.getElementById('howtoplay-ok');
     const closeBtn = document.getElementById('howtoplay-dialog-close');
+
+    const closeHandler = () => {
+        dialog.classList.add('hidden');
+        overlay.classList.add('hidden');
+    };
+
+    okBtn.onclick = closeHandler;
+    closeBtn.onclick = closeHandler;
+
+    dialog.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+}
+
+export function showAbout() {
+    const dialog = document.getElementById('about-dialog');
+    const overlay = document.getElementById('dialog-overlay');
+    const okBtn = document.getElementById('about-ok');
+    const closeBtn = document.getElementById('about-dialog-close');
 
     const closeHandler = () => {
         dialog.classList.add('hidden');
