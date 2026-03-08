@@ -271,4 +271,41 @@ Phase 3 will implement the BoardEngine: the core game state that tracks which ce
 
 ---
 
+## Phase 3: Board Engine and Bit-Packed State
+
+### 3.1 Overview
+
+Phase 3 introduces the core game state engine (`BoardEngine`). A massive Minesweeper board cannot rely on an elaborate 2D array of objects without introducing heavy object allocation overhead and poor cache locality. To solve this, `BoardEngine` utilizes a flat, 1D `Uint8Array` to manage millions of cells efficiently.
+
+The deliverables for this phase are:
+- `js/engine/BoardEngine.js`
+- `js/engine/SeedRNG.js`
+
+### 3.2 Pure Bit-Packing Structure
+
+Every cell holds four independent pieces of state, all elegantly packed into a single byte (8 bits) without requiring object property lookups:
+- **1 bit:** Mine presence (128 = `0b10000000`)
+- **1 bit:** Revealed State (64 = `0b01000000`)
+- **1 bit:** Flagged State (32 = `0b00100000`)
+- **4 bits:** Neighbor mine count (0-8 fits cleanly in `0b00001111`)
+
+This cache-friendly mapping drastically minimizes processing constraints. A 1,000 x 1,000 grid safely requires exactly 1 MB of working memory rather than dozens of megabytes needed by a conventional nested object architecture. 
+
+### 3.3 Linear Grid Indexing
+
+Rather than deeply nested lookups (`grid[row][col]`), the engine relies upon basic index arithmetic to map 2D coordinates smoothly into the 1D typed array:
+`index = row * columns + col`
+
+Contiguous memory alignment translates into the V8 JavaScript compiler handling cell calculations rapidly and compactly.
+
+### 3.4 Reproducible Algorithms
+
+A purely random board generation (`Math.random()`) prevents exact map sharing among users. The `SeedRNG` module solves this via implementing the deterministic Mulberry32 PRNG logic. If multiple players utilize the same initial parameters, the map generates perfectly predictably step-by-step.
+
+### 3.5 What Comes Next
+
+With the grid backing ready, Phase 4 will introduce the BFS flood-fill mechanisms for safely and continuously uncloaking blank neighboring cells iteratively to mitigate any risks of exceeding the maximum call stack limit.
+
+---
+
 *Document continues in subsequent phases.*
