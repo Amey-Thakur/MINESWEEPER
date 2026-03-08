@@ -310,11 +310,9 @@
     display: none;
 }
 
-.start-menu-item-container:hover .start-sub-menu {
-    display: flex !important;
-}
-
-.start-menu-item-container:hover .start-menu-item {
+.start-menu-item:hover,
+.start-menu-item.active,
+.start-menu-item.active-parent {
     background-color: var(--win95-menu-highlight);
     color: var(--win95-menu-hl-text);
 }
