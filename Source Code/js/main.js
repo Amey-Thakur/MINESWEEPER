@@ -141,6 +141,7 @@ function init() {
 }
 
 function startNewGame(difficulty, forcedSeed = null) {
+    ui.openWindow();
     gameState = GAME_STATE.IDLE;
     currentDifficulty = { ...difficulty };
 

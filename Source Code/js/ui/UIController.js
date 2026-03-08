@@ -156,12 +156,6 @@ export class UIController {
             taskbarTab.style.display = 'none';
         };
 
-        const openWindow = () => {
-            win.classList.remove('minimized');
-            taskbarTab.style.display = 'flex';
-            taskbarTab.classList.add('active');
-        };
-
         const openGithub = () => {
             window.open('https://github.com/Amey-Thakur', '_blank');
         };
@@ -175,7 +169,7 @@ export class UIController {
         if (desktopIcon) {
             desktopIcon.addEventListener('dblclick', (e) => {
                 e.stopPropagation();
-                openWindow();
+                this.openWindow();
             });
 
             let lastMinesweeperClick = 0;
@@ -183,7 +177,7 @@ export class UIController {
                 e.stopPropagation();
                 const now = Date.now();
                 if (now - lastMinesweeperClick < 300) {
-                    openWindow();
+                    this.openWindow();
                 }
                 lastMinesweeperClick = now;
 
@@ -218,5 +212,15 @@ export class UIController {
         document.getElementById('desktop').addEventListener('click', () => {
             document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
         });
+    }
+
+    openWindow() {
+        const win = this.dom.window;
+        const taskbarTab = document.getElementById('minesweeper-tab');
+        if (win) win.classList.remove('minimized');
+        if (taskbarTab) {
+            taskbarTab.style.display = 'flex';
+            taskbarTab.classList.add('active');
+        }
     }
 }
