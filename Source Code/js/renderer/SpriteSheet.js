@@ -58,14 +58,14 @@ export class SpriteSheet {
         ];
 
         this.numberPaths = {
-            1: "M40 0h20v120H40V0z M20 20h20v20H20V20z M30 100h40v20H30v-20z",
-            2: "M0 0h100v20H20v30h80v70H0v-20h80V70H0V0z",
-            3: "M0 0h100v120H0V100h80V70H20V50h60V20H0V0z",
-            4: "M0 0h20v60h60V0h20v120h-20V80H0V0z",
-            5: "M0 0h100V20H20v30h80v70H0v-20h80V70H0V50h80V20H0V0z",
-            6: "M0 0h20v120h80v-20H20V70h80V0H0v20h80v30H20v70H0V0z",
-            7: "M0 0h100v120h-20V20H0V0z",
-            8: "M0 0h100v120H0V0zm20 20v30h60V20H20zm0 50v30h60V70H20z"
+            1: "M 20 20 H 60 V 100 H 80 V 120 H 20 V 100 H 40 V 40 H 20 V 20 Z",
+            2: "M 0 0 H 100 V 60 H 20 V 100 H 100 V 120 H 0 V 40 H 80 V 20 H 0 Z",
+            3: "M 0 0 H 100 V 120 H 0 V 100 H 80 V 70 H 20 V 50 H 80 V 20 H 0 Z",
+            4: "M 0 0 V 60 H 80 V 120 H 100 V 0 H 80 V 40 H 20 V 0 Z",
+            5: "M 0 0 H 100 V 20 H 20 V 40 H 100 V 120 H 0 V 100 H 80 V 60 H 0 Z",
+            6: "M 0 0 V 120 H 100 V 40 H 20 V 20 H 100 V 0 Z M 20 60 H 80 V 100 H 20 Z",
+            7: "M 0 0 H 100 V 120 H 80 V 20 H 0 Z",
+            8: "M 0 0 V 120 H 100 V 0 Z M 20 20 H 80 V 50 H 20 Z M 20 70 H 80 V 100 H 20 Z"
         };
 
         this.generateSprites();
