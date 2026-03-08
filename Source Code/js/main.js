@@ -327,7 +327,7 @@ function handleGameOver(fatalIndex) {
 
     // Automatically violently unveil everything!
     for (let i = 0; i < shadowBoard.totalCells; i++) {
-        if (!shadowBoard.isFlagged(i)) shadowBoard.setRevealed(i);
+        shadowBoard.setRevealed(i);
     }
 }
 
