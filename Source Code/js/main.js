@@ -137,6 +137,18 @@ function init() {
     // Attach Smiley Restart
     dom.smileyBtn.addEventListener('click', () => startNewGame(currentDifficulty));
 
+    // Anti-F12 and DevTools blocks
+    window.addEventListener('keydown', (e) => {
+        if (
+            e.key === 'F12' ||
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+            (e.ctrlKey && e.key === 'U')
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
     startNewGame(currentDifficulty, config ? config.seed : null);
 }
 
@@ -200,8 +212,11 @@ let isMiddleDown = false;
 let lastPanPos = { x: 0, y: 0 };
 
 function bindCanvasEvents() {
-    // Prevent context menu
+    // Prevent context menu globally for the canvas
     dom.canvas.oncontextmenu = (e) => e.preventDefault();
+
+    // Prevent right-click globally on the document to stop "Save Image" blocks
+    document.oncontextmenu = (e) => e.preventDefault();
 
     // Remove old listeners specifically to prevent duplication caching
     const newCanvas = dom.canvas.cloneNode(true);
