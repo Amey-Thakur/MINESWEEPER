@@ -47,12 +47,12 @@ export class SpriteSheet {
 
         this.colors = [
             null,
-            '#0000ff',  // 1: Blue
+            '#0000FF',  // 1: Blue
             '#008000',  // 2: Green
-            '#ff0000',  // 3: Red
+            '#FF0000',  // 3: Red
             '#000080',  // 4: Navy
-            '#800000',  // 5: Maroon
-            '#008080',  // 6: Teal
+            '#FF69B4',  // 5: Pink 
+            '#00FFFF',  // 6: Cyan
             '#000000',  // 7: Black
             '#808080'   // 8: Gray
         ];
