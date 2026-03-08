@@ -124,6 +124,75 @@
     }
 }
 
+@keyframes crt-turn-off {
+    0% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+
+    60% {
+        transform: scale(1, 0.001);
+        filter: brightness(2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1, 0.001);
+        filter: brightness(0);
+        opacity: 0;
+    }
+}
+
+.win95-desktop.turning-off {
+    animation: crt-turn-off 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* ===========================================================
+   SHUTDOWN OVERLAY
+   =========================================================== */
+
+.shutdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ff8c00;
+    font-family: sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.shutdown-overlay.hidden {
+    display: none;
+}
+
+.shutdown-restart {
+    margin-top: 60px;
+    font-size: 16px;
+    color: #aaa;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 /* ===========================================================
    START MENU
    Pops up from bottom-left corner when Start is clicked
