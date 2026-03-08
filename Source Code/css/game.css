@@ -9,24 +9,19 @@
  *
  * Tech Stack   : CSS3
  *
- * Description  : Styling for the Minesweeper game interface components:
- *                the LCD counters (mine count and timer), the smiley
- *                reset button, and the Canvas container. The game board
- *                itself is rendered via the Canvas API in JavaScript;
- *                this stylesheet only controls the surrounding chrome.
+ * Description  : Contains the styling semantics for the interior components of 
+ *                the game window. This stylesheet specifically targets the GUI 
+ *                elements surrounding the primary canvas instance, managing 
+ *                the visual state of the status headers, interactive buttons, 
+ *                and the boundaries of the canvas container.
  */
 
 
-/* ===========================================================
-   GAME HEADER
-   
-   Sits between the menu bar and the game board. Contains
-   three elements in a row:
-     [Mine Counter]  [Smiley Button]  [Timer]
-   
-   The whole panel is sunken (inset bevel) to match how
-   the original Minesweeper looked.
-   =========================================================== */
+/* 
+ * Game Header Section 
+ * Secures the structural topology of the upper UI panel. This container uses 
+ * an inset 3D bevel to recess the counter modules and the control button. 
+ */
 
 .game-header {
     display: flex;
@@ -37,7 +32,7 @@
     gap: 8px;
     background-color: var(--win95-surface);
 
-    /* Sunken panel */
+    /* Apply deep bevel inset */
     border-top: 2px solid var(--win95-shadow);
     border-left: 2px solid var(--win95-shadow);
     border-bottom: 2px solid var(--win95-highlight);
@@ -45,16 +40,12 @@
 }
 
 
-/* ===========================================================
-   LCD COUNTER
-   
-   Used for both the mine counter and the timer. The original
-   Minesweeper used a 7-segment LED-style display: red digits
-   on a near-black background.
-   
-   The VT323 font does a good job of approximating that look
-   without needing custom bitmap rendering.
-   =========================================================== */
+/* 
+ * Hardware Emulation Displays 
+ * Recreates the aesthetic configuration of the standard 7-segment LED arrays 
+ * native to legacy hardware. This class relies heavily on the typographical 
+ * tracking provided by the VT323 monospaced web font.
+ */
 
 .lcd-counter {
     background-color: #000;
@@ -67,7 +58,7 @@
     align-items: center;
     overflow: hidden;
 
-    /* Sunken bevel */
+    /* Internal counter beveling */
     border-top: 2px solid var(--win95-shadow);
     border-left: 2px solid var(--win95-shadow);
     border-bottom: 2px solid var(--win95-highlight);
@@ -83,18 +74,11 @@
 }
 
 
-/* ===========================================================
-   SMILEY BUTTON
-   
-   The central reset button between the two counters.
-   Win95 used four smiley states:
-     - Normal:    standard happy face
-     - Clicking:  surprised face (mouth open)
-     - Won:       sunglasses face
-     - Lost:      dead face (X eyes)
-   
-   State changes are handled in JS by swapping the emoji.
-   =========================================================== */
+/* 
+ * Primary Action Node (Smiley Button)
+ * Provides centralized hit detection for absolute game termination or initialization. 
+ * State transitions are mapped directly to SVG source changes dynamically in the execution logic.
+ */
 
 .smiley-button {
     width: 36px;
@@ -106,7 +90,7 @@
     justify-content: center;
     background-color: var(--win95-btn-face);
 
-    /* Raised bevel */
+    /* Construct elevated physical properties */
     border-top: 2px solid var(--win95-highlight);
     border-left: 2px solid var(--win95-highlight);
     border-bottom: 2px solid var(--win95-dark-shadow);
@@ -128,12 +112,11 @@
 }
 
 
-/* ===========================================================
-   GAME CONTAINER
-   
-   Wraps the HTML5 Canvas where all cells are drawn. The
-   sunken border matches the original game field look.
-   =========================================================== */
+/* 
+ * Rendering Context Container 
+ * Establishes the clipping paths and bordering framework around the HTML5 
+ * Canvas node. Provides explicit bounds for the generated visual grid. 
+ */
 
 .game-container {
     margin: 0 4px 4px 4px;
@@ -141,7 +124,7 @@
     position: relative;
     background-color: var(--win95-surface);
 
-    /* Sunken panel */
+    /* Deep viewport inset border */
     border-top: 3px solid var(--win95-shadow);
     border-left: 3px solid var(--win95-shadow);
     border-bottom: 3px solid var(--win95-highlight);
@@ -155,8 +138,10 @@
 }
 
 
-/* The canvas size is set in JS to match the board dimensions.
-   crisp-edges keeps the pixel art look sharp when scaling. */
+/*
+ * Image scaling algorithms are strictly configured to maintain rigid edges. 
+ * Prevents antialiasing algorithms from blurring the pixelated source material.
+ */
 
 #game-canvas {
     cursor: pointer;
@@ -165,12 +150,10 @@
 }
 
 
-/* ===========================================================
-   GAME STATE FEEDBACK
-   
-   These classes get toggled on the game container by JS
-   to change the cursor based on the current game state.
-   =========================================================== */
+/*
+ * Interaction States
+ * Injects pointer feedback modifiers based on specific game phases. 
+ */
 
 .game-container.pressing {
     cursor: pointer;
