@@ -149,20 +149,32 @@ export class SpriteSheet {
     }
 
     drawFlag(x) {
-        const cx = x + CELL_SIZE / 2;
-        const cy = CELL_SIZE / 2;
+        const ctx = this.ctx;
+        const scale = CELL_SIZE / 444.127;
+        const offsetX = (CELL_SIZE - 355.303 * scale) / 2;
 
-        // Base
-        this.ctx.fillStyle = '#000000';
-        this.ctx.fillRect(cx - 5, cy + 4, 10, 2);
-        this.ctx.fillRect(cx - 3, cy + 2, 6, 2);
+        ctx.save();
+        ctx.translate(x + offsetX, 0);
+        ctx.scale(scale, scale);
 
-        // Pole
-        this.ctx.fillRect(cx - 1, cy - 5, 2, 8);
+        // Use the exact matrix from SVG transform attribute
+        const matrix = [0.44413, 0, 0, 0.44413, 86.605, 122.579];
 
-        // Flag
-        this.ctx.fillStyle = '#ff0000';
-        this.ctx.fillRect(cx, cy - 5, 5, 5);
+        // Red flag part
+        ctx.save();
+        ctx.transform(...matrix);
+        ctx.fillStyle = "red";
+        ctx.fill(new Path2D("M105 174v-50H-95V24h-100V-76h100v-100h200v-100h200v500H105Z"));
+        ctx.restore();
+
+        // Black base/pole part
+        ctx.save();
+        ctx.transform(...matrix);
+        ctx.fillStyle = "#000";
+        ctx.fill(new Path2D("M-195 624V524H5V424h200V224h100v200h100v100h200v200h-800Z"));
+        ctx.restore();
+
+        ctx.restore();
     }
 
     drawCross(x) {
