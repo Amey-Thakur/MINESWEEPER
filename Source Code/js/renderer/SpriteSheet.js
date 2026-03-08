@@ -190,13 +190,13 @@ export class SpriteSheet {
         ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // Flag body (Vibrant RED triangle - pointing RIGHT)
+        // Flag body (Centered RED triangle - points RIGHT)
         ctx.fillStyle = "red";
-        ctx.fill(new Path2D("M35 10l50 30-50 30V10z"));
+        ctx.fill(new Path2D("M40 10l50 30-50 30V10z"));
 
-        // Classic pole and stepped base (Solid BLACK - pole on LEFT)
+        // Pole and multi-stepped base (Centered BLACK)
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M25 10h10v75H25V10z M10 80h40v7H10v-7z M0 87h60v10H0v-10z"));
+        ctx.fill(new Path2D("M30 10h10v75H30V10z M15 80h40v7H15v-7z M5 87h60v10H5V87z"));
 
         ctx.restore();
     }

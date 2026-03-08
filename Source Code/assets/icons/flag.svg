@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 100 100" shape-rendering="crispEdges">
   <!-- 
-    High-Fidelity Windows 95 Minesweeper Flag (Right-Facing)
-    Classic red pennant on a left-aligned pole with stepped base.
+    High-Fidelity Windows 95 Minesweeper Flag (Perfectly Centered)
+    Balanced assembly with the pole and flag centered on the horizontal axis.
   -->
   
   <!-- Flag Pennant (Vibrant RED - Pointing Right) -->
-  <path d="M35 10 L85 40 L35 70 Z" fill="#ff0000" />
+  <path d="M40 10 L90 40 L40 70 Z" fill="#ff0000" />
   
-  <!-- Flag Pole (Solid BLACK - Positioned Left) -->
-  <path d="M25 10 H35 V85 H25 Z" fill="#000000" />
+  <!-- Flag Pole (Solid BLACK) -->
+  <path d="M30 10 H40 V85 H30 Z" fill="#000000" />
   
-  <!-- Stepped Base (Solid BLACK) -->
-  <path d="M10 80 H50 V87 H10 Z" fill="#000000" />
-  <path d="M0 87 H60 V97 H0 Z" fill="#000000" />
+  <!-- Stepped Base (Solid BLACK - Centered) -->
+  <path d="M15 80 H55 V87 H15 Z" fill="#000000" />
+  <path d="M5 87 H65 V97 H5 Z" fill="#000000" />
 </svg>
