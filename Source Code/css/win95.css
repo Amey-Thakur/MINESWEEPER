@@ -624,6 +624,10 @@
     color: var(--win95-menu-hl-text);
 }
 
+.menu-option:hover .menu-invert {
+    filter: brightness(0) invert(1);
+}
+
 .menu-icon-img {
     image-rendering: pixelated;
     display: block;

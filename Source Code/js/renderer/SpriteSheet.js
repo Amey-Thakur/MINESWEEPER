@@ -151,16 +151,33 @@ export class SpriteSheet {
     }
 
     drawBevel(x, raised) {
+        const thickness = 3;
+        const w = CELL_SIZE;
+
         this.ctx.fillStyle = '#c0c0c0';
-        this.ctx.fillRect(x, 0, CELL_SIZE, CELL_SIZE);
+        this.ctx.fillRect(x, 0, w, w);
 
+        // Top-Left Bevel (Mitred)
         this.ctx.fillStyle = raised ? '#ffffff' : '#808080';
-        this.ctx.fillRect(x, 0, CELL_SIZE, 2);
-        this.ctx.fillRect(x, 0, 2, CELL_SIZE);
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, 0);
+        this.ctx.lineTo(x + w, 0);
+        this.ctx.lineTo(x + w - thickness, thickness);
+        this.ctx.lineTo(x + thickness, thickness);
+        this.ctx.lineTo(x + thickness, w - thickness);
+        this.ctx.lineTo(x, w);
+        this.ctx.fill();
 
+        // Bottom-Right Bevel (Mitred)
         this.ctx.fillStyle = raised ? '#808080' : '#ffffff';
-        this.ctx.fillRect(x, CELL_SIZE - 2, CELL_SIZE, 2);
-        this.ctx.fillRect(x + CELL_SIZE - 2, 0, 2, CELL_SIZE);
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + w, w);
+        this.ctx.lineTo(x, w);
+        this.ctx.lineTo(x + thickness, w - thickness);
+        this.ctx.lineTo(x + w - thickness, w - thickness);
+        this.ctx.lineTo(x + w - thickness, thickness);
+        this.ctx.lineTo(x + w, 0);
+        this.ctx.fill();
     }
 
     drawFlat(x, bg = '#c0c0c0') {
