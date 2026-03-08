@@ -156,19 +156,19 @@ function startNewGame(difficulty, forcedSeed = null) {
     // if Workers face CORS issues structurally on github pages locally. 
     shadowBoard = new BoardEngine(difficulty.rows, difficulty.cols, seed);
 
-    // Setup Spatial Index
-    quadTree = new QuadTree(new Rectangle(0, 0, difficulty.cols, difficulty.rows), 16);
+    // Setup Spatial Index (using pixel coordinates for alignment with Camera)
+    quadTree = new QuadTree(new Rectangle(0, 0, difficulty.cols * CELL_SIZE, difficulty.rows * CELL_SIZE), 16);
 
     // Push every single coordinate efficiently into the QuadTree mapping
     for (let index = 0; index < shadowBoard.totalCells; index++) {
         const row = Math.floor(index / shadowBoard.cols);
         const col = index % shadowBoard.cols;
-        quadTree.insert({ row, col, index });
+        quadTree.insert({ x: col * CELL_SIZE, y: row * CELL_SIZE, row, col, index });
     }
 
-    renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
-
     bindCanvasEvents();
+
+    renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
 
     requestAnimationFrame(renderLoop);
 }
