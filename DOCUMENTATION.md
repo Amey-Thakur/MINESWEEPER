@@ -10,15 +10,15 @@
 ## Table of Contents
 
 1. [Phase 1: Project Scaffold and Deployment Infrastructure](#phase-1-project-scaffold-and-deployment-infrastructure)
-2. [Phase 2: QuadTree Spatial Index](#phase-2-quadtree-spatial-index) *(upcoming)*
-3. [Phase 3: Board Engine and Bit-Packed State](#phase-3-board-engine-and-bit-packed-state) *(upcoming)*
-4. [Phase 4: BFS Flood-Fill with Bitmask](#phase-4-bfs-flood-fill-with-bitmask) *(upcoming)*
-5. [Phase 5: Constraint Satisfaction Solver](#phase-5-constraint-satisfaction-solver) *(upcoming)*
-6. [Phase 6: Canvas Renderer and Virtual Camera](#phase-6-canvas-renderer-and-virtual-camera) *(upcoming)*
-7. [Phase 7: Web Worker Integration](#phase-7-web-worker-integration) *(upcoming)*
-8. [Phase 8: Windows 95 UI Shell](#phase-8-windows-95-ui-shell) *(upcoming)*
-9. [Phase 9: Seed-Based URL Sharing](#phase-9-seed-based-url-sharing) *(upcoming)*
-10. [Phase 10: Testing, Benchmarks, and Polish](#phase-10-testing-benchmarks-and-polish) *(upcoming)*
+2. [Phase 2: QuadTree Spatial Index](#phase-2-quadtree-spatial-index)
+3. [Phase 3: Board Engine and Bit-Packed State](#phase-3-board-engine-and-bit-packed-state)
+4. [Phase 4: BFS Flood-Fill with Bitmask](#phase-4-bfs-flood-fill-with-bitmask)
+5. [Phase 5: Constraint Satisfaction Solver](#phase-5-constraint-satisfaction-solver)
+6. [Phase 6: Canvas Renderer and Virtual Camera](#phase-6-canvas-renderer-and-virtual-camera)
+7. [Phase 7: Web Worker Integration](#phase-7-web-worker-integration)
+8. [Phase 8: Windows 95 UI Shell](#phase-8-windows-95-ui-shell)
+9. [Phase 9: Seed-Based URL Sharing](#phase-9-seed-based-url-sharing)
+10. [Phase 10: Testing, Benchmarks, and Polish](#phase-10-testing-benchmarks-and-polish)
 
 ---
 
