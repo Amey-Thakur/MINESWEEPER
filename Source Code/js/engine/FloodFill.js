@@ -11,15 +11,15 @@
  *
  * Description  : Iterative Breadth-First Search (BFS) mechanism for uncloaking
  *                contiguous regions of empty cells. This custom queue-based
- *                implementation avoids O(n) array shift latency and fully
- *                bypasses standard recursion limits, guaranteeing safety on
- *                exponentially large board configurations.
+ *                implementation avoids standard array shift latency and fully
+ *                bypasses standard recursion depth limits, guaranteeing safety 
+ *                and performance on exponentially large board configurations.
  */
 
 export function floodFill(board, startRow, startCol) {
     const startIndex = board.getIndex(startRow, startCol);
 
-    // Safety aborts
+    // Terminate execution if the initial target is already exposed, marked, or inherently lethal.
     if (board.isRevealed(startIndex) || board.isFlagged(startIndex) || board.isMine(startIndex)) {
         return [];
     }
@@ -34,7 +34,7 @@ export function floodFill(board, startRow, startCol) {
     while (head < queue.length) {
         const index = queue[head++];
 
-        // Only propagate outward across contiguous 0-neighbor "empty" cells
+        // Restrict propagation to coordinates explicitly containing zero neighboring anomalies.
         if (board.getNeighbors(index) === 0) {
             const row = Math.floor(index / board.cols);
             const col = index % board.cols;
@@ -45,7 +45,7 @@ export function floodFill(board, startRow, startCol) {
                     board.setRevealed(nIndex);
                     revealedIndices.push(nIndex);
 
-                    // Add empty neighbors strictly to the frontier propagation
+                    // Append only completely clear neighbors to the propagation frontier queue.
                     if (board.getNeighbors(nIndex) === 0) {
                         queue.push(nIndex);
                     }
