@@ -41,7 +41,7 @@ import { GameRenderer } from './renderer/GameRenderer.js';
 import { QuadTree, Rectangle } from './engine/QuadTree.js';
 import { BoardEngine } from './engine/BoardEngine.js';
 import { CELL_SIZE } from './constants.js';
-import { startTimer, stopTimer, resetTimer, initClock } from './ui/TimerController.js';
+import { startTimer, stopTimer, resetTimer, initClock, setClockFormat } from './ui/TimerController.js';
 import { initMenus } from './ui/MenuController.js';
 
 // -------------------------------------------------------
@@ -120,7 +120,11 @@ function init() {
         },
         onHowToPlay: () => {
             alert("Classic Rules:\nRight-click to flag a mine.\nLeft-click to reveal.\nMiddle-click/Scroll to Pan/Zoom.");
-        }
+        },
+        onClock12Sec: () => setClockFormat('12h-sec', dom.clock),
+        onClock12NoSec: () => setClockFormat('12h-nosec', dom.clock),
+        onClock24Sec: () => setClockFormat('24h-sec', dom.clock),
+        onClock24NoSec: () => setClockFormat('24h-nosec', dom.clock)
     });
     initClock(dom.clock);
 

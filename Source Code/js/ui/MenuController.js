@@ -49,6 +49,10 @@ export function initMenus(callbacks) {
         'menu-seed': callbacks.onSeed,
         'menu-about': callbacks.onAbout,
         'menu-how-to-play': callbacks.onHowToPlay,
+        'clock-12-sec': callbacks.onClock12Sec,
+        'clock-12-nosec': callbacks.onClock12NoSec,
+        'clock-24-sec': callbacks.onClock24Sec,
+        'clock-24-nosec': callbacks.onClock24NoSec,
     };
 
     for (const [id, handler] of Object.entries(bindings)) {

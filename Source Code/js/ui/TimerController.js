@@ -67,15 +67,39 @@ export function getElapsed() {
 
 // Taskbar clock - updates every second with local time
 
-export function initClock(clockEl) {
-    function tick() {
-        clockEl.textContent = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        });
+let currentClockFormat = '12h-sec';
+let clockIntervalId = null;
+
+export function setClockFormat(format, clockEl) {
+    currentClockFormat = format;
+    if (clockEl) updateClockText(clockEl);
+}
+
+function updateClockText(clockEl) {
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+
+    if (currentClockFormat.includes('sec')) {
+        options.second = '2-digit';
     }
 
-    setInterval(tick, 1000);
+    if (currentClockFormat.includes('24')) {
+        options.hour12 = false;
+    } else {
+        options.hour12 = true;
+    }
+
+    clockEl.textContent = new Date().toLocaleTimeString([], options);
+}
+
+export function initClock(clockEl) {
+    function tick() {
+        updateClockText(clockEl);
+    }
+
+    if (clockIntervalId) clearInterval(clockIntervalId);
+    clockIntervalId = setInterval(tick, 1000);
     tick();
 }

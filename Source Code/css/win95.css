@@ -194,6 +194,18 @@
     border-right: 1px solid var(--win95-highlight);
 }
 
+.win95-clock.menu-label:hover {
+    background-color: transparent;
+    color: var(--win95-text);
+}
+
+.menu-dropdown.clock-dropdown {
+    top: auto;
+    bottom: 100%;
+    left: auto;
+    right: 0;
+}
+
 
 /* ===========================================================
    WINDOW
@@ -341,6 +353,11 @@
 .menu-item.active .menu-label {
     background-color: var(--win95-menu-highlight);
     color: var(--win95-menu-hl-text);
+}
+
+.menu-item.active .win95-clock.menu-label {
+    background-color: transparent;
+    color: var(--win95-text);
 }
 
 .menu-option {

@@ -77,7 +77,15 @@
                 <span class="start-text">Start</span>
             </button>
             <div class="taskbar-divider"></div>
-            <div id="taskbar-clock" class="win95-clock"></div>
+            <div class="menu-item" id="menu-clock" style="margin-left: auto;">
+                <div id="taskbar-clock" class="win95-clock menu-label"></div>
+                <div class="menu-dropdown clock-dropdown" id="dropdown-clock">
+                    <button class="menu-option" id="clock-12-sec">12 hour with seconds</button>
+                    <button class="menu-option" id="clock-12-nosec">12 hour without seconds</button>
+                    <button class="menu-option" id="clock-24-sec">24 hour with seconds</button>
+                    <button class="menu-option" id="clock-24-nosec">24 hour without seconds</button>
+                </div>
+            </div>
         </div>
 
         <!-- ================ GAME WINDOW ===================
