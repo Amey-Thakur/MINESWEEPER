@@ -19,6 +19,8 @@ export function initMenus(callbacks) {
     const items = document.querySelectorAll('.menu-item');
     const startBtn = document.getElementById('start-button');
     const startMenu = document.getElementById('start-menu');
+    const smHelp = document.getElementById('sm-help');
+    const smHelpSub = document.getElementById('sm-help-sub');
 
     // Toggle dropdown on label click
     items.forEach((item) => {
@@ -38,7 +40,10 @@ export function initMenus(callbacks) {
 
     const resetStartMenu = () => {
         if (smHelpSub) smHelpSub.classList.add('hidden');
-        if (smHelp) smHelp.classList.remove('active-parent');
+        if (smHelp) {
+            smHelp.classList.remove('active-parent');
+            smHelp.classList.remove('active');
+        }
     };
 
     // Close all menus on outside click
@@ -96,8 +101,6 @@ export function initMenus(callbacks) {
             });
         }
 
-        const smHelp = document.getElementById('sm-help');
-        const smHelpSub = document.getElementById('sm-help-sub');
         if (smHelp && smHelpSub) {
             smHelp.addEventListener('click', (e) => {
                 e.preventDefault();
