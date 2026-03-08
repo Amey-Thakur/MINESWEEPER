@@ -100,6 +100,18 @@ export class UIController {
         this.setLCDDigits(this.dom.timer, seconds);
     }
 
+    updateStatus(message) {
+        if (this.dom.statusText) {
+            this.dom.statusText.textContent = message;
+        }
+    }
+
+    updateSeedDisplay(seed) {
+        if (this.dom.statusSeed) {
+            this.dom.statusSeed.textContent = seed ? `Seed: ${seed}` : '';
+        }
+    }
+
     // -------------------------------------------------------
     // Dialog Triggers
     // -------------------------------------------------------

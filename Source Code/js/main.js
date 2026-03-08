@@ -73,6 +73,8 @@ const dom = {
     window: document.getElementById('game-window'),
     titleBar: document.getElementById('title-bar'),
     clock: document.getElementById('taskbar-clock'),
+    statusText: document.getElementById('status-text'),
+    statusSeed: document.getElementById('status-seed'),
 };
 
 // -------------------------------------------------------
@@ -157,6 +159,9 @@ function startNewGame(difficulty, forcedSeed = null) {
 
     // Inject parameters natively to Seed Controller interface rendering state map.
     setSeedState(seed, difficulty.rows, difficulty.cols, difficulty.mines, shareUrl);
+
+    ui.updateStatus('Ready');
+    ui.updateSeedDisplay(seed);
 
     // Execute synchronous engine initialization. This bypasses asynchronous WebWorkers 
     // to strictly prevent explicit cross origin isolation errors natively on static hosts. 
@@ -243,6 +248,7 @@ function handleMouseDown(e) {
 
     if (e.button === 0) {
         ui.updateSmiley(SMILEY.PRESSING);
+        ui.updateStatus('Searching...');
     } else if (e.button === 1) {
         isMiddleDown = true;
         lastPanPos = { x: e.clientX, y: e.clientY };
@@ -258,6 +264,7 @@ function handleMouseUp(e) {
     if (gameState === GAME_STATE.WON || gameState === GAME_STATE.LOST) return;
 
     ui.updateSmiley(SMILEY.IDLE);
+    ui.updateStatus('Ready');
 
     const pos = getGridPos(e);
     if (!pos) return;
@@ -322,6 +329,7 @@ function checkWinCondition() {
         gameState = GAME_STATE.WON;
         stopTimer();
         ui.updateSmiley(SMILEY.WON);
+        ui.updateStatus('Game Over: Victory!');
 
         if (renderer) {
             renderer.isWon = true;
@@ -337,6 +345,7 @@ function handleGameOver(fatalIndex) {
     gameState = GAME_STATE.LOST;
     stopTimer();
     ui.updateSmiley(SMILEY.LOST);
+    ui.updateStatus('Game Over: Mine Detonated');
 
     // Pass the specific index of the triggered unit to the renderer for specific isolated frame priority.
     renderer.fatalIndex = fatalIndex;
