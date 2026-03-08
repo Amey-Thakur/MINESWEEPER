@@ -9,9 +9,10 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Shared constants for difficulty presets, game states,
- *                smiley face states, and cell sizing. Imported by
- *                every other module that needs configuration values.
+ * Description  : Contains the immutable configuration maps fundamental to the 
+ *                engine execution logic. These static enumerations define the 
+ *                baseline geometric constraints for all difficulty matrices 
+ *                and the definitive state machine nomenclature used globally.
  */
 
 
