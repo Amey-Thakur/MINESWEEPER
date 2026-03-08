@@ -102,19 +102,20 @@ export class UIController {
     // -------------------------------------------------------
 
     showCustomDialog(callback) {
-        const dialog = document.getElementById('custom-game-dialog');
+        const dialog = document.getElementById('custom-dialog');
         const overlay = document.getElementById('dialog-overlay');
 
-        const wInput = document.getElementById('input-width');
-        const hInput = document.getElementById('input-height');
-        const mInput = document.getElementById('input-mines');
+        const wInput = document.getElementById('custom-cols');
+        const hInput = document.getElementById('custom-rows');
+        const mInput = document.getElementById('custom-mines');
 
         const okBtn = document.getElementById('custom-ok');
         const cancelBtn = document.getElementById('custom-cancel');
+        const closeBtn = document.getElementById('custom-dialog-close');
 
         const closeOverlay = () => {
-            dialog.style.display = 'none';
-            overlay.style.display = 'none';
+            dialog.classList.add('hidden');
+            overlay.classList.add('hidden');
         };
 
         let resolved = false;
@@ -139,9 +140,10 @@ export class UIController {
 
         okBtn.onclick = handleOk;
         cancelBtn.onclick = handleCancel;
+        if (closeBtn) closeBtn.onclick = handleCancel;
 
-        dialog.style.display = 'flex';
-        overlay.style.display = 'block';
+        dialog.classList.remove('hidden');
+        overlay.classList.remove('hidden');
     }
 
     // -------------------------------------------------------
