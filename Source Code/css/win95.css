@@ -100,52 +100,6 @@
     align-items: center;
     user-select: none;
     position: relative;
-    /* Old monitor turn on animation */
-    animation: crt-turn-on 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-@keyframes crt-turn-on {
-    0% {
-        transform: scale(1, 0.001);
-        filter: brightness(0);
-        opacity: 0;
-    }
-
-    40% {
-        transform: scale(1, 0.001);
-        filter: brightness(2);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1, 1);
-        filter: brightness(1);
-        opacity: 1;
-    }
-}
-
-@keyframes crt-turn-off {
-    0% {
-        transform: scale(1, 1);
-        filter: brightness(1);
-        opacity: 1;
-    }
-
-    60% {
-        transform: scale(1, 0.001);
-        filter: brightness(2);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1, 0.001);
-        filter: brightness(0);
-        opacity: 0;
-    }
-}
-
-.win95-desktop.turning-off {
-    animation: crt-turn-off 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 /* ===========================================================
