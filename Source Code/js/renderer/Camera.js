@@ -42,12 +42,21 @@ export class Camera {
         const scaledVP_W = this.vpW / this.zoom;
         const scaledVP_H = this.vpH / this.zoom;
 
-        const maxX = Math.max(0, this.mapW - scaledVP_W);
-        const maxY = Math.max(0, this.mapH - scaledVP_H);
+        const maxX = this.mapW - scaledVP_W;
+        const maxY = this.mapH - scaledVP_H;
 
-        // Clamp camera position
-        this.x = Math.max(0, Math.min(this.x, maxX));
-        this.y = Math.max(0, Math.min(this.y, maxY));
+        // If the viewport is larger than the map, center it by setting x/y to half the difference
+        if (maxX < 0) {
+            this.x = maxX / 2;
+        } else {
+            this.x = Math.max(0, Math.min(this.x, maxX));
+        }
+
+        if (maxY < 0) {
+            this.y = maxY / 2;
+        } else {
+            this.y = Math.max(0, Math.min(this.y, maxY));
+        }
     }
 
     pan(dx, dy) {

@@ -182,6 +182,15 @@ function startNewGame(difficulty, forcedSeed = null) {
 
     renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
 
+    // Watch for container resizes (e.g. on maximize/fullscreen) to keep board fitting
+    const resizeObserver = new ResizeObserver(() => {
+        if (renderer) {
+            renderer.resize();
+            renderer.fitToScreen();
+        }
+    });
+    resizeObserver.observe(dom.container);
+
     requestAnimationFrame(renderLoop);
 }
 

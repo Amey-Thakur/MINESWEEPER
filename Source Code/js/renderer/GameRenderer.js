@@ -24,6 +24,7 @@ export class GameRenderer {
 
     constructor(canvas, board, quadTree) {
         this.canvas = canvas;
+        this.container = canvas.parentElement;
         this.ctx = canvas.getContext('2d', { alpha: false });
         this.board = board;
         this.quadTree = quadTree;
@@ -31,17 +32,53 @@ export class GameRenderer {
         // Procedurally cache graphics into offscreen layer
         this.sprites = new SpriteSheet();
 
-        // Bind interactive viewport frame panning size relative to active browser constraints
-        const maxW = window.innerWidth - 40;
-        const maxH = window.innerHeight - 140; // Space for Win95 toolbars
+        // Initial sizing based on container
+        this.resize();
 
-        const idealW = board.cols * CELL_SIZE;
-        const idealH = board.rows * CELL_SIZE;
+        // Automatically scale to fill height as requested
+        this.fitToScreen();
+    }
 
-        this.canvas.width = Math.min(maxW, idealW);
-        this.canvas.height = Math.min(maxH, idealH);
+    resize() {
+        // Match canvas physical size to CSS container size
+        const rect = this.container.getBoundingClientRect();
 
-        this.camera = new Camera(this.canvas.width, this.canvas.height, board.cols, board.rows);
+        // Ensure we have non-zero dimensions
+        const w = Math.max(rect.width, 100);
+        const h = Math.max(rect.height, 100);
+
+        this.canvas.width = w;
+        this.canvas.height = h;
+
+        if (!this.camera) {
+            this.camera = new Camera(w, h, this.board.cols, this.board.rows);
+        } else {
+            this.camera.vpW = w;
+            this.camera.vpH = h;
+            this.camera.updateConstraints();
+        }
+    }
+
+    fitToScreen() {
+        const boardW = this.board.cols * CELL_SIZE;
+        const boardH = this.board.rows * CELL_SIZE;
+
+        // Calculate zoom factors for both dimensions
+        const zoomX = this.canvas.width / boardW;
+        const zoomY = this.canvas.height / boardH;
+
+        // Use the smaller zoom to fit the whole board, or zoomY to "touch top and bottom"
+        // The user specifically asked to touch top and bottom, so we'll prioritize Y,
+        // but clamp it so we don't zoom out too much if the board is tiny.
+        const targetZoom = Math.min(zoomX, zoomY); // Perfectly touch boundaries
+
+        this.camera.zoom = Math.max(this.camera.minZoom, Math.min(targetZoom, this.camera.maxZoom));
+
+        // Center the camera
+        this.camera.x = (boardW - (this.canvas.width / this.camera.zoom)) / 2;
+        this.camera.y = (boardH - (this.canvas.height / this.camera.zoom)) / 2;
+
+        this.camera.updateConstraints();
     }
 
     render() {
