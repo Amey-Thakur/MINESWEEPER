@@ -58,14 +58,14 @@ export class SpriteSheet {
         ];
 
         this.numberPaths = {
-            1: "M23.502 117.509V23.502H0V11.751h11.751V0h47v117.509h23.502v11.751H0v-11.751z",
-            2: "M0 117.509V94.007h94.007V70.505H70.505V58.755H0V0h117.509v47.004H23.502v23.502H47.004v11.751h70.505v35.253H0z",
-            3: "M0 117.509V94.007h94.007V70.505H35.253V47.004h58.754V23.502H0V0h117.509v47.004h-11.751v23.501h11.751v47.004H0z",
-            4: "M94.007 117.509V94.007H117.51V70.505H94.007V0H70.505v70.505H0V94.01h70.505v23.502H94.007z",
-            5: "M0 117.509V70.505h94.007V47.004H0V0h117.509v23.502H23.502v23.502h94.007v70.505H0z",
-            6: "M0 117.509V0h117.509v23.502H23.502v23.502h94.007v70.505H0zm94.007-47.004V47.004H23.502v23.502h70.505z",
-            7: "M23.502 117.509V23.502H0V0h117.509v23.502H47.004v94.007H23.502z",
-            8: "M0 117.509V0h117.509v117.509H0zm94.007-70.505V23.502H23.502v23.502h70.505zm0 47.003V70.505H23.502v23.502h70.505z"
+            1: "M40 0h20v120H40V0z M20 20h20v20H20V20z M30 100h40v20H30v-20z",
+            2: "M0 0h100v20H20v30h80v70H0v-20h80V70H0V0z",
+            3: "M0 0h100v120H0V100h80V70H20V50h60V20H0V0z",
+            4: "M0 0h20v60h60V0h20v120h-20V80H0V0z",
+            5: "M0 0h100V20H20v30h80v70H0v-20h80V70H0V50h80V20H0V0z",
+            6: "M0 0h20v120h80v-20H20V70h80V0H0v20h80v30H20v70H0V0z",
+            7: "M0 0h100v120h-20V20H0V0z",
+            8: "M0 0h100v120H0V0zm20 20v30h60V20H20zm0 50v30h60V70H20z"
         };
 
         this.generateSprites();
@@ -145,11 +145,10 @@ export class SpriteSheet {
         const pathData = this.numberPaths[num];
         if (!pathData) return;
 
-        const isOne = num === 1;
-        const vW = isOne ? 82.256 : 117.509;
-        const vH = 117.509;
+        const vW = 100;
+        const vH = 120;
 
-        const scale = (CELL_SIZE * 0.42) / vH; // 42% of cell height for numbers
+        const scale = (CELL_SIZE * 0.70) / vH; // 70% of cell height
         const offsetX = x + (CELL_SIZE - vW * scale) / 2;
         const offsetY = (CELL_SIZE - vH * scale) / 2;
 
@@ -163,53 +162,49 @@ export class SpriteSheet {
 
     drawMine(x) {
         const ctx = this.ctx;
-        // The new path goes from roughly 0 to 110 in height
-        const scale = (CELL_SIZE * 0.55) / 110;
-        const offset = (CELL_SIZE - 110 * scale) / 2;
+        const scale = (CELL_SIZE * 0.70) / 100;
+        const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        const p = new Path2D("M30 30h20v20H30z"); // Highlight
+        // Highlight
         ctx.fillStyle = "#fff";
-        ctx.fill(p);
+        ctx.fillRect(25, 25, 20, 20);
 
-        const p2 = new Path2D("m50 110v-10h-20v-10h-10v10h-10v-10h10v-10h-10V60H0V50h20V30h10v-10h-10v-10h10v10h10v-10h20V0h10v20h20v10h10v-10h10v10h-10v10h10v20h20v10H100v20h-10v10h10v10h-10v-10h-10v10H60v20h-10zm0-60v-10h-20v20h20z");
+        // Body
         ctx.fillStyle = "#000";
-        ctx.fill(p2);
+        const body = new Path2D("M50 0h10v20H50V0z M50 80h10v20H50V80z M0 50h20v10H0V50z M80 50h20v10H80V50z M15 15h15v15H15V15z M70 15h15v15H70V15z M15 70h15v15H15V70z M70 70h15v15H70V70z M20 30h60v40H20V30z M30 20h40v60H30V20z");
+        ctx.fill(body);
 
         ctx.restore();
     }
 
     drawFlag(x) {
         const ctx = this.ctx;
-        // The new flag path has a height of 400px
-        // The new flag path has a height of 400px (400vh in classic terms)
-        const scale = (CELL_SIZE * 0.55) / 400;
-        const offset = (CELL_SIZE - 400 * scale) / 2;
+        const scale = (CELL_SIZE * 0.70) / 100;
+        const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        const matrix = [0.44413, 0, 0, 0.44413, 86.605, 122.579];
-
-        // Red flag part
+        // Flag body (red)
         ctx.fillStyle = "red";
-        ctx.fill(new Path2D("M100 250V50H0V0h300v200H100v100h150v50H100z"));
+        ctx.fill(new Path2D("M30 10h40v40H30V10z"));
 
-        // Black base/pole part
+        // Pole and base (black)
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M80 400v-50h300v100H80z M110 350V50h30v300h-30z"));
+        ctx.fill(new Path2D("M25 50h50v10H25V50z M60 10v70h10V10H60z M35 70h30v10H35V70z"));
 
         ctx.restore();
     }
 
     drawCross(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.55) / 110; // Match mine scale
-        const offset = (CELL_SIZE - 110 * scale) / 2;
+        const scale = (CELL_SIZE * 0.70) / 100; // Match mine scale
+        const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
