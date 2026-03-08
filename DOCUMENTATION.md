@@ -411,4 +411,25 @@ With the Web Worker correctly splitting our logic calculation safely alongside t
 
 ---
 
+## Phase 8: Windows 95 UI Shell
+
+### 8.1 Overview
+
+Classic native desktop interactions separate graphical operating systems from standard flat webpage elements. Phase 8 provides authentic desktop movement by implementing a standard click-and-hold boundary script specifically onto the top title bar of our game.
+
+The deliverable for this phase is:
+- `js/ui/WindowDragger.js`
+
+### 8.2 Boundary Constraints vs Position
+
+Rather than utilizing flex formatting which limits the application to strictly center-locked alignments, `WindowDragger.js` hooks onto `mousedown` specifically on the navy-blue `handle` elements. Converting screen positioning onto explicit absolute `style.left` and `style.top` strings actively overrides the CSS grid system dynamically on mouse movement, breaking the window cleanly into an overlay dragging mode.
+
+To prevent the user from flinging the canvas entirely off the `window.innerWidth` limits rendering it unrecoverable permanently, strict `Math.max()` and `Math.min()` limitations securely pin coordinate bounding continuously inside the viewport limits preventing CSS dropouts natively.
+
+### 8.3 What Comes Next
+
+With the window properly bound across the entire logical layout, mechanics, mathematical equations, scaling graphics frameworks, web workers, and interface layouts... Phase 9 hooks our random generation seed properties directly into browser URL hash routing for completely shared deterministic link parameters!
+
+---
+
 *Document continues in subsequent phases.*
