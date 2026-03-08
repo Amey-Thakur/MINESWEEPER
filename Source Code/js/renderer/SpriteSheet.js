@@ -21,9 +21,9 @@ import { CELL_SIZE } from '../constants.js';
 export class SpriteSheet {
 
     constructor() {
-        // Offscreen canvas to hold all pre-rendered 24x24 sprites
+        // Offscreen canvas to hold all pre-rendered sprites
         this.canvas = document.createElement('canvas');
-        this.canvas.width = CELL_SIZE * 14;
+        this.canvas.width = CELL_SIZE * 16; // Accommodate up to index 15
         this.canvas.height = CELL_SIZE;
         this.ctx = this.canvas.getContext('2d', { alpha: false });
 
