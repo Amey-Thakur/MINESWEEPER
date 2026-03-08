@@ -90,12 +90,25 @@ export function initMenus(callbacks) {
         const smHelp = document.getElementById('sm-help');
         const smHelpSub = document.getElementById('sm-help-sub');
         if (smHelp && smHelpSub) {
-            // Hover logic is mostly CSS, but we can add programmatic toggles if needed.
-            // Click for mobile/fallback:
             smHelp.addEventListener('click', (e) => {
+                e.preventDefault();
                 e.stopPropagation();
-                e.stopImmediatePropagation(); // Block the generic 'close menu' listener
-                smHelpSub.classList.toggle('hidden');
+                e.stopImmediatePropagation();
+                const wasHidden = smHelpSub.classList.contains('hidden');
+
+                // Toggle current state
+                if (wasHidden) {
+                    smHelpSub.classList.remove('hidden');
+                    smHelp.classList.add('active-parent');
+                } else {
+                    smHelpSub.classList.add('hidden');
+                    smHelp.classList.remove('active-parent');
+                }
+            });
+
+            // Prevent closing menus when clicking inside help submenu area itself
+            smHelpSub.addEventListener('click', (e) => {
+                e.stopPropagation();
             });
         }
 
