@@ -41,7 +41,7 @@ import { GameRenderer } from './renderer/GameRenderer.js';
 import { QuadTree, Rectangle } from './engine/QuadTree.js';
 import { BoardEngine } from './engine/BoardEngine.js';
 import { CELL_SIZE } from './constants.js';
-import { startTimer, stopTimer, resetTimer } from './ui/TimerController.js';
+import { startTimer, stopTimer, resetTimer, initClock } from './ui/TimerController.js';
 import { initMenu } from './ui/MenuController.js';
 
 // -------------------------------------------------------
@@ -81,6 +81,7 @@ const dom = {
     smileyBtn: document.getElementById('smiley-button'),
     window: document.getElementById('game-window'),
     titleBar: document.getElementById('title-bar'),
+    clock: document.getElementById('taskbar-clock'),
 };
 
 // -------------------------------------------------------
@@ -102,6 +103,7 @@ let shadowBoard = null;
 
 function init() {
     initMenu();
+    initClock(dom.clock);
 
     // Check URL parameters for custom shared map specs
     const config = ui.parseInitialConfig();
@@ -119,7 +121,7 @@ function startNewGame(difficulty, forcedSeed = null) {
     gameState = GAME_STATE.IDLE;
     currentDifficulty = { ...difficulty };
 
-    resetTimer();
+    resetTimer(dom.timer);
     ui.updateSmiley(SMILEY.IDLE);
     ui.updateMineCounter(difficulty.mines, 0);
 
@@ -216,7 +218,7 @@ function handleMouseUp(e) {
     if (e.button === 0) { // Left Click = Reveal
         if (gameState === GAME_STATE.IDLE) {
             gameState = GAME_STATE.PLAYING;
-            startTimer();
+            startTimer(dom.timer);
             shadowBoard.placeMines(currentDifficulty.mines, pos.row, pos.col);
         }
 
