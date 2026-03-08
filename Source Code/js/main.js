@@ -42,7 +42,7 @@ import { QuadTree, Rectangle } from './engine/QuadTree.js';
 import { BoardEngine } from './engine/BoardEngine.js';
 import { CELL_SIZE } from './constants.js';
 import { startTimer, stopTimer, resetTimer, initClock } from './ui/TimerController.js';
-import { initMenu } from './ui/MenuController.js';
+import { initMenus } from './ui/MenuController.js';
 
 // -------------------------------------------------------
 // Constants
@@ -102,7 +102,26 @@ let shadowBoard = null;
 // -------------------------------------------------------
 
 function init() {
-    initMenu();
+    initMenus({
+        onNew: () => startNewGame(currentDifficulty),
+        onBeginner: () => startNewGame(DIFFICULTY.BEGINNER),
+        onIntermediate: () => startNewGame(DIFFICULTY.INTERMEDIATE),
+        onExpert: () => startNewGame(DIFFICULTY.EXPERT),
+        onCustom: () => setDifficulty('CUSTOM'),
+        onSeed: () => {
+            const seed = prompt("Enter a seed ID:");
+            if (seed && !isNaN(parseInt(seed))) {
+                startNewGame(currentDifficulty, parseInt(seed));
+            }
+        },
+        onAbout: () => {
+            document.getElementById('about-dialog').style.display = 'flex';
+            document.getElementById('dialog-overlay').style.display = 'block';
+        },
+        onHowToPlay: () => {
+            alert("Classic Rules:\nRight-click to flag a mine.\nLeft-click to reveal.\nMiddle-click/Scroll to Pan/Zoom.");
+        }
+    });
     initClock(dom.clock);
 
     // Check URL parameters for custom shared map specs
