@@ -183,20 +183,21 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.85) / 100;
+        const scale = (CELL_SIZE * 0.70) / 100;
         const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // Flag body (Centered RED triangle - points RIGHT)
+        // Flag body (Vibrant RED triangle - pointing LEFT)
         ctx.fillStyle = "red";
-        ctx.fill(new Path2D("M40 10l50 30-50 30V10z"));
+        ctx.fill(new Path2D("M55 10 L15 35 L55 60 Z"));
 
-        // Pole and multi-stepped base (Centered BLACK)
+        // Classic pole and stepped base (Solid BLACK)
+        // Pole is on the right side of the pennant, base is centered
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M30 10h10v75H30V10z M15 80h40v7H15v-7z M5 87h60v10H5V87z"));
+        ctx.fill(new Path2D("M55 10 h10 v70 h-10 Z M35 80 h50 v10 h-50 Z M20 90 h80 v10 h-80 Z"));
 
         ctx.restore();
     }
