@@ -9,17 +9,17 @@
  *
  * Tech Stack   : CSS3
  *
- * Description  : Browser normalization layer that strips default margins,
- *                paddings, and box model inconsistencies across Chrome,
- *                Firefox, Safari, and Edge. Establishes a predictable
- *                baseline for the Win95 design system to build on top of.
+ * Description  : Browser normalization layer. Eliminates default margins, 
+ *                paddings, and box model inconsistencies across client runtimes, 
+ *                establishing a deterministic baseline for the Windows 95 UI.
  */
 
 
 
-/* Apply border-box globally. Without this, padding and border
-   get added on top of width/height, which makes layout math
-   unpredictable. */
+/* 
+ * Apply universal border-box sizing. This prevents arbitrary dimensional 
+ * expansions caused by padding and border injections into the DOM layout vector. 
+ */
 
 *,
 *::before,
@@ -30,8 +30,10 @@
 }
 
 
-/* Lock the viewport so nothing scrolls. The game window is
-   fixed-size, and the desktop fills the screen. */
+/* 
+ * Restrict implicit scrolling behaviors. The game window utilizes absolute 
+ * geometry, requiring the root surface to remain completely rigid. 
+ */
 
 html,
 body {
@@ -43,8 +45,10 @@ body {
 }
 
 
-/* Buttons should inherit font settings from their parent
-   instead of using the browser default (usually Times). */
+/* 
+ * Force interactive elements to inherit system typographic settings rather 
+ * than falling back to browser-specific defaults. 
+ */
 
 button {
   cursor: pointer;
@@ -56,7 +60,7 @@ button {
 }
 
 
-/* Same deal for inputs. */
+/* Standardize input forms typography. */
 
 input {
   font-family: inherit;
@@ -64,8 +68,7 @@ input {
 }
 
 
-/* Lists are only used inside the About dialog, and they
-   get custom styling there. Strip the default bullets. */
+/* Remove arbitrary bullet rendering in list arrays for internal menus. */
 
 ul,
 ol {
@@ -73,7 +76,7 @@ ol {
 }
 
 
-/* Links are not really used in the game, but just in case. */
+/* Normalize anchor elements for textual continuity. */
 
 a {
   text-decoration: none;
@@ -81,24 +84,27 @@ a {
 }
 
 
-/* Canvas elements should be block-level so they do not
-   introduce a phantom gap below them (inline elements
-   sit on the text baseline, which leaves a few pixels). */
+/* 
+ * Reclassify canvas as a block-level entity. Inline classification forces 
+ * baseline alignment which inherently generates phantom vertical padding. 
+ */
 
 canvas {
   display: block;
 }
 
 
-/* Kill the blue tap highlight on mobile devices. */
+/* Suppress mobile tap-highlight events globally. */
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
 
-/* Utility class to prevent text selection during play.
-   Applied to the desktop container via JS. */
+/* 
+ * Selection Utility 
+ * Suppresses standard text highlighting during gameplay interaction. 
+ */
 
 .no-select {
   user-select: none;
