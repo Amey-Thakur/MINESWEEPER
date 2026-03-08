@@ -204,7 +204,7 @@
     left: 0;
     width: 220px;
     background-color: var(--win95-surface);
-    z-index: 10000;
+    z-index: 99999;
     display: flex;
     flex-direction: row;
 
