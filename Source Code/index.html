@@ -62,6 +62,41 @@
        ==================================================== -->
     <div id="desktop" class="win95-desktop">
 
+        <!-- =================== START MENU =================
+         Hidden by default. Pops up when Start is clicked.
+         ================================================= -->
+        <div id="start-menu" class="win95-start-menu hidden">
+            <div class="start-menu-sidebar">
+                <span class="sidebar-text">Windows 95</span>
+            </div>
+            <div class="start-menu-body">
+                <button class="start-menu-item" id="sm-programs">
+                    <span class="sm-icon">📁</span>
+                    <span class="sm-text">Programs</span>
+                    <span class="sm-arrow">▶</span>
+                </button>
+                <button class="start-menu-item" id="sm-documents"
+                    onclick="window.open('https://github.com/Amey-Thakur/MINESWEEPER', '_blank')">
+                    <span class="sm-icon">📄</span>
+                    <span class="sm-text">GitHub Repo</span>
+                </button>
+                <div class="sm-divider"></div>
+                <button class="start-menu-item" id="sm-help">
+                    <span class="sm-icon">❓</span>
+                    <span class="sm-text">Help</span>
+                </button>
+                <button class="start-menu-item" id="sm-run" onclick="alert('Run dialog not implemented.')">
+                    <span class="sm-icon">🏃</span>
+                    <span class="sm-text">Run...</span>
+                </button>
+                <div class="sm-divider"></div>
+                <button class="start-menu-item" id="sm-shutdown">
+                    <span class="sm-icon">⏻</span>
+                    <span class="sm-text">Shut Down...</span>
+                </button>
+            </div>
+        </div>
+
         <!-- =================== TASKBAR ====================
          Fixed bar along the bottom edge. Contains a Start
          button and a clock, just like the real thing.

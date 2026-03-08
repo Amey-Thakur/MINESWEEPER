@@ -124,6 +124,96 @@
     }
 }
 
+/* ===========================================================
+   START MENU
+   Pops up from bottom-left corner when Start is clicked
+   =========================================================== */
+
+.win95-start-menu {
+    position: absolute;
+    bottom: var(--taskbar-h);
+    left: 0;
+    width: 220px;
+    background-color: var(--win95-surface);
+    z-index: 10000;
+    display: flex;
+    flex-direction: row;
+
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-bottom: 2px solid var(--win95-dark-shadow);
+    border-right: 2px solid var(--win95-dark-shadow);
+}
+
+.win95-start-menu.hidden {
+    display: none;
+}
+
+.start-menu-sidebar {
+    width: 28px;
+    background: linear-gradient(0deg, #000080, #1084d0);
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 8px;
+    padding-left: 4px;
+}
+
+.sidebar-text {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    letter-spacing: 1px;
+}
+
+.start-menu-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: default;
+    text-align: left;
+    font-family: inherit;
+    font-size: var(--fs-base);
+    color: var(--win95-text);
+}
+
+.start-menu-item:hover {
+    background-color: var(--win95-menu-highlight);
+    color: var(--win95-menu-hl-text);
+}
+
+.sm-icon {
+    font-size: 16px;
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
+.sm-text {
+    flex: 1;
+}
+
+.sm-arrow {
+    font-size: 10px;
+}
+
+.sm-divider {
+    height: 2px;
+    margin: 4px 2px;
+    border-top: 1px solid var(--win95-shadow);
+    border-bottom: 1px solid var(--win95-highlight);
+}
+
 
 /* ===========================================================
    TASKBAR
