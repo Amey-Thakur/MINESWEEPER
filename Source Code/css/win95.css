@@ -359,10 +359,11 @@
 }
 
 .menu-dropdown.clock-dropdown {
+    position: fixed;
     top: auto;
-    bottom: 100%;
+    bottom: var(--taskbar-h);
     left: auto;
-    right: 0;
+    right: 4px;
 }
 
 
