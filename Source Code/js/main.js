@@ -335,9 +335,18 @@ function handleGameOver(fatalIndex) {
     renderer.fatalIndex = fatalIndex;
 
     for (let i = 0; i < shadowBoard.totalCells; i++) {
-        if (shadowBoard.isMine(i) || shadowBoard.isFlagged(i)) {
+        if (shadowBoard.isMine(i)) {
+            // Flagged mines stay flagged (will render green)
+            // Unflagged mines stay unflagged (will render black/red)
+            shadowBoard.setRevealed(i);
+        } else if (shadowBoard.isFlagged(i)) {
+            // Bad flags (flag on empty cell) should also be revealed
             shadowBoard.setRevealed(i);
         }
+    }
+
+    if (renderer) {
+        renderer.render();
     }
 }
 

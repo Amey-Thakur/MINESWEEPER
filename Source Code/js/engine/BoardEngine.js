@@ -119,13 +119,21 @@ export class BoardEngine {
     }
 
     placeMines(minesToPlace, ignoreRow, ignoreCol) {
-        const ignoreIndex = this.getIndex(ignoreRow, ignoreCol);
+        const safeIndices = new Set();
+
+        // Classic Minesweeper rule: The first click and its 8 neighbors are NEVER mines.
+        // This guarantees a '0' on first click for a better opening.
+        this.forEachNeighbor(ignoreRow, ignoreCol, (r, c, nIndex) => {
+            safeIndices.add(nIndex);
+        });
+        safeIndices.add(this.getIndex(ignoreRow, ignoreCol));
+
         let placed = 0;
 
         while (placed < minesToPlace) {
             const index = this.rng.nextInt(this.totalCells);
 
-            if (index !== ignoreIndex && !this.isMine(index)) {
+            if (!safeIndices.has(index) && !this.isMine(index)) {
                 this.setMine(index);
                 placed++;
 
@@ -133,9 +141,9 @@ export class BoardEngine {
                 const col = index % this.cols;
 
                 this.forEachNeighbor(row, col, (r, c, nIndex) => {
-                    if (!this.isMine(nIndex)) {
-                        this.incrementNeighbor(nIndex);
-                    }
+                    // We increment EVERY neighbor. If the neighbor is or becomes a mine,
+                    // it doesn't matter because the renderer skips the count for mine cells.
+                    this.incrementNeighbor(nIndex);
                 });
             }
         }
