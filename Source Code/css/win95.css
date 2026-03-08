@@ -944,18 +944,21 @@
  */
 .seed-tab-strip {
     display: flex;
-    border-bottom: 2px solid #dfdfdf;
-    padding-left: 6px;
-    margin-top: 4px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -2px;
+    padding-left: 4px;
 }
 
 .seed-tab {
-    padding: 3px 12px;
-    margin-right: -2px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 4px 8px 2px 8px;
+    margin-right: 2px;
+    background: var(--win95-surface);
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-right: 2px solid var(--win95-dark-shadow);
     border-bottom: none;
+    box-shadow: inset -1px 0 var(--win95-shadow);
     cursor: default;
     font-size: 11px;
     position: relative;
@@ -965,23 +968,22 @@
 
 .seed-tab.active {
     top: 0;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    background: #c0c0c0;
+    padding-bottom: 4px;
     z-index: 3;
-    border-color: #ffffff #808080 #dfdfdf #ffffff;
+    border-bottom: 2px solid var(--win95-surface);
 }
 
 .seed-tab-panel {
     display: none;
     padding: 16px;
-    border: 2px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
-    border-top: none;
-    margin-top: -2px;
-    z-index: 2;
+    background: var(--win95-surface);
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-right: 2px solid var(--win95-dark-shadow);
+    border-bottom: 2px solid var(--win95-dark-shadow);
+    box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
-    background: #c0c0c0;
+    z-index: 1;
 }
 
 .seed-tab-panel.active {

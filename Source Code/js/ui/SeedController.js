@@ -144,11 +144,13 @@ function _attachActionListeners() {
 
             // Rejection of invalid types guarantees strict structural integrity 
             // before parameter handover to the SeedRNG mathematical processor.
-            if (!isNaN(parsedSeed)) {
+            if (!isNaN(parsedSeed) && parsedSeed > 0) {
                 hideSeedDialog();
                 if (state.onSeedSubmitted) {
                     state.onSeedSubmitted(parsedSeed);
                 }
+            } else {
+                _triggerFeedbackToast('Invalid Seed!');
             }
         });
 
@@ -316,7 +318,7 @@ function _executeClipboardTransfer(payload) {
     }
 
     navigator.clipboard.writeText(payload)
-        .then(() => _triggerFeedbackToast())
+        .then(() => _triggerFeedbackToast('Copied to clipboard!'))
         .catch(err => console.error("Clipboard IO exception: ", err));
 }
 
@@ -350,9 +352,10 @@ function _executeNativeShare() {
  * 
  * Time Complexity: O(1)
  */
-function _triggerFeedbackToast() {
+function _triggerFeedbackToast(message = 'Copied to clipboard!') {
     if (!refs.feedbackToast) return;
 
+    refs.feedbackToast.textContent = message;
     refs.feedbackToast.classList.remove('hidden');
 
     // Flushes animation pipeline
