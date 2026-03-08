@@ -361,4 +361,33 @@ Now that the logic engine safely hosts data securely underneath through quadtree
 
 ---
 
+## Phase 6: Canvas Renderer and Virtual Camera
+
+### 6.1 Overview
+
+A grid featuring hundreds of thousands of HTML `<div>` grid elements will grind standard browser DOM parsing severely until complete page failure. Phase 6 solves this by avoiding standard Document Object models altogether, utilizing the standalone `HTML5 Canvas API`. 
+
+Because our `BoardEngine` holds arrays indexing 0/0 positioning, the spatial properties perfectly align mapping into the `QuadTree` boundaries.
+
+The deliverables for this phase are:
+- `js/renderer/SpriteSheet.js`
+- `js/renderer/Camera.js`
+- `js/renderer/GameRenderer.js`
+
+### 6.2 Pre-Rendered Offscreen Sprites
+
+Requesting multiple PNG image downloads slows load parameters and introduces rendering glitches. `SpriteSheet.js` generates Win95 24x24 beveling, flags, mines, and text *procedurally* once into an offscreen memory canvas during initialization. `GameRenderer` pulls raw graphical arrays straight from cached memory avoiding redraw calculations dynamically.
+
+### 6.3 Virtual Focus Boundaries
+
+The `Camera` handles user interaction to scale (zooming boundaries out natively tracking mathematical pointer distance changes) and panning offsets. The active translated rectangle automatically pipes mathematically into the indexed `QuadTree.query()` method.
+
+This ensures that out of a theoretically 1,000,000 length array grid, ONLY the specific maximum bounds mathematically displaying visible ranges (roughly 1,200 grid tiles) invoke the rendering operation natively. Frame rate sustains 60 FPS permanently.
+
+### 6.4 What Comes Next
+
+As calculation spans expand continuously processing algorithmic bounds over wide constraints, main thread execution could stutter visual animations. Phase 7 implements standalone, asynchronous `Web Worker` integrations executing the engine completely separately.
+
+---
+
 *Document continues in subsequent phases.*
