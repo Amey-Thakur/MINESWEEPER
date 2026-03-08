@@ -9,10 +9,11 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Constraint Satisfaction Problem (CSP) solver for Minesweeper.
- *                Analyzes the visible board to mathematically derive safe cells
- *                and unknown mines without relying on luck. Used directly by the
- *                BoardEngine to guarantee "no-guess" map spawning.
+ * Description  : Implements a Constraint Satisfaction Problem framework for the 
+ *                board data structure. It systematically analyzes the exposed 
+ *                cartesian topology to deduce guaranteed safe geometric zones 
+ *                and absolute mine coordinates based strictly on available 
+ *                numerical parameters, thereby bypassing pseudo randomness bounds.
  */
 
 export class CSPSolver {
@@ -21,13 +22,13 @@ export class CSPSolver {
         this.board = board;
     }
 
-    // Simplistic initial implementation that returns an array of known safe configurations
-    // that can be programmatically clicked without dying.
+    // Establishes primary solver iterations to extract demonstrably safe vectors 
+    // from the currently revealed logical matrix structure.
     solve() {
         const safeCells = [];
         const knownMines = new Set();
 
-        // Loop through the entire board looking for boundary cells
+        // Iterate across the contiguous memory array resolving localized boundaries
         for (let index = 0; index < this.board.totalCells; index++) {
             if (!this.board.isRevealed(index)) continue;
 
@@ -52,12 +53,14 @@ export class CSPSolver {
                 }
             });
 
-            // Rule 1: If remaining hidden cells equal the remaining required mines, they are ALL mines
+            // Deductive Condition A. If the remaining unrevealed neighbor parameter 
+            // exclusively matches the residual required mines metric, all unrevealed nodes are mines.
             if (hiddenCount > 0 && reqMines - flaggedCount === hiddenCount) {
                 hiddenNeighbors.forEach(n => knownMines.add(n));
             }
 
-            // Rule 2: If the required mines are already fully flagged, all remaining hidden neighbors are SAFE
+            // Deductive Condition B. If the required mine parameter is fully satisfied 
+            // by current flag assertions, all remaining adjacent hidden nodes are mathematically safe.
             if (hiddenCount > 0 && reqMines === flaggedCount) {
                 hiddenNeighbors.forEach(n => {
                     if (!safeCells.includes(n)) {
