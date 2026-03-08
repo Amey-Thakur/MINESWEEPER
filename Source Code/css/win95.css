@@ -456,6 +456,12 @@
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - var(--taskbar-h) - 20px);
     overflow: hidden;
+    z-index: 100;
+}
+
+/* Hide desktop icons if a window is maximized to keep a clean look */
+.win95-desktop:has(.win95-window.maximized) .desktop-icons {
+    display: none;
 }
 
 
@@ -903,6 +909,10 @@
     max-width: none !important;
     max-height: none !important;
     transform: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    z-index: 1000 !important;
+    display: flex !important; /* Ensure it stays flex to fill height */
 }
 
 .tab-icon-img,
