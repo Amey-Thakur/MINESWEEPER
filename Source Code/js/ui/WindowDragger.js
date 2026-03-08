@@ -9,10 +9,11 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Implements the classic Windows native dragging logic. 
- *                Allows the user to click entirely down on the Title bar to 
- *                smoothly drag the entire game window element fluidly across
- *                the screen boundary.
+ * Description  : Implements a coordinate translation system to simulate 
+ *                legacy OS window management. This module calculates the 
+ *                relative offset between the cursor and the viewport anchor 
+ *                to facilitate smooth, boundary-clamped dragging of the 
+ *                graphical window component.
  */
 
 export class WindowDragger {
@@ -51,7 +52,8 @@ export class WindowDragger {
         // Only react to standard primary left clicks
         if (e.type === 'mousedown' && e.button !== 0) return;
 
-        // Prevents selecting the inner title text
+        // Prevents the browser from triggering default text selection or 
+        // scrolling behaviors during the active drag state.
         if (e.cancelable) e.preventDefault();
 
         this.isDragging = true;
@@ -62,7 +64,8 @@ export class WindowDragger {
 
         const rect = this.win.getBoundingClientRect();
 
-        // Calculate the exact pixel difference between mouse anchor and the window anchor
+        // Calculates the static pixel offset between the pointer and the 
+        // logical top-left coordinate of the window boundary.
         this.offsetX = pointerX - rect.left;
         this.offsetY = pointerY - rect.top;
     }
@@ -79,7 +82,8 @@ export class WindowDragger {
         let newX = pointerX - this.offsetX;
         let newY = pointerY - this.offsetY;
 
-        // Prevent dragging the title bar out of the screen entirely natively
+        // Restricts the window position to the logical viewport dimensions to 
+        // prevent accidental boundary loss.
         const maxX = window.innerWidth - 100;
         const maxY = window.innerHeight - 50;
 
@@ -90,7 +94,8 @@ export class WindowDragger {
         this.win.style.left = `${newX}px`;
         this.win.style.top = `${newY}px`;
 
-        // Break the flexbox centering safely once an explicit coordinate drops
+        // Transitions the element from centered flow to absolute positioning 
+        // once the user initiates an explicit coordinate translation.
         this.win.style.position = 'absolute';
         this.win.style.margin = '0';
         this.win.style.transform = 'none';

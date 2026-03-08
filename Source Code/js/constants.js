@@ -10,8 +10,8 @@
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
  * Description  : Contains the immutable configuration maps fundamental to the 
- *                engine execution logic. These static enumerations define the 
- *                baseline geometric constraints for all difficulty matrices 
+ *                engine execution logic. These static enumerations facilitate 
+ *                O(1) constant-time lookup for baseline geometric constraints 
  *                and the definitive state machine nomenclature used globally.
  */
 

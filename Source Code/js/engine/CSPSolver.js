@@ -9,11 +9,16 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Implements a Constraint Satisfaction Problem framework for the 
- *                board data structure. It systematically analyzes the exposed 
- *                cartesian topology to deduce guaranteed safe geometric zones 
- *                and absolute mine coordinates based strictly on available 
- *                numerical parameters, thereby bypassing pseudo randomness bounds.
+ * Description  : Implements a Constraint Satisfaction Problem (CSP) framework for the 
+ *                cartesian board topology. This engine systematically analyzes 
+ *                local numerical constraints to deduce absolute mine coordinates 
+ *                and mathematically safe vectors. 
+ *                
+ *                Complexity:
+ *                  - Time  : O(N) for a single deterministic scan where N 
+ *                            represents the total cell count, as each node 
+ *                            evaluates a static 3x3 neighborhood.
+ *                  - Space : O(M) where M is the count of deduced cell indices.
  */
 
 export class CSPSolver {

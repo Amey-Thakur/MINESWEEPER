@@ -7,11 +7,15 @@
  * Release Date : March 5, 2026
  * License      : MIT
  *
- * Tech Stack   : Vanilla JavaScript (ES6)
+ * Tech Stack   : Vanilla JavaScript (ES6), Web Audio API
  *
- * Description  : Handles the Win95-style menu bar. Clicking a menu label
- *                toggles its dropdown; clicking anywhere else closes all
- *                open menus. Each menu option fires a callback.
+ * Description  : Implements a hierarchical event-delegation system for the 
+ *                Win95-aesthetic menu structures. This module facilitates 
+ *                asynchronous callback execution mapped to discrete DOM states. 
+ *                
+ *                Additionally, it leverages the Web Audio API for real-time 
+ *                waveform synthesis, simulating legacy OS auditory feedback 
+ *                without external asset dependencies.
  */
 
 
@@ -22,7 +26,8 @@ export function initMenus(callbacks) {
     const smHelp = document.getElementById('sm-help');
     const smHelpSub = document.getElementById('sm-help-sub');
 
-    // Toggle dropdown on label click
+    // Attaches interaction listeners to primary menu labels utilizing a 
+    // toggle-state pattern with explicit propagation suppression.
     items.forEach((item) => {
         const label = item.querySelector('.menu-label');
 
@@ -46,7 +51,8 @@ export function initMenus(callbacks) {
         }
     };
 
-    // Close all menus on outside click
+    // Enforces a global close policy for open menu fragments upon 
+    // out-of-bounds interactive events.
     document.addEventListener('click', () => {
         items.forEach((m) => m.classList.remove('active'));
         if (startMenu && !startMenu.classList.contains('hidden')) {
@@ -78,7 +84,8 @@ export function initMenus(callbacks) {
         }
     }
 
-    // Start Menu interaction
+    // Orchestrates recursive UI visibility for the "Start" menu component. 
+    // This utilizes a class-based hidden/visible toggle logic.
     if (startBtn && startMenu) {
         startBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Keep global click from instantly closing it
@@ -174,7 +181,11 @@ function triggerShutdown() {
     // Trigger turn off animation
     if (desktop) desktop.classList.add('turning-off');
 
-    // Wait for the CSS animation (0.6s) to finish before showing the text screen
+    // Emulates a system shutdown sequence by manipulating DOM visibility 
+    // and triggering an auditory frequency sweep.
+    //
+    // Note: 'void desktop.offsetWidth' is utilized to force a synchronous 
+    // layout reflow, ensuring the browser recognizes the sudden display transition.
     setTimeout(() => {
         if (desktop) desktop.style.display = 'none';
         if (overlay) overlay.classList.remove('hidden');
@@ -210,6 +221,9 @@ function playSystemSound(type) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (!AudioContext) return;
 
+    // Synthesizes period-accurate OS auditory signals utilizing the 
+    // Web Audio API oscillators. This bypasses HTTP requests for 
+    // static audio files while ensuring zero-latency playback.
     const ctx = new AudioContext();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
