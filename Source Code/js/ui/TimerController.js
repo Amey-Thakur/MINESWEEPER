@@ -81,7 +81,7 @@ function updateClockText(clockEl) {
         minute: '2-digit',
     };
 
-    if (currentClockFormat.includes('sec')) {
+    if (!currentClockFormat.includes('nosec')) {
         options.second = '2-digit';
     }
 
