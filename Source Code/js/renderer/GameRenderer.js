@@ -40,41 +40,60 @@ export class GameRenderer {
     }
 
     resize() {
-        // Match canvas physical size to CSS container size
-        const rect = this.container.getBoundingClientRect();
+        const win = this.container.closest('.win95-window');
+        const isMaximized = win && win.classList.contains('maximized');
 
-        // Ensure we have non-zero dimensions
-        const w = Math.max(rect.width, 100);
-        const h = Math.max(rect.height, 100);
+        if (isMaximized) {
+            // Fill available screen space
+            const rect = this.container.getBoundingClientRect();
+            this.canvas.width = Math.max(rect.width, 100);
+            this.canvas.height = Math.max(rect.height, 100);
+        } else {
+            // Restore classic behavior: wrap the board exactly
+            const idealW = this.board.cols * CELL_SIZE;
+            const idealH = this.board.rows * CELL_SIZE;
 
-        this.canvas.width = w;
-        this.canvas.height = h;
+            // Still clamp so it doesn't overflow small screens before maximizing
+            const maxW = window.innerWidth - 40;
+            const maxH = window.innerHeight - 140;
+
+            this.canvas.width = Math.min(idealW, maxW);
+            this.canvas.height = Math.min(idealH, maxH);
+        }
 
         if (!this.camera) {
-            this.camera = new Camera(w, h, this.board.cols, this.board.rows);
+            this.camera = new Camera(this.canvas.width, this.canvas.height, this.board.cols, this.board.rows);
         } else {
-            this.camera.vpW = w;
-            this.camera.vpH = h;
+            this.camera.vpW = this.canvas.width;
+            this.camera.vpH = this.canvas.height;
             this.camera.updateConstraints();
         }
     }
 
     fitToScreen() {
+        const win = this.container.closest('.win95-window');
+        const isMaximized = win && win.classList.contains('maximized');
+
+        if (!isMaximized) {
+            // In normal mode, we strictly want 1:1 pixel scale for the classic feel
+            this.camera.zoom = 1.0;
+            this.camera.x = 0;
+            this.camera.y = 0;
+            this.camera.updateConstraints();
+            return;
+        }
+
+        // Maximized logic: Scale up so that the board utilizes the screen height
         const boardW = this.board.cols * CELL_SIZE;
         const boardH = this.board.rows * CELL_SIZE;
 
-        // Calculate zoom factors for both dimensions
         const zoomX = this.canvas.width / boardW;
         const zoomY = this.canvas.height / boardH;
 
-        // Use the smaller zoom to fit the whole board, or zoomY to "touch top and bottom"
-        // The user specifically asked to touch top and bottom, so we'll prioritize Y,
-        // but clamp it so we don't zoom out too much if the board is tiny.
-        const targetZoom = Math.min(zoomX, zoomY); // Perfectly touch boundaries
+        // Use the smaller coefficient to ensure the whole board fits, but scales up to touch edges
+        this.camera.zoom = Math.min(zoomX, zoomY);
 
-        this.camera.zoom = Math.max(this.camera.minZoom, Math.min(targetZoom, this.camera.maxZoom));
-
-        // Center the camera
+        // Center the board within the larger canvas
         this.camera.x = (boardW - (this.canvas.width / this.camera.zoom)) / 2;
         this.camera.y = (boardH - (this.canvas.height / this.camera.zoom)) / 2;
 
