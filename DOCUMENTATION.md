@@ -390,4 +390,25 @@ As calculation spans expand continuously processing algorithmic bounds over wide
 
 ---
 
+## Phase 7: Web Worker Integration
+
+### 7.1 Overview
+
+A 1,000,000 cell map undergoing a massive click-induced flood-fill uncloaking process theoretically executes JavaScript logical loops millions of times momentarily. Running those raw mathematical calculations synchronously causes the HTML5 Canvas to lock rendering natively, tearing frame animations apart and causing the dreaded "Browser is not responding" alert limit.
+
+Phase 7 avoids browser locking unconditionally by shipping the computational engine processing off the primary UI thread onto an independent, asynchronous `Web Worker`.
+
+The deliverable for this phase is:
+- `js/worker/GameWorker.js`
+
+### 7.2 Post Message Architecture
+
+The `BoardEngine` instantiate solely inside the isolated worker environment (`GameWorker.js`). The UI simply issues structural requests down the pipeline via `postMessage()`. The Worker replies directly carrying payloads attached with freshly copied subsets of the `Uint8Array` rendering block. The Canvas then digests the passed grids safely independently, keeping visual performance utterly detached from CPU processing latency scaling.
+
+### 7.3 What Comes Next
+
+With the Web Worker correctly splitting our logic calculation safely alongside the graphical Camera rendering parameters, Phase 8 brings all the elements natively mapped together underneath the `main.js` controller alongside clicking inputs natively bound to the Win95 user-interface shells.
+
+---
+
 *Document continues in subsequent phases.*
