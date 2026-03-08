@@ -276,6 +276,12 @@
     font-size: 10px;
 }
 
+.sm-arrow-icon {
+    width: 6px;
+    height: 10px;
+    margin-left: auto;
+}
+
 .sm-divider {
     height: 2px;
     margin: 4px 2px;
