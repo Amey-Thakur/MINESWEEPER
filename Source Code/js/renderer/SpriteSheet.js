@@ -47,25 +47,25 @@ export class SpriteSheet {
 
         this.colors = [
             null,
-            '#0000FF',  // 1: Blue
-            '#008000',  // 2: Green
-            '#FF0000',  // 3: Red
-            '#000080',  // 4: Navy
-            '#FF69B4',  // 5: Pink 
-            '#00FFFF',  // 6: Cyan
-            '#000000',  // 7: Black
-            '#808080'   // 8: Gray
+            '#0000FF', // 1: Blue
+            '#008000', // 2: Green
+            '#FF0000', // 3: Red
+            '#000080', // 4: Navy
+            '#800000', // 5: Maroon
+            '#008080', // 6: Teal
+            '#000000', // 7: Black
+            '#808080'  // 8: Gray
         ];
 
         this.numberPaths = {
-            1: "M35 117h14V7H35v110z M35 7h-7l-7 7v14h7v-7l7-7V7z",
-            2: "M7 117h103v-14H21v-35l77-49V7H7v14h77v7L7 77v40z",
-            3: "M7 117h96V7H7v14h77v28H21v14h63v35H7v19z",
-            4: "M77 117h14V7H77v56H21V7H7v70h70v40z",
-            5: "M103 117H7V77h82V63H7V7h96v14H21v28h82v68z",
-            6: "M7 117h96V63H21v-7h82V7H7v110z M21 103v-26h68v26H21z",
-            7: "M7 21V7h96v14L35 117H21l68-96H7z",
-            8: "M7 117h96V7H7v110z M21 21h68v35H21V21z M21 70h68v33H21V70z"
+            1: "M 40 120 V 0 H 60 V 120 Z",
+            2: "M 10 0 H 90 V 20 H 30 V 50 H 90 V 120 H 10 V 100 H 70 V 70 H 10 Z",
+            3: "M 10 0 H 90 V 120 H 10 V 100 H 70 V 70 H 30 V 50 H 70 V 20 H 10 Z",
+            4: "M 70 120 H 90 V 0 H 70 L 10 60 V 80 H 70 Z M 70 20 V 60 H 30 Z",
+            5: "M 90 0 H 10 V 70 H 90 V 120 H 10 V 100 H 70 V 50 H 30 V 20 H 90 Z",
+            6: "M 10 0 H 90 V 20 H 30 V 50 H 90 V 120 H 10 Z M 30 70 V 100 H 70 V 70 Z",
+            7: "M 10 0 H 90 L 50 120 H 30 L 70 20 H 10 Z",
+            8: "M 10 0 H 90 V 120 H 10 Z M 30 20 V 50 H 70 V 20 Z M 30 70 V 100 H 70 V 70 Z"
         };
 
         this.generateSprites();
@@ -80,7 +80,7 @@ export class SpriteSheet {
         // 1: Empty (Sunken/Flat)
         this.drawFlat(1 * CELL_SIZE);
 
-        // 2: Mine (Standard grey background)
+        // 2: Mine
         this.drawFlat(2 * CELL_SIZE);
         this.drawMine(2 * CELL_SIZE);
 
@@ -145,16 +145,11 @@ export class SpriteSheet {
         const pathData = this.numberPaths[num];
         if (!pathData) return;
 
-        // Perfect visual centering calculation
-        // vH is consistent for all, but vW varies per digit character
-        const vH = 117.509;
-        let vW = 117.509; // Default
+        // These paths are built on a 100x120 grid
+        const vW = 100;
+        const vH = 120;
 
-        if (num === 1) vW = 70; // Narrow stem
-        if (num === 4) vW = 100;
-        if (num === 7) vW = 110;
-
-        const targetSize = CELL_SIZE * 0.70; // Slightly smaller for cleaner look
+        const targetSize = CELL_SIZE * 0.70;
         const scale = targetSize / vH;
 
         const drawW = vW * scale;
@@ -173,64 +168,41 @@ export class SpriteSheet {
 
     drawMine(x) {
         const ctx = this.ctx;
-        const vW = 117.509;
-        const vH = 117.509;
-
-        const targetSize = CELL_SIZE * 0.75;
-        const scale = targetSize / vH;
-
-        const offsetX = x + (CELL_SIZE - targetSize) / 2;
-        const offsetY = (CELL_SIZE - targetSize) / 2;
+        const scale = (CELL_SIZE * 0.70) / 100;
+        const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
-        ctx.translate(offsetX, offsetY);
+        ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // White Highlight Square
+        // White Highlight
         ctx.fillStyle = "#fff";
-        ctx.fill(new Path2D("M35.134 34.736h20.478v20.612H35.134z"));
+        ctx.fillRect(25, 25, 20, 20);
 
         // Black Mine Body
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M54.29 108.46v-9.047H36.192v-11.751h-9.048v11.751h-9.049v-11.751h9.049v-9.048h-9.049V63.22H0V54.289h18.096V36.193h9.049v-9.048h-9.049v-9.049h9.049v9.049h9.048v-9.049h18.096V0H63.22v18.096h18.096v9.049h9.048v-9.049h9.049v9.049h-9.049v9.048h9.049v18.096h18.096V63.22H99.413v18.096h-9.049v9.048h9.049v9.049h-9.049v-9.049h-9.048v9.049H63.22v18.096H54.289zm0-63.219v-9.048H36.192v18.096h18.096z"));
+        const body = new Path2D("M50 0h10v20H50V0z M50 80h10v20H50V80z M0 50h20v10H0V50z M80 50h20v10H80V50z M15 15h15v15H15V15z M70 15h15v15H70V15z M15 70h15v15H15V70z M70 70h15v15H70V70z M20 30h60v40H20V30z M30 20h40v60H30V20z");
+        ctx.fill(body);
 
         ctx.restore();
     }
 
     drawFlag(x) {
         const ctx = this.ctx;
-        // The flag content is roughly located between X=0 and X=180 in transformed space
-        // Total transformed width is about 400. We need to center the 0-180 range.
-        const vW = 180;
-        const vH = 444.127;
-
-        const targetSize = CELL_SIZE * 0.75;
-        const scale = targetSize / vH;
-
-        const drawW = vW * scale;
-        const drawH = targetSize;
-
-        // Push slighty right (+1px) to visually offset the flag pennant overhang
-        const offsetX = x + (CELL_SIZE - drawW) / 2 + 1;
-        const offsetY = (CELL_SIZE - drawH) / 2;
+        const scale = (CELL_SIZE * 0.70) / 100;
+        const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
-        ctx.translate(offsetX, offsetY);
+        ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // Path 1 (Red Flag)
-        ctx.save();
-        ctx.transform(0.44413, 0, 0, 0.44413, 86.605, 122.579);
+        // Flag body (Vibrant RED triangle - pointing LEFT)
         ctx.fillStyle = "red";
-        ctx.fill(new Path2D("M105 174v-50H-95V24h-100V-76h100v-100h200v-100h200v500H105Z"));
-        ctx.restore();
+        ctx.fill(new Path2D("M55 10 L15 35 L55 60 Z"));
 
-        // Path 2 (Black Pole)
-        ctx.save();
-        ctx.transform(0.44413, 0, 0, 0.44413, 86.605, 122.579);
+        // Classic pole and stepped base (Solid BLACK)
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M-195 624V524H5V424h200V224h100v200h100v100h200v200h-800Z"));
-        ctx.restore();
+        ctx.fill(new Path2D("M55 10 h10 v70 h-10 Z M35 80 h50 v10 h-50 Z M20 90 h80 v10 h-80 Z"));
 
         ctx.restore();
     }

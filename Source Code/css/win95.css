@@ -253,7 +253,8 @@
 .start-menu-item {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    width: 100%;
+    padding: 2px 8px;
     background: none;
     border: none;
     cursor: default;
@@ -596,17 +597,26 @@
 }
 
 .menu-option {
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
     text-align: left;
-    padding: 4px 24px;
+    padding: 2px 8px;
     font-size: var(--fs-menu);
     white-space: nowrap;
+    background: none;
+    border: none;
 }
 
 .menu-option:hover {
     background-color: var(--win95-menu-highlight);
     color: var(--win95-menu-hl-text);
+}
+
+.menu-icon-img {
+    image-rendering: pixelated;
+    display: block;
+    object-fit: contain;
 }
 
 .menu-separator {
@@ -912,7 +922,8 @@
     border: none !important;
     box-shadow: none !important;
     z-index: 1000 !important;
-    display: flex !important; /* Ensure it stays flex to fill height */
+    display: flex !important;
+    /* Ensure it stays flex to fill height */
 }
 
 .tab-icon-img,
