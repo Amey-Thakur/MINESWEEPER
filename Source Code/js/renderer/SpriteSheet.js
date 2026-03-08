@@ -181,12 +181,18 @@ export class SpriteSheet {
         const pathData = this.numberPaths[num];
         if (!pathData) return;
 
-        const vW = 100;
-        const vH = 120;
+        // Number 1 has a narrower viewport than the others
+        const vW = (num === 1) ? 82.256 : 117.509;
+        const vH = 117.509;
 
-        const scale = (CELL_SIZE * 0.70) / vH; // 70% of cell height
-        const offsetX = x + (CELL_SIZE - vW * scale) / 2;
-        const offsetY = (CELL_SIZE - vH * scale) / 2;
+        const targetSize = CELL_SIZE * 0.75;
+        const scale = targetSize / vH;
+
+        const drawW = vW * scale;
+        const drawH = vH * scale;
+
+        const offsetX = x + (CELL_SIZE - drawW) / 2;
+        const offsetY = (CELL_SIZE - drawH) / 2;
 
         ctx.save();
         ctx.translate(offsetX, offsetY);
@@ -198,11 +204,20 @@ export class SpriteSheet {
 
     drawMine(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.70) / 117.509; // Match number scale
-        const offset = (CELL_SIZE - 117.509 * scale) / 2;
+        const vW = 117.509;
+        const vH = 117.509;
+
+        const targetSize = CELL_SIZE * 0.75;
+        const scale = targetSize / vH;
+
+        const drawW = vW * scale;
+        const drawH = vH * scale;
+
+        const offsetX = x + (CELL_SIZE - drawW) / 2;
+        const offsetY = (CELL_SIZE - drawH) / 2;
 
         ctx.save();
-        ctx.translate(x + offset, offset);
+        ctx.translate(offsetX, offsetY);
         ctx.scale(scale, scale);
 
         // White Highlight Square
@@ -218,18 +233,21 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
+        const vW = 355.303;
+        const vH = 444.127;
+
+        const targetSize = CELL_SIZE * 0.75;
+        const scale = targetSize / vH;
+
+        const drawW = vW * scale;
+        const drawH = vH * scale;
+
+        const offsetX = x + (CELL_SIZE - drawW) / 2;
+        const offsetY = (CELL_SIZE - drawH) / 2;
+
         ctx.save();
-        ctx.translate(x, 0);
-
-        // Transform is matrix(.44413 0 0 .44413 86.605 122.579)
-        // SVG size is 355x444. Scale it to fit CELL_SIZE (24x24) or similar.
-        // The original SpriteSheet used scale = (CELL_SIZE * 0.70) / 100.
-        // Let's use a scale that fits the 117.509 viewBox used for numbers to stay consistent if possible, 
-        // but flag.svg has a different viewBox. Let's just use the matrix from the SVG.
-
-        ctx.translate(CELL_SIZE * 0.15, CELL_SIZE * 0.15); // Center padding
-        const svgScale = (CELL_SIZE * 0.7) / 444;
-        ctx.scale(svgScale, svgScale);
+        ctx.translate(offsetX, offsetY);
+        ctx.scale(scale, scale);
 
         // Path 1 (Red Flag)
         ctx.save();
