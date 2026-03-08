@@ -86,10 +86,24 @@
                     <span class="sm-text">Source Code Repository</span>
                 </button>
                 <div class="sm-divider"></div>
-                <button class="start-menu-item" id="sm-help">
-                    <span class="sm-icon">❓</span>
-                    <span class="sm-text">Help</span>
-                </button>
+                <!-- Help with sub-menu -->
+                <div class="start-menu-item-container" id="sm-help-container">
+                    <button class="start-menu-item" id="sm-help">
+                        <span class="sm-icon">❓</span>
+                        <span class="sm-text">Help</span>
+                        <span class="sm-arrow">▶</span>
+                    </button>
+                    <div class="start-sub-menu hidden" id="sm-help-sub">
+                        <button class="start-menu-item" id="sm-about-trigger">
+                            <span class="sm-icon">ℹ️</span>
+                            <span class="sm-text">About Minesweeper</span>
+                        </button>
+                        <button class="start-menu-item" id="sm-howtoplay-trigger">
+                            <span class="sm-icon">📖</span>
+                            <span class="sm-text">How to Play</span>
+                        </button>
+                    </div>
+                </div>
                 <button class="start-menu-item" id="sm-run"
                     onclick="const p = prompt('Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.', ''); if(p) window.open('https://www.google.com/search?q=' + encodeURIComponent(p), '_blank');">
                     <span class="sm-icon">🏃🏻</span>
@@ -267,6 +281,28 @@
             <p><strong>License:</strong> MIT</p>
             <div class="dialog-actions">
                 <button id="about-ok" class="win95-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ HOW TO PLAY DIALOG ================ -->
+    <div id="howtoplay-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="howtoplay-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="howtoplay-dialog-title">How To Play</span>
+            <button class="title-btn close-btn" id="howtoplay-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body" style="width: 300px;">
+            <p style="margin-bottom: 15px;">The goal of the game is to uncover all the squares that do not contain
+                mines.</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Left-Click:</strong> Reveal a square.</li>
+                <li><strong>Right-Click:</strong> Plant a flag on a suspected mine.</li>
+                <li><strong>Middle-Click:</strong> Pan the camera for large maps.</li>
+                <li><strong>Scroll:</strong> Zoom in and out.</li>
+            </ul>
+            <p>If you reveal a mine, the game is over!</p>
+            <div class="dialog-actions">
+                <button id="howtoplay-ok" class="win95-btn">OK</button>
             </div>
         </div>
     </div>

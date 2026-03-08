@@ -88,10 +88,30 @@ export function initMenus(callbacks) {
         }
 
         const smHelp = document.getElementById('sm-help');
-        if (smHelp) {
-            smHelp.addEventListener('click', () => {
+        const smHelpSub = document.getElementById('sm-help-sub');
+        if (smHelp && smHelpSub) {
+            // Mobile/Click fallback for the hover menu
+            smHelp.addEventListener('click', (e) => {
+                e.stopPropagation();
+                smHelpSub.classList.toggle('hidden');
+            });
+        }
+
+        const smAboutTrigger = document.getElementById('sm-about-trigger');
+        if (smAboutTrigger) {
+            smAboutTrigger.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
+                if (smHelpSub) smHelpSub.classList.add('hidden');
                 if (callbacks.onAbout) callbacks.onAbout();
+            });
+        }
+
+        const smHowToPlayTrigger = document.getElementById('sm-howtoplay-trigger');
+        if (smHowToPlayTrigger) {
+            smHowToPlayTrigger.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                if (smHelpSub) smHelpSub.classList.add('hidden');
+                showHowToPlay();
             });
         }
 
@@ -111,6 +131,24 @@ export function initMenus(callbacks) {
             });
         });
     }
+}
+
+function showHowToPlay() {
+    const dialog = document.getElementById('howtoplay-dialog');
+    const overlay = document.getElementById('dialog-overlay');
+    const okBtn = document.getElementById('howtoplay-ok');
+    const closeBtn = document.getElementById('howtoplay-dialog-close');
+
+    const closeHandler = () => {
+        dialog.classList.add('hidden');
+        overlay.classList.add('hidden');
+    };
+
+    okBtn.onclick = closeHandler;
+    closeBtn.onclick = closeHandler;
+
+    dialog.classList.remove('hidden');
+    overlay.classList.remove('hidden');
 }
 
 // =======================================================

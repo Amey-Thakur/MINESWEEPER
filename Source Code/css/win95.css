@@ -283,6 +283,37 @@
     border-bottom: 1px solid var(--win95-highlight);
 }
 
+.start-menu-item-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.start-sub-menu {
+    position: absolute;
+    left: 100%;
+    top: -2px;
+    width: 200px;
+    background-color: var(--win95-surface);
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    z-index: 100000;
+
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-bottom: 2px solid var(--win95-dark-shadow);
+    border-right: 2px solid var(--win95-dark-shadow);
+}
+
+.start-sub-menu.hidden {
+    display: none;
+}
+
+.start-menu-item-container:hover .start-sub-menu {
+    display: flex;
+}
+
 
 /* ===========================================================
    TASKBAR
