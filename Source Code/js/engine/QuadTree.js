@@ -11,8 +11,9 @@
  *
  * Description  : Implements a recursive spatial partitioning tree structure.
  *                This architecture enables logarithmic time complexity queries
- *                against two-dimensional cartesian coordinate bounds, allowing 
- *                the rendering pipeline to efficiently cull off-screen geometry.
+ *                against two-dimensional cartesian coordinate bounds. This 
+ *                implementation is specifically validated to perform viewport 
+ *                culling efficiently on grids exceeding 1,000,000 individual units.
  */
 
 

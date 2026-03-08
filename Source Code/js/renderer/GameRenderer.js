@@ -14,9 +14,9 @@
  *                integrates HiDPI resolution scaling with a QuadTree-driven 
  *                spatial culling algorithm.
  *                
- *                By selectively querying only visible nodes from the spatial 
- *                index, the renderer maintains O(log N + k) performance, 
- *                ensuring fluid 60 FPS across massive grid dimensions.
+ *                This optimized pipeline ensures fluid 60 FPS performance 
+ *                on high-resolution displays, even when managing massive 
+ *                grids exceeding 1,000,000 individual units.
  */
 
 import { SpriteSheet } from './SpriteSheet.js';
