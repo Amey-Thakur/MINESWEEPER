@@ -325,9 +325,10 @@ function handleGameOver(fatalIndex) {
     // Let the renderer selectively know exactly WHICH index blew us up
     renderer.fatalIndex = fatalIndex;
 
-    // Automatically violently unveil everything!
     for (let i = 0; i < shadowBoard.totalCells; i++) {
-        shadowBoard.setRevealed(i);
+        if (shadowBoard.isMine(i) || shadowBoard.isFlagged(i)) {
+            shadowBoard.setRevealed(i);
+        }
     }
 }
 

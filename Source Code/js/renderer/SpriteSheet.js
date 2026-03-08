@@ -80,8 +80,8 @@ export class SpriteSheet {
         // 1: Empty (Sunken/Flat)
         this.drawFlat(1 * CELL_SIZE);
 
-        // 2: Mine (All revealed mines red bg as requested)
-        this.drawFlat(2 * CELL_SIZE, '#ff0000');
+        // 2: Mine (Standard grey background)
+        this.drawFlat(2 * CELL_SIZE);
         this.drawMine(2 * CELL_SIZE);
 
         // 3: Flag
@@ -92,10 +92,9 @@ export class SpriteSheet {
         this.drawBevel(4 * CELL_SIZE, true);
         this.drawText(4 * CELL_SIZE, '?', '#000000');
 
-        // 5: Red Mine (The one that exploded - with cross as requested)
+        // 5: Red Mine (The one the user clicked)
         this.drawFlat(5 * CELL_SIZE, '#ff0000');
         this.drawMine(5 * CELL_SIZE);
-        this.drawCross(5 * CELL_SIZE);
 
         // 6: Crossed Mine (Wrongly flagged)
         this.drawFlat(6 * CELL_SIZE);
