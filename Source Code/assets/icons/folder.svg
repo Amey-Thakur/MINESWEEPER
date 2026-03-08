@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Folder: Body -->
+  <path d="M4 10h10l2 2h12v14H4z" fill="#ffff00" stroke="#000" stroke-width="0.5" />
+  <path d="M4 10h10l2 2h12v1" fill="#fff" fill-opacity="0.3" />
+  <path d="M4 10h1v16H4z" fill="#fff" fill-opacity="0.3" />
+  
+  <!-- Folder: Tab -->
+  <path d="M4 8h6v2H4z" fill="#ffff00" stroke="#000" stroke-width="0.5" />
+</svg>

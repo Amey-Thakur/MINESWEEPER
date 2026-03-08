@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Window Outline -->
+  <rect x="4" y="8" width="24" height="18" fill="#c0c0c0" />
+  <path d="M4 8h24v1H4z" fill="#fff" />
+  <path d="M4 8h1v18H4z" fill="#fff" />
+  <path d="M4 25h24v1H4z" fill="#000" />
+  <path d="M27 8h1v18h-1z" fill="#000" />
+  
+  <!-- Title Bar -->
+  <rect x="6" y="10" width="20" height="3" fill="#000080" />
+  
+  <!-- "Folder" / "Program" icon inside -->
+  <rect x="8" y="15" width="8" height="6" fill="#ffff00" stroke="#000" stroke-width="0.5" />
+  
+  <!-- "Execution" cursor/spark -->
+  <path d="M20 20l4-4M20 16l4 4" stroke="#ff0000" stroke-width="1.5" />
+</svg>
