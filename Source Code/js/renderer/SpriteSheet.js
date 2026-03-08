@@ -149,7 +149,7 @@ export class SpriteSheet {
         const vW = isOne ? 82.256 : 117.509;
         const vH = 117.509;
 
-        const scale = (CELL_SIZE * 0.55) / vH; // 55% of cell height for numbers
+        const scale = (CELL_SIZE * 0.42) / vH; // 42% of cell height for numbers
         const offsetX = x + (CELL_SIZE - vW * scale) / 2;
         const offsetY = (CELL_SIZE - vH * scale) / 2;
 
@@ -163,8 +163,9 @@ export class SpriteSheet {
 
     drawMine(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.75) / 117.509;
-        const offset = (CELL_SIZE - 117.509 * scale) / 2;
+        // The new path goes from roughly 0 to 110 in height
+        const scale = (CELL_SIZE * 0.55) / 110;
+        const offset = (CELL_SIZE - 110 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
@@ -183,9 +184,10 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
-        // Flag SVG native size is roughly based on 444 viewport but content is smaller
-        const scale = (CELL_SIZE * 0.75) / 444.127;
-        const offset = (CELL_SIZE - 444.127 * scale) / 2;
+        // The new flag path has a height of 400px
+        // The new flag path has a height of 400px (400vh in classic terms)
+        const scale = (CELL_SIZE * 0.55) / 400;
+        const offset = (CELL_SIZE - 400 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
@@ -206,8 +208,8 @@ export class SpriteSheet {
 
     drawCross(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.75) / 117.509; // Match mine scale
-        const offset = (CELL_SIZE - 117.509 * scale) / 2;
+        const scale = (CELL_SIZE * 0.55) / 110; // Match mine scale
+        const offset = (CELL_SIZE - 110 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
