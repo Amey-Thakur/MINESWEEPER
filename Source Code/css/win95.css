@@ -311,7 +311,12 @@
 }
 
 .start-menu-item-container:hover .start-sub-menu {
-    display: flex;
+    display: flex !important;
+}
+
+.start-menu-item-container:hover .start-menu-item {
+    background-color: var(--win95-menu-highlight);
+    color: var(--win95-menu-hl-text);
 }
 
 
