@@ -97,6 +97,7 @@ export function initMenus(callbacks) {
         if (smNewGame) {
             smNewGame.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
+                resetStartMenu();
                 if (callbacks.onNew) callbacks.onNew();
             });
         }
@@ -128,7 +129,7 @@ export function initMenus(callbacks) {
         if (smAboutTrigger) {
             smAboutTrigger.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
-                if (smHelpSub) smHelpSub.classList.add('hidden');
+                resetStartMenu();
                 if (callbacks.onAbout) callbacks.onAbout();
             });
         }
@@ -137,7 +138,7 @@ export function initMenus(callbacks) {
         if (smHowToPlayTrigger) {
             smHowToPlayTrigger.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
-                if (smHelpSub) smHelpSub.classList.add('hidden');
+                resetStartMenu();
                 showHowToPlay();
             });
         }
@@ -146,6 +147,7 @@ export function initMenus(callbacks) {
         if (smShutdown) {
             smShutdown.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
+                resetStartMenu();
                 triggerShutdown();
             });
         }
@@ -154,7 +156,9 @@ export function initMenus(callbacks) {
         const smItems = startMenu.querySelectorAll('.start-menu-item');
         smItems.forEach(item => {
             item.addEventListener('click', () => {
+                if (item.id === 'sm-help') return; // Handled separately
                 startMenu.classList.add('hidden');
+                resetStartMenu();
             });
         });
     }
