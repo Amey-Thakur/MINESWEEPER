@@ -35,14 +35,14 @@
  * Each module is a plain ES6 module with no external dependencies.
  */
 
-
-// -------------------------------------------------------
-// Module imports (these will be created in later phases)
-// -------------------------------------------------------
-// import { BoardEngine } from './engine/BoardEngine.js';
-// import { GameRenderer } from './renderer/GameRenderer.js';
-// import { UIController } from './ui/UIController.js';
-
+import { UIController } from './ui/UIController.js';
+import { WindowDragger } from './ui/WindowDragger.js';
+import { GameRenderer } from './renderer/GameRenderer.js';
+import { QuadTree, Rectangle } from './engine/QuadTree.js';
+import { BoardEngine } from './engine/BoardEngine.js';
+import { CELL_SIZE } from './constants.js';
+import { startTimer, stopTimer, resetTimer } from './ui/TimerController.js';
+import { initMenu } from './ui/MenuController.js';
 
 // -------------------------------------------------------
 // Constants
@@ -55,8 +55,8 @@ const DIFFICULTY = {
 };
 
 const GAME_STATE = {
-    IDLE: 'idle',      // Before the first click
-    PLAYING: 'playing',  // Timer is running
+    IDLE: 'idle',
+    PLAYING: 'playing',
     WON: 'won',
     LOST: 'lost',
 };
@@ -67,7 +67,6 @@ const SMILEY = {
     WON: '😎',
     LOST: '💀',
 };
-
 
 // -------------------------------------------------------
 // DOM references
@@ -80,11 +79,9 @@ const dom = {
     timer: document.getElementById('timer'),
     smiley: document.getElementById('smiley-face'),
     smileyBtn: document.getElementById('smiley-button'),
-    statusText: document.getElementById('status-text'),
-    statusSeed: document.getElementById('status-seed'),
-    clock: document.getElementById('taskbar-clock'),
+    window: document.getElementById('game-window'),
+    titleBar: document.getElementById('title-bar'),
 };
-
 
 // -------------------------------------------------------
 // Application state
@@ -92,332 +89,241 @@ const dom = {
 
 let gameState = GAME_STATE.IDLE;
 let currentDifficulty = { ...DIFFICULTY.BEGINNER };
-let currentSeed = null;
-let timerInterval = null;
-let elapsedSeconds = 0;
-
-
-// -------------------------------------------------------
-// Taskbar clock
-//
-// Updates the time display in the taskbar every second.
-// Uses the system locale for formatting.
-// -------------------------------------------------------
-
-function updateClock() {
-    const now = new Date();
-    dom.clock.textContent = now.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-    });
-}
-
-setInterval(updateClock, 1000);
-updateClock();
-
+let ui = new UIController(dom);
+let dragger = new WindowDragger(dom.window, dom.titleBar);
+let renderer = null;
+let boardWorker = null;
+let quadTree = null;
+let shadowBoard = null;
 
 // -------------------------------------------------------
-// LCD counter formatting
-//
-// Pads a number to 3 digits for the mine counter and timer.
-// Negative numbers show a minus sign and 2 digits (e.g. -05).
+// Initialization
 // -------------------------------------------------------
 
-function formatLCD(value) {
-    if (value < 0) {
-        return '-' + String(Math.abs(value)).padStart(2, '0');
-    }
-    return String(Math.min(value, 999)).padStart(3, '0');
-}
+function init() {
+    initMenu();
 
-
-// -------------------------------------------------------
-// Timer controls
-// -------------------------------------------------------
-
-function startTimer() {
-    if (timerInterval) return;
-
-    elapsedSeconds = 0;
-    dom.timer.textContent = formatLCD(0);
-
-    timerInterval = setInterval(() => {
-        elapsedSeconds++;
-        dom.timer.textContent = formatLCD(elapsedSeconds);
-    }, 1000);
-}
-
-function stopTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-    }
-}
-
-function resetTimer() {
-    stopTimer();
-    elapsedSeconds = 0;
-    dom.timer.textContent = formatLCD(0);
-}
-
-
-// -------------------------------------------------------
-// Menu system
-//
-// Clicking a menu label toggles its dropdown. Clicking
-// anywhere else closes all open menus.
-// -------------------------------------------------------
-
-const menuItems = document.querySelectorAll('.menu-item');
-
-menuItems.forEach((item) => {
-    const label = item.querySelector('.menu-label');
-
-    label.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const wasActive = item.classList.contains('active');
-
-        // Close all menus first
-        menuItems.forEach((m) => m.classList.remove('active'));
-
-        // Toggle the clicked one
-        if (!wasActive) {
-            item.classList.add('active');
-        }
-    });
-});
-
-// Close menus on outside click
-document.addEventListener('click', () => {
-    menuItems.forEach((m) => m.classList.remove('active'));
-});
-
-
-// -------------------------------------------------------
-// Menu actions
-// -------------------------------------------------------
-
-document.getElementById('menu-new').addEventListener('click', () => {
-    newGame(currentDifficulty, currentSeed);
-});
-
-document.getElementById('menu-beginner').addEventListener('click', () => {
-    currentDifficulty = { ...DIFFICULTY.BEGINNER };
-    newGame(currentDifficulty);
-});
-
-document.getElementById('menu-intermediate').addEventListener('click', () => {
-    currentDifficulty = { ...DIFFICULTY.INTERMEDIATE };
-    newGame(currentDifficulty);
-});
-
-document.getElementById('menu-expert').addEventListener('click', () => {
-    currentDifficulty = { ...DIFFICULTY.EXPERT };
-    newGame(currentDifficulty);
-});
-
-document.getElementById('menu-custom').addEventListener('click', () => {
-    showDialog('custom-dialog');
-});
-
-document.getElementById('menu-seed').addEventListener('click', () => {
-    showDialog('seed-dialog');
-});
-
-document.getElementById('menu-about').addEventListener('click', () => {
-    showDialog('about-dialog');
-});
-
-document.getElementById('menu-how-to-play').addEventListener('click', () => {
-    alert(
-        'How to Play Minesweeper:\n\n' +
-        '- Left-click to reveal a cell.\n' +
-        '- Right-click to place or remove a flag.\n' +
-        '- Numbers show how many mines are adjacent.\n' +
-        '- Reveal all non-mine cells to win!\n\n' +
-        'Tip: Use the Game menu to change difficulty or enter a seed.'
-    );
-});
-
-
-// -------------------------------------------------------
-// Dialog management
-//
-// Shows/hides the overlay and the requested dialog box.
-// -------------------------------------------------------
-
-const overlay = document.getElementById('dialog-overlay');
-
-function showDialog(dialogId) {
-    overlay.classList.remove('hidden');
-    document.getElementById(dialogId).classList.remove('hidden');
-}
-
-function hideAllDialogs() {
-    overlay.classList.add('hidden');
-    document.querySelectorAll('.win95-dialog').forEach((d) => {
-        d.classList.add('hidden');
-    });
-}
-
-// Close buttons on each dialog
-document.getElementById('custom-dialog-close').addEventListener('click', hideAllDialogs);
-document.getElementById('custom-cancel').addEventListener('click', hideAllDialogs);
-document.getElementById('seed-dialog-close').addEventListener('click', hideAllDialogs);
-document.getElementById('seed-cancel').addEventListener('click', hideAllDialogs);
-document.getElementById('about-dialog-close').addEventListener('click', hideAllDialogs);
-document.getElementById('about-ok').addEventListener('click', hideAllDialogs);
-overlay.addEventListener('click', hideAllDialogs);
-
-// Custom dialog OK
-document.getElementById('custom-ok').addEventListener('click', () => {
-    const rows = parseInt(document.getElementById('custom-rows').value, 10);
-    const cols = parseInt(document.getElementById('custom-cols').value, 10);
-    const mines = parseInt(document.getElementById('custom-mines').value, 10);
-
-    // Clamp values to sane ranges
-    const clampedRows = Math.max(9, Math.min(1000, rows || 9));
-    const clampedCols = Math.max(9, Math.min(1000, cols || 9));
-    const maxMines = (clampedRows * clampedCols) - 9; // leave room for first click
-    const clampedMines = Math.max(1, Math.min(maxMines, mines || 1));
-
-    currentDifficulty = { rows: clampedRows, cols: clampedCols, mines: clampedMines };
-    hideAllDialogs();
-    newGame(currentDifficulty);
-});
-
-// Seed dialog OK
-document.getElementById('seed-ok').addEventListener('click', () => {
-    const seed = parseInt(document.getElementById('seed-input').value, 10);
-    currentSeed = seed || null;
-    hideAllDialogs();
-    newGame(currentDifficulty, currentSeed);
-});
-
-
-// -------------------------------------------------------
-// Smiley button resets the game
-// -------------------------------------------------------
-
-dom.smileyBtn.addEventListener('click', () => {
-    newGame(currentDifficulty, currentSeed);
-});
-
-
-// -------------------------------------------------------
-// URL parameter parsing
-//
-// Reads ?seed=42&rows=16&cols=30&mines=99 from the URL
-// so that games can be shared between players.
-// -------------------------------------------------------
-
-function readURLParams() {
-    const params = new URLSearchParams(window.location.search);
-
-    const seed = parseInt(params.get('seed'), 10);
-    if (!isNaN(seed) && seed > 0) {
-        currentSeed = seed;
+    // Check URL parameters for custom shared map specs
+    const config = ui.parseInitialConfig();
+    if (config) {
+        currentDifficulty = { ...config };
     }
 
-    const rows = parseInt(params.get('rows'), 10);
-    const cols = parseInt(params.get('cols'), 10);
-    const mines = parseInt(params.get('mines'), 10);
+    // Attach Smiley Restart
+    dom.smileyBtn.addEventListener('click', () => startNewGame(currentDifficulty));
 
-    if (!isNaN(rows) && !isNaN(cols) && !isNaN(mines)) {
-        currentDifficulty = {
-            rows: Math.max(9, Math.min(1000, rows)),
-            cols: Math.max(9, Math.min(1000, cols)),
-            mines: Math.max(1, Math.min(rows * cols - 9, mines)),
-        };
-    }
+    startNewGame(currentDifficulty, config ? config.seed : null);
 }
 
-
-// -------------------------------------------------------
-// New game
-//
-// Resets everything and starts a fresh board.
-// The actual board creation and rendering will be handled
-// by BoardEngine and GameRenderer once those modules
-// are built in Phases 2-6.
-// -------------------------------------------------------
-
-function newGame(difficulty, seed) {
-    // Reset state
+function startNewGame(difficulty, forcedSeed = null) {
     gameState = GAME_STATE.IDLE;
+    currentDifficulty = { ...difficulty };
+
     resetTimer();
+    ui.updateSmiley(SMILEY.IDLE);
+    ui.updateMineCounter(difficulty.mines, 0);
 
-    // Update UI
-    dom.smiley.textContent = SMILEY.IDLE;
-    dom.mineCounter.textContent = formatLCD(difficulty.mines);
-    dom.statusText.textContent = 'Ready';
-    dom.container.classList.remove('won', 'lost');
+    const seed = forcedSeed !== null ? forcedSeed : Math.floor(Math.random() * 0xffffffff);
+    ui.generateShareLink(difficulty.rows, difficulty.cols, difficulty.mines, seed);
 
-    // Show seed in status bar if one is set
-    if (seed) {
-        dom.statusSeed.textContent = 'Seed: ' + seed;
-    } else {
-        dom.statusSeed.textContent = '';
+    // Instead of using WebWorker for the exact phase, fallback to standard synchronous engine processing
+    // if Workers face CORS issues structurally on github pages locally. 
+    shadowBoard = new BoardEngine(difficulty.rows, difficulty.cols, seed);
+
+    // Setup Spatial Index
+    quadTree = new QuadTree(new Rectangle(0, 0, difficulty.cols, difficulty.rows), 16);
+
+    // Push every single coordinate efficiently into the QuadTree mapping
+    for (let index = 0; index < shadowBoard.totalCells; index++) {
+        const row = Math.floor(index / shadowBoard.cols);
+        const col = index % shadowBoard.cols;
+        quadTree.insert({ row, col, index });
     }
 
-    // Size the canvas to match the board.
-    // Each cell is 24x24 pixels (will be configurable later).
-    const cellSize = 24;
-    const canvas = dom.canvas;
-    canvas.width = difficulty.cols * cellSize;
-    canvas.height = difficulty.rows * cellSize;
+    renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
 
-    // Draw a placeholder grid until the real renderer is hooked up
-    drawPlaceholderGrid(canvas, difficulty, cellSize);
+    bindCanvasEvents();
 
-    console.log(
-        '[Minesweeper] New game:',
-        difficulty.rows + 'x' + difficulty.cols + ',',
-        difficulty.mines, 'mines',
-        seed ? '(seed: ' + seed + ')' : ''
-    );
+    requestAnimationFrame(renderLoop);
 }
 
-
 // -------------------------------------------------------
-// Placeholder grid
-//
-// Draws a simple raised-cell grid on the canvas so there
-// is something visible before the real renderer exists.
-// This will be replaced in Phase 6.
+// Input Handling
 // -------------------------------------------------------
 
-function drawPlaceholderGrid(canvas, difficulty, cellSize) {
-    const ctx = canvas.getContext('2d');
+function getGridPos(e) {
+    const rect = dom.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    for (let row = 0; row < difficulty.rows; row++) {
-        for (let col = 0; col < difficulty.cols; col++) {
-            const x = col * cellSize;
-            const y = row * cellSize;
+    // Apply exact mathematical camera offsets
+    const scale = renderer.camera.zoom;
+    const absX = (x / scale) + renderer.camera.x;
+    const absY = (y / scale) + renderer.camera.y;
 
-            // Cell face
-            ctx.fillStyle = '#c0c0c0';
-            ctx.fillRect(x, y, cellSize, cellSize);
+    const col = Math.floor(absX / CELL_SIZE);
+    const row = Math.floor(absY / CELL_SIZE);
 
-            // Raised bevel: top and left edges (highlight)
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(x, y, cellSize, 2);
-            ctx.fillRect(x, y, 2, cellSize);
+    if (row >= 0 && row < shadowBoard.rows && col >= 0 && col < shadowBoard.cols) {
+        return { row, col, index: shadowBoard.getIndex(row, col) };
+    }
+    return null;
+}
 
-            // Raised bevel: bottom and right edges (shadow)
-            ctx.fillStyle = '#808080';
-            ctx.fillRect(x, y + cellSize - 2, cellSize, 2);
-            ctx.fillRect(x + cellSize - 2, y, 2, cellSize);
+let isMiddleDown = false;
+let lastPanPos = { x: 0, y: 0 };
+
+function bindCanvasEvents() {
+    // Prevent context menu
+    dom.canvas.oncontextmenu = (e) => e.preventDefault();
+
+    // Remove old listeners specifically to prevent duplication caching
+    const newCanvas = dom.canvas.cloneNode(true);
+    dom.canvas.parentNode.replaceChild(newCanvas, dom.canvas);
+    dom.canvas = newCanvas;
+
+    dom.canvas.addEventListener('mousedown', handleMouseDown);
+    dom.canvas.addEventListener('mouseup', handleMouseUp);
+    dom.canvas.addEventListener('mousemove', handleMouseMove);
+    dom.canvas.addEventListener('wheel', handleWheel);
+    dom.canvas.addEventListener('mouseleave', () => ui.updateSmiley(gameState === GAME_STATE.IDLE || gameState === GAME_STATE.PLAYING ? SMILEY.IDLE : (gameState === GAME_STATE.WON ? SMILEY.WON : SMILEY.LOST)));
+}
+
+function handleMouseDown(e) {
+    if (gameState === GAME_STATE.WON || gameState === GAME_STATE.LOST) return;
+
+    if (e.button === 0) { // Left Click
+        ui.updateSmiley(SMILEY.PRESSING);
+    } else if (e.button === 1) { // Middle Click Pan
+        isMiddleDown = true;
+        lastPanPos = { x: e.clientX, y: e.clientY };
+    }
+}
+
+function handleMouseUp(e) {
+    if (e.button === 1) {
+        isMiddleDown = false;
+        return;
+    }
+
+    if (gameState === GAME_STATE.WON || gameState === GAME_STATE.LOST) return;
+
+    ui.updateSmiley(SMILEY.IDLE);
+
+    const pos = getGridPos(e);
+    if (!pos) return;
+
+    if (e.button === 0) { // Left Click = Reveal
+        if (gameState === GAME_STATE.IDLE) {
+            gameState = GAME_STATE.PLAYING;
+            startTimer();
+            shadowBoard.placeMines(currentDifficulty.mines, pos.row, pos.col);
+        }
+
+        const index = pos.index;
+
+        if (!shadowBoard.isRevealed(index) && !shadowBoard.isFlagged(index)) {
+            if (shadowBoard.isMine(index)) {
+                handleGameOver(index);
+            } else {
+                import('./engine/FloodFill.js').then(({ floodFill }) => {
+                    floodFill(shadowBoard, pos.row, pos.col);
+                    checkWinCondition();
+                });
+            }
+        }
+    } else if (e.button === 2) { // Right Click = Flag
+        if (!shadowBoard.isRevealed(pos.index)) {
+            const added = shadowBoard.toggleFlag(pos.index);
+            ui.updateMineCounter(currentDifficulty.mines, shadowBoard.flagsCount);
         }
     }
 }
 
+function handleMouseMove(e) {
+    if (isMiddleDown) {
+        const dx = e.clientX - lastPanPos.x;
+        const dy = e.clientY - lastPanPos.y;
+
+        renderer.camera.pan(dx, dy);
+
+        lastPanPos = { x: e.clientX, y: e.clientY };
+    }
+}
+
+function handleWheel(e) {
+    e.preventDefault();
+
+    const rect = dom.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Scale dynamically
+    const zoomFactor = -e.deltaY > 0 ? 1.1 : 0.9;
+    renderer.camera.setZoom(renderer.camera.zoom * zoomFactor, x, y);
+}
 
 // -------------------------------------------------------
-// Startup
+// State Checking
 // -------------------------------------------------------
 
-readURLParams();
-newGame(currentDifficulty, currentSeed);
+function checkWinCondition() {
+    const nonMines = shadowBoard.totalCells - currentDifficulty.mines;
+    if (shadowBoard.revealedCount === nonMines) {
+        gameState = GAME_STATE.WON;
+        stopTimer();
+        ui.updateSmiley(SMILEY.WON);
+    }
+}
 
-console.log('[Minesweeper] Application loaded.');
+function handleGameOver(fatalIndex) {
+    gameState = GAME_STATE.LOST;
+    stopTimer();
+    ui.updateSmiley(SMILEY.LOST);
+
+    // Let the renderer selectively know exactly WHICH index blew us up
+    renderer.fatalIndex = fatalIndex;
+
+    // Automatically violently unveil everything!
+    for (let i = 0; i < shadowBoard.totalCells; i++) {
+        if (!shadowBoard.isFlagged(i)) shadowBoard.setRevealed(i);
+    }
+}
+
+// -------------------------------------------------------
+// Render Loop
+// -------------------------------------------------------
+
+function renderLoop() {
+    if (renderer) {
+        renderer.render();
+    }
+    requestAnimationFrame(renderLoop);
+}
+
+// Expose strictly standard custom dialog interactions from DOM into Main namespace bounds
+window.setDifficulty = function (type) {
+    if (DIFFICULTY[type]) {
+        startNewGame(DIFFICULTY[type]);
+    } else if (type === 'CUSTOM') {
+        ui.showCustomDialog((customSpec) => {
+            startNewGame({
+                rows: customSpec.rows,
+                cols: customSpec.cols,
+                mines: customSpec.mines
+            });
+        });
+    }
+};
+
+window.solveGame = function () {
+    if (gameState !== GAME_STATE.PLAYING) return;
+    import('./engine/CSPSolver.js').then(({ CSPSolver }) => {
+        const solver = new CSPSolver(shadowBoard);
+        const result = solver.solve();
+        console.log("CSP Solver Safe Cells: ", result.safeCells);
+        console.log("CSP Solver Mines: ", result.mines);
+    });
+};
+
+document.addEventListener('DOMContentLoaded', init);
