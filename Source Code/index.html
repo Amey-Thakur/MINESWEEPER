@@ -62,6 +62,22 @@
        ==================================================== -->
     <div id="desktop" class="win95-desktop">
 
+        <!-- =================== DESKTOP ICONS ================= -->
+        <div class="desktop-icons">
+            <div id="minesweeper-desktop-icon" class="desktop-icon" title="Double click to Open">
+                <div class="icon-img-container">
+                    <span class="desktop-icon-emoji">💣</span>
+                </div>
+                <div class="icon-label">Minesweeper</div>
+            </div>
+            <div id="github-desktop-icon" class="desktop-icon" title="Double click to visit GitHub">
+                <div class="icon-img-container">
+                    <span class="desktop-icon-emoji">🐱</span>
+                </div>
+                <div class="icon-label">GitHub</div>
+            </div>
+        </div>
+
         <!-- =================== START MENU =================
          Hidden by default. Pops up when Start is clicked.
          ================================================= -->
@@ -132,6 +148,14 @@
                 <span class="start-text">Start</span>
             </button>
             <div class="taskbar-divider"></div>
+
+            <!-- =================== TASKBAR APPS ================ -->
+            <div id="taskbar-apps" class="taskbar-apps">
+                <button id="minesweeper-tab" class="taskbar-app-tab active">
+                    <span class="tab-icon">💣</span>
+                    <span class="tab-text">Minesweeper</span>
+                </button>
+            </div>
             <div class="menu-item" id="menu-clock" style="margin-left: auto;">
                 <div id="taskbar-clock" class="win95-clock menu-label"></div>
                 <div class="menu-dropdown clock-dropdown" id="dropdown-clock">

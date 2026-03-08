@@ -126,6 +126,7 @@ function init() {
         onClock24NoSec: () => setClockFormat('24h-nosec', dom.clock)
     });
     initClock(dom.clock);
+    ui.initWindowControls();
 
     // Check URL parameters for custom shared map specs
     const config = ui.parseInitialConfig();

@@ -115,4 +115,108 @@ export class UIController {
         dialog.style.display = 'flex';
         overlay.style.display = 'block';
     }
+
+    // -------------------------------------------------------
+    // Window Management
+    // -------------------------------------------------------
+
+    initWindowControls() {
+        const win = this.dom.window;
+        const minimizeBtn = document.getElementById('btn-minimize');
+        const maximizeBtn = document.getElementById('btn-maximize');
+        const closeBtn = document.getElementById('btn-close');
+        const taskbarTab = document.getElementById('minesweeper-tab');
+        const desktopIcon = document.getElementById('minesweeper-desktop-icon');
+        const githubIcon = document.getElementById('github-desktop-icon');
+
+        const toggleMinimize = () => {
+            const isMinimized = win.classList.contains('minimized');
+            if (isMinimized) {
+                win.classList.remove('minimized');
+                taskbarTab.classList.add('active');
+            } else {
+                win.classList.add('minimized');
+                taskbarTab.classList.remove('active');
+            }
+        };
+
+        const toggleMaximize = () => {
+            const isMaximized = win.classList.contains('maximized');
+            if (isMaximized) {
+                win.classList.remove('maximized');
+                maximizeBtn.textContent = '□';
+            } else {
+                win.classList.add('maximized');
+                maximizeBtn.textContent = '❐';
+            }
+        };
+
+        const closeWindow = () => {
+            win.classList.add('minimized');
+            taskbarTab.style.display = 'none';
+        };
+
+        const openWindow = () => {
+            win.classList.remove('minimized');
+            taskbarTab.style.display = 'flex';
+            taskbarTab.classList.add('active');
+        };
+
+        const openGithub = () => {
+            window.open('https://github.com/Amey-Thakur', '_blank');
+        };
+
+        if (minimizeBtn) minimizeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMinimize(); });
+        if (maximizeBtn) maximizeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(); });
+        if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeWindow(); });
+        if (taskbarTab) taskbarTab.addEventListener('click', toggleMinimize);
+
+        // Selection / DblClick for MINESWEEPER
+        if (desktopIcon) {
+            desktopIcon.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                openWindow();
+            });
+
+            let lastMinesweeperClick = 0;
+            desktopIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const now = Date.now();
+                if (now - lastMinesweeperClick < 300) {
+                    openWindow();
+                }
+                lastMinesweeperClick = now;
+
+                // Deselect all others
+                document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+                desktopIcon.classList.add('selected');
+            });
+        }
+
+        // Selection / DblClick for GITHUB
+        if (githubIcon) {
+            githubIcon.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                openGithub();
+            });
+
+            let lastGithubClick = 0;
+            githubIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const now = Date.now();
+                if (now - lastGithubClick < 300) {
+                    openGithub();
+                }
+                lastGithubClick = now;
+
+                // Deselect all others
+                document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+                githubIcon.classList.add('selected');
+            });
+        }
+
+        document.getElementById('desktop').addEventListener('click', () => {
+            document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+        });
+    }
 }
