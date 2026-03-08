@@ -58,14 +58,14 @@ export class SpriteSheet {
         ];
 
         this.numberPaths = {
-            1: "M0 105.758v-11.75H23.502V47.003H0V35.253H11.751V23.502H23.502V11.75H35.253V0H58.755v94.007H82.256v23.502H0Z",
-            2: "M0 99.883V82.256H11.751V70.505H35.253v-11.75H58.755V47.004H82.256V23.502H35.253V35.253H0V11.75H11.751V0h94.007V11.751H117.51v35.253H105.758V58.755H94.007v11.75H70.505V82.256H47.004V94.007h70.505v23.502H0Z",
-            3: "M0 105.758v-11.75h82.256V70.505H35.253V47.003h47.003V23.502H0V0h105.759V11.751h11.75v35.253H105.758V70.505H117.51v35.253H105.758V117.51H0Z",
-            4: "M70.505 94.007V70.505H0V47.004H11.751V23.502H23.502V0h35.253V23.502H47.004V47.004H70.505V0h35.253v47.004H117.51V70.505H105.758v47.004H70.505Z",
-            5: "M0 105.758v-11.75h82.256V70.505H0V0h117.509V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H0Z",
-            6: "M11.75 111.634v-5.876H0V11.751H11.751V0h94.007V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H11.751Zm70.506-29.378v-11.75H35.253V94.006h47.003z",
-            7: "M47.004 105.758v-11.75H58.755V70.505h11.75V47.003H82.256V23.502H0V0h117.509v47.004H105.758V70.505H94.007v23.502H82.256v23.502H47.004Z",
-            8: "M11.75 111.634v-5.876H0V70.505H11.751V47.004H0V11.75H11.751V0h94.007V11.751H117.51v35.253H105.758V70.505H117.51v35.253H105.758V117.51H11.751zm70.506-29.378v-11.75H35.253V94.006h47.003zm0-47.003V23.502H35.253V47.004h47.003z"
+            1: "M35 117h14V7H35v110z M35 7h-7l-7 7v14h7v-7l7-7V7z",
+            2: "M7 117h103v-14H21v-35l77-49V7H7v14h77v7L7 77v40z",
+            3: "M7 117h96V7H7v14h77v28H21v14h63v35H7v19z",
+            4: "M77 117h14V7H77v56H21V7H7v70h70v40z",
+            5: "M103 117H7V77h82V63H7V7h96v14H21v28h82v68z",
+            6: "M7 117h96V63H21v-7h82V7H7v110z M21 103v-26h68v26H21z",
+            7: "M7 21V7h96v14L35 117H21l68-96H7z",
+            8: "M7 117h96V7H7v110z M21 21h68v35H21V21z M21 70h68v33H21V70z"
         };
 
         this.generateSprites();
@@ -145,12 +145,17 @@ export class SpriteSheet {
         const pathData = this.numberPaths[num];
         if (!pathData) return;
 
-        // Number 1 has a narrower viewport than the others
-        const vW = (num === 1) ? 82.256 : 117.509;
+        // Perfect visual centering calculation
+        // vH is consistent for all, but vW varies per digit character
         const vH = 117.509;
+        let vW = 117.509; // Default
 
-        const scaleBound = (CELL_SIZE * 0.75); // Target 75% of cell
-        const scale = scaleBound / vH;
+        if (num === 1) vW = 70; // Narrow stem
+        if (num === 4) vW = 100;
+        if (num === 7) vW = 110;
+
+        const targetSize = CELL_SIZE * 0.70; // Slightly smaller for cleaner look
+        const scale = targetSize / vH;
 
         const drawW = vW * scale;
         const drawH = vH * scale;
@@ -194,16 +199,19 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
-        const vW = 355.303;
+        // The flag content is roughly located between X=0 and X=180 in transformed space
+        // Total transformed width is about 400. We need to center the 0-180 range.
+        const vW = 180;
         const vH = 444.127;
 
         const targetSize = CELL_SIZE * 0.75;
         const scale = targetSize / vH;
 
         const drawW = vW * scale;
-        const drawH = vH * scale;
+        const drawH = targetSize;
 
-        const offsetX = x + (CELL_SIZE - drawW) / 2;
+        // Push slighty right (+1px) to visually offset the flag pennant overhang
+        const offsetX = x + (CELL_SIZE - drawW) / 2 + 1;
         const offsetY = (CELL_SIZE - drawH) / 2;
 
         ctx.save();
