@@ -1,3 +1,3 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="120" viewBox="0 0 100 120" shape-rendering="crispEdges">
-  <path fill="#008000" d="M 0 0 H 100 V 60 H 20 V 100 H 100 V 120 H 0 V 40 H 80 V 20 H 0 Z" />
+  <path fill="#008000" d="M 10 120 H 90 V 100 H 40 L 90 50 V 0 H 10 V 20 H 60 L 10 70 Z" />
 </svg>

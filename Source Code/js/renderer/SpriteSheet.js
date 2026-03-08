@@ -58,14 +58,14 @@ export class SpriteSheet {
         ];
 
         this.numberPaths = {
-            1: "M 20 20 H 60 V 100 H 80 V 120 H 20 V 100 H 40 V 40 H 20 V 20 Z",
-            2: "M 0 0 H 100 V 60 H 20 V 100 H 100 V 120 H 0 V 40 H 80 V 20 H 0 Z",
-            3: "M 0 0 H 100 V 120 H 0 V 100 H 80 V 70 H 20 V 50 H 80 V 20 H 0 Z",
-            4: "M 0 0 V 60 H 80 V 120 H 100 V 0 H 80 V 40 H 20 V 0 Z",
-            5: "M 0 0 H 100 V 20 H 20 V 40 H 100 V 120 H 0 V 100 H 80 V 60 H 0 Z",
-            6: "M 0 0 V 120 H 100 V 40 H 20 V 20 H 100 V 0 Z M 20 60 H 80 V 100 H 20 Z",
-            7: "M 0 0 H 100 V 120 H 80 V 20 H 0 Z",
-            8: "M 0 0 V 120 H 100 V 0 Z M 20 20 H 80 V 50 H 20 Z M 20 70 H 80 V 100 H 20 Z"
+            1: "M 10 120 V 100 H 40 V 40 H 20 V 20 H 40 V 0 H 60 V 100 H 90 V 120 Z",
+            2: "M 10 120 H 90 V 100 H 40 L 90 50 V 0 H 10 V 20 H 60 L 10 70 Z",
+            3: "M 10 0 H 90 V 120 H 10 V 100 H 70 V 70 H 30 V 50 H 70 V 20 H 10 Z",
+            4: "M 70 120 H 90 V 0 H 70 L 10 60 V 80 H 70 Z M 70 20 V 60 H 30 Z",
+            5: "M 90 0 H 10 V 70 H 90 V 120 H 10 V 100 H 70 V 50 H 30 V 20 H 90 Z",
+            6: "M 10 0 H 90 V 20 H 30 V 50 H 90 V 120 H 10 Z M 30 70 V 100 H 70 V 70 Z",
+            7: "M 10 0 H 90 L 50 120 H 30 L 70 20 H 10 Z",
+            8: "M 10 0 H 90 V 120 H 10 Z M 30 20 V 50 H 70 V 20 Z M 30 70 V 100 H 70 V 70 Z"
         };
 
         this.generateSprites();
