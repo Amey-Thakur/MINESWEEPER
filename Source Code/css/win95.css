@@ -734,6 +734,7 @@
 .hidden {
     display: none !important;
 }
+
 .win95-link {
     color: #0000ee;
     text-decoration: underline;
@@ -755,7 +756,7 @@
 .desktop-icons {
     position: absolute;
     top: 20px;
-    right: 20px;
+    left: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -777,8 +778,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
     margin-bottom: 4px;
+}
+
+.icon-img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
 }
 
 .icon-label {
@@ -855,4 +861,9 @@
     max-width: none !important;
     max-height: none !important;
     transform: none !important;
+}
+.tab-icon-img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
 }

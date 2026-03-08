@@ -143,6 +143,15 @@ export function initMenus(callbacks) {
             });
         }
 
+        const smGithub = document.getElementById('sm-github');
+        if (smGithub) {
+            smGithub.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                resetStartMenu();
+                window.open('https://github.com/Amey-Thakur', '_blank');
+            });
+        }
+
         const smShutdown = document.getElementById('sm-shutdown');
         if (smShutdown) {
             smShutdown.addEventListener('click', () => {
