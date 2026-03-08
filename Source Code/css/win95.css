@@ -243,6 +243,13 @@
     padding: 2px;
 }
 
+.tab-icon-img,
+.icon-img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
 .start-menu-item {
     display: flex;
     align-items: center;
