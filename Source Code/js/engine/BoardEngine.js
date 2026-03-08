@@ -9,11 +9,12 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Core game state engine utilizing a flat Uint8Array to manage
- *                the board grid. Bit-packing stores mine status, reveal state,
- *                flag state, and neighbor counts in a single byte per cell.
- *                This cache-friendly abstraction dramatically cuts memory
- *                overhead and lookup times for large and massive grids.
+ * Description  : Core state manager for the board grid. Implements a contiguous 
+ *                Uint8Array to achieve explicit memory alignment. Individual cell 
+ *                state variables (mine presence, revealed status, flag assertion, 
+ *                and local neighbor count) are compressed into single bytes via 
+ *                strict bit mask logic. This approach mitigates garbage collection 
+ *                pressure when manipulating theoretically boundless Cartesian grids.
  */
 
 import { SeedRNG } from './SeedRNG.js';
@@ -121,8 +122,8 @@ export class BoardEngine {
     placeMines(minesToPlace, ignoreRow, ignoreCol) {
         const safeIndices = new Set();
 
-        // Classic Minesweeper rule: The first click and its 8 neighbors are NEVER mines.
-        // This guarantees a '0' on first click for a better opening.
+        // Enforce the standard opening constraint. The initial interactive coordinate 
+        // and its immediate contiguous neighborhood guarantee a completely safe generation.
         this.forEachNeighbor(ignoreRow, ignoreCol, (r, c, nIndex) => {
             safeIndices.add(nIndex);
         });
@@ -141,8 +142,8 @@ export class BoardEngine {
                 const col = index % this.cols;
 
                 this.forEachNeighbor(row, col, (r, c, nIndex) => {
-                    // We increment EVERY neighbor. If the neighbor is or becomes a mine,
-                    // it doesn't matter because the renderer skips the count for mine cells.
+                    // Increment numeric count indiscriminately on all valid neighbor coordinates.
+                    // Visual rendering layer bypasses numeric outputs on terminal failure nodes.
                     this.incrementNeighbor(nIndex);
                 });
             }
