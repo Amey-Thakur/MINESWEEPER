@@ -211,14 +211,49 @@ export class SpriteSheet {
     }
 
     drawCross(x) {
-        this.ctx.strokeStyle = '#ff0000';
-        this.ctx.lineWidth = 2;
-        this.ctx.beginPath();
-        this.ctx.moveTo(x + 4, 4);
-        this.ctx.lineTo(x + CELL_SIZE - 4, CELL_SIZE - 4);
-        this.ctx.moveTo(x + CELL_SIZE - 4, 4);
-        this.ctx.lineTo(x + 4, CELL_SIZE - 4);
-        this.ctx.stroke();
+        // drawMine(x) is already called before this in generateSprites for ID 6
+        const ctx = this.ctx;
+        const scale = CELL_SIZE / 117.509;
+
+        ctx.save();
+        ctx.translate(x, 0);
+        ctx.scale(scale, scale);
+
+        ctx.fillStyle = "red";
+
+        const paths = [
+            "M0 0h9.048v9.048H0z", "M17.628 9.048h9.516v9.048h-9.516z", "M26.395 18.096h9.796v9.048h-9.796z",
+            "M27.144 26.536h9.048v9.656h-9.048z", "M35.35 27.144h9.89v9.048h-9.89z", "M45.124 44.632h9.163v9.987h-9.163z",
+            "M53.68 45.24h9.656v9.048H53.68z", "M81.327 72.384h9.037v9.703h-9.037z", "M72.383 71.458h9.048v9.974h-9.048z",
+            "M54.288 53.633h9.048v9.703h-9.048z", "M62.727 54.288h9.656v9.048h-9.656z", "M63.336 62.542h9.048v9.842h-9.048z",
+            "M71.722 63.336h9.709v9.048h-9.709z", "M81.316 81.316h9.048v9.048h-9.048z", "M89.99 81.316h9.422v9.048H89.99z",
+            "M90.364 89.195h9.048v10.217h-9.048z", "M98.71 90.364h9.75v9.048h-9.75z", "M99.412 98.477h9.048v9.983h-9.048z",
+            "M107.712 99.412h9.796v9.048h-9.796z", "M108.46 107.712h9.048v9.796h-9.048z", "M44.678 36.192h9.609v9.048h-9.609z",
+            "M36.192 35.116h9.048V45.24h-9.048z", "M18.096 17.769h9.048v9.375h-9.048z", "M9.048 8.767h9.048v9.329H9.048z",
+            "M9.048 0h9.048v9.048H9.048z"
+        ];
+
+        paths.forEach(p => ctx.fill(new Path2D(p)));
+
+        // Mirror paths (scale -1 1)
+        ctx.save();
+        ctx.translate(117.509, 0);
+        ctx.scale(-1, 1);
+        const mirrorPaths = [
+            "M0 0h9.048v9.048H0z", "M17.628 9.048h9.516v9.048h-9.516z", "M26.395 18.096h9.796v9.048h-9.796z",
+            "M27.144 26.536h9.048v9.656h-9.048z", "M35.35 27.144h9.89v9.048h-9.89z", "M45.124 44.632h9.163v9.987h-9.163z",
+            "M53.68 45.24h9.656v9.048h-9.656z", "M81.327 72.384h9.037v9.703h-9.037z", "M72.383 71.458h9.048v9.974h-9.048z",
+            "M54.288 53.633h9.048v9.703h-9.048z", "M62.727 54.288h9.656v9.048h-9.656z", "M63.336 62.542h9.048v9.842h-9.048z",
+            "M71.722 63.336h9.709v9.048h-9.709z", "M81.316 81.316h9.048v9.048h-9.048z", "M89.99 81.316h9.422v9.048h-9.422z",
+            "M90.364 89.195h9.048v10.217h-9.048z", "M98.71 90.364h9.75v9.048h-9.75z", "M99.412 98.477h9.048v9.983h-9.048z",
+            "M107.712 99.412H0v9.048h-9.796z", "M108.46 107.712H0v9.796h-9.048z", "M44.678 36.192h9.609v9.048h-9.609z",
+            "M36.192 35.116h9.048V45.24h-9.048z", "M18.096 17.769h9.048v9.375h-9.048z", "M9.048 8.767h9.048v9.329h-9.048z",
+            "M9.048 0h9.048v9.048h-9.048z"
+        ];
+        mirrorPaths.forEach(p => ctx.fill(new Path2D(p)));
+        ctx.restore();
+
+        ctx.restore();
     }
 
     // Retrieve a specific tile directly

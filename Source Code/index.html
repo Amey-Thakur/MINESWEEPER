@@ -93,7 +93,8 @@
                 <div class="sm-divider"></div>
                 <button class="start-menu-item" id="sm-author"
                     onclick="window.open('https://github.com/Amey-Thakur', '_blank')">
-                    <span class="sm-icon">👨🏻‍💻</span>
+                    <img src="./assets/icons/stats.svg" class="tab-icon-img" alt=""
+                        style="margin-right: 8px; filter: invert(0.5);">
                     <span class="sm-text">Amey Thakur (GitHub)</span>
                 </button>
                 <button class="start-menu-item" id="sm-documents"
@@ -198,7 +199,11 @@
                         <button class="menu-option" id="menu-intermediate">Intermediate (16x16, 40 mines)</button>
                         <button class="menu-option" id="menu-expert">Expert (30x16, 99 mines)</button>
                         <div class="menu-separator"></div>
-                        <button class="menu-option" id="menu-custom">Custom...</button>
+                        <button class="menu-option" id="menu-custom">
+                            <img src="./assets/icons/plus.svg" class="menu-icon-img" alt=""
+                                style="width:12px; height:12px; margin-right:6px;">
+                            Custom...
+                        </button>
                         <div class="menu-separator"></div>
                         <button class="menu-option" id="menu-seed">Enter Seed...</button>
                     </div>
@@ -206,7 +211,11 @@
                 <div class="menu-item" id="menu-help">
                     <span class="menu-label">Help</span>
                     <div class="menu-dropdown" id="dropdown-help">
-                        <button class="menu-option" id="menu-about">About Minesweeper</button>
+                        <button class="menu-option" id="menu-about">
+                            <img src="./assets/icons/stats.svg" class="menu-icon-img" alt=""
+                                style="width:12px; height:12px; margin-right:6px;">
+                            About Minesweeper
+                        </button>
                         <button class="menu-option" id="menu-how-to-play">How to Play</button>
                     </div>
                 </div>
@@ -214,11 +223,19 @@
 
             <!-- Game header: mine counter on the left, smiley in the middle, timer on the right -->
             <div id="game-header" class="game-header">
-                <div id="mine-counter" class="lcd-counter" aria-label="Remaining mines">000</div>
+                <div id="mine-counter" class="lcd-counter" aria-label="Remaining mines">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                </div>
                 <button id="smiley-button" class="smiley-button" aria-label="New game">
                     <img id="smiley-icon" src="./assets/icons/smiley_normal.svg" alt="Smiley">
                 </button>
-                <div id="timer" class="lcd-counter" aria-label="Elapsed time">000</div>
+                <div id="timer" class="lcd-counter" aria-label="Elapsed time">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                    <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
+                </div>
             </div>
 
             <!-- The canvas lives here. All cell rendering is handled in JS. -->
@@ -294,7 +311,8 @@
             <button class="title-btn close-btn" id="about-dialog-close" aria-label="Close">x</button>
         </div>
         <div class="win95-dialog-body about-body" style="width: 360px;">
-            <h2 style="font-size: 18px; margin: 0 0 10px 0;">Minesweeper Engine by Amey Thakur</h2>
+            <img src="./assets/icons/stats.svg" style="width:48px; height:48px; float:right; margin: 0 0 10px 10px;">
+            <h2 style="font-size: 18px; margin: 0 0 10px 0;">Minesweeper Engine</h2>
 
             <div class="sm-divider" style="margin: 10px 0;"></div>
 
@@ -347,11 +365,19 @@
         <div class="win95-dialog-body" style="width: 300px;">
             <p style="margin-bottom: 15px;">The goal of the game is to uncover all the squares that do not contain
                 mines.</p>
-            <ul style="margin-left: 20px; margin-bottom: 15px;">
-                <li><strong>Left-Click:</strong> Reveal a square.</li>
-                <li><strong>Right-Click:</strong> Plant a flag on a suspected mine.</li>
-                <li><strong>Middle-Click:</strong> Pan the camera for large maps.</li>
-                <li><strong>Scroll:</strong> Zoom in and out.</li>
+            <ul style="list-style: none; padding: 0; margin-bottom: 15px;">
+                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_left.svg"
+                        style="width:18px; vertical-align:middle; margin-right:8px;"><strong>Left-Click:</strong> Reveal
+                    a square.</li>
+                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_left.svg"
+                        style="width:18px; vertical-align:middle; margin-right:8px; filter: hue-rotate(90deg);"><strong>Right-Click:</strong>
+                    Plant a flag.</li>
+                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_both.svg"
+                        style="width:18px; vertical-align:middle; margin-right:8px;"><strong>Middle-Click:</strong> Pan
+                    camera.</li>
+                <li style="margin-bottom:8px;"><span
+                        style="display:inline-block; width:18px; text-align:center; margin-right:8px;">🖱️</span><strong>Scroll:</strong>
+                    Zoom in/out.</li>
             </ul>
             <p>If you reveal a mine, the game is over!</p>
             <div class="dialog-actions">

@@ -22,6 +22,20 @@ export class UIController {
     constructor(dom) {
         this.dom = dom;
         this.currentUrlParams = new URLSearchParams(window.location.search);
+
+        this.digitsMap = {
+            '0': './assets/icons/t0.svg',
+            '1': './assets/icons/t1.svg',
+            '2': './assets/icons/t2.svg',
+            '3': './assets/icons/t3.svg',
+            '4': './assets/icons/t4.svg',
+            '5': './assets/icons/t5.svg',
+            '6': './assets/icons/t6.svg',
+            '7': './assets/icons/t7.svg',
+            '8': './assets/icons/t8.svg',
+            '9': './assets/icons/t9.svg',
+            '-': './assets/icons/tm.svg'
+        };
     }
 
     // -------------------------------------------------------
@@ -64,9 +78,23 @@ export class UIController {
         this.dom.smiley.src = face;
     }
 
+    setLCDDigits(el, value) {
+        const str = formatLCD(value);
+        const imgs = el.querySelectorAll('.lcd-digit');
+        if (imgs.length === 3) {
+            for (let i = 0; i < 3; i++) {
+                imgs[i].src = this.digitsMap[str[i]] || this.digitsMap['0'];
+            }
+        }
+    }
+
     updateMineCounter(minesTotal, flagsPlaced) {
         let remaining = minesTotal - flagsPlaced;
-        this.dom.mineCounter.textContent = formatLCD(remaining);
+        this.setLCDDigits(this.dom.mineCounter, remaining);
+    }
+
+    updateTimer(seconds) {
+        this.setLCDDigits(this.dom.timer, seconds);
     }
 
     // -------------------------------------------------------

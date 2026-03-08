@@ -145,7 +145,7 @@ function startNewGame(difficulty, forcedSeed = null) {
     gameState = GAME_STATE.IDLE;
     currentDifficulty = { ...difficulty };
 
-    resetTimer(dom.timer);
+    resetTimer((s) => ui.updateTimer(s));
     ui.updateSmiley(SMILEY.IDLE);
     ui.updateMineCounter(difficulty.mines, 0);
 
@@ -242,7 +242,7 @@ function handleMouseUp(e) {
     if (e.button === 0) { // Left Click = Reveal
         if (gameState === GAME_STATE.IDLE) {
             gameState = GAME_STATE.PLAYING;
-            startTimer(dom.timer);
+            startTimer((s) => ui.updateTimer(s));
             shadowBoard.placeMines(currentDifficulty.mines, pos.row, pos.col);
         }
 

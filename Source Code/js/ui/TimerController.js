@@ -32,15 +32,15 @@ let interval = null;
 let seconds = 0;
 
 
-export function startTimer(timerEl) {
+export function startTimer(onTick) {
     if (interval) return;
 
     seconds = 0;
-    timerEl.textContent = formatLCD(0);
+    if (onTick) onTick(0);
 
     interval = setInterval(() => {
         seconds++;
-        timerEl.textContent = formatLCD(seconds);
+        if (onTick) onTick(seconds);
     }, 1000);
 }
 
@@ -53,10 +53,10 @@ export function stopTimer() {
 }
 
 
-export function resetTimer(timerEl) {
+export function resetTimer(onTick) {
     stopTimer();
     seconds = 0;
-    timerEl.textContent = formatLCD(0);
+    if (onTick) onTick(0);
 }
 
 
