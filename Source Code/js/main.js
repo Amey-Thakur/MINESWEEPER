@@ -9,30 +9,13 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6 Modules), Canvas API, Web Workers
  *
- * Description  : Application entry point that wires together the game engine,
- *                the Canvas renderer, and the Win95 UI shell. Handles menu
- *                interactions, dialog management, timer/counter display, URL
- *                parameter parsing for shareable game seeds, and the core
- *                game lifecycle (new game, win, loss).
- *
- * Architecture overview:
- *
- *   main.js (this file)
- *     +-- engine/          Game state, mine placement, reveal logic
- *     |     +-- QuadTree         Spatial index for cell lookups
- *     |     +-- BoardEngine      Grid state, neighbor counting
- *     |     +-- FloodFill        BFS-based cell reveal
- *     |     +-- SeedRNG          Deterministic random number generator
- *     |     +-- CSPSolver        No-guess board validation
- *     +-- renderer/        Canvas drawing, camera, sprites
- *     |     +-- GameRenderer     Main draw loop
- *     |     +-- Camera           Pan and zoom controls
- *     |     +-- SpriteSheet      Cell graphics (mines, flags, numbers)
- *     +-- ui/              Win95 chrome, menus, dialogs, taskbar
- *           +-- UIController     Menus, dialogs, smiley, counters
- *           +-- WindowDragger    Title bar drag-to-move
- *
- * Each module is a plain ES6 module with no external dependencies.
+ * Description  : Core initialization and orchestration module for the Minesweeper engine.
+ *                This file establishes the integration between the underlying BoardEngine 
+ *                data structure, the QuadTree spatial partitioning system, the HTML5 
+ *                Canvas rendering pipeline, and the Windows 95 graphical user interface.
+ *                
+ *                It manages the global game state loop, input event delegation to the 
+ *                camera matrix, and URL parameter parsing for deterministic seed validation.
  */
 
 import { UIController } from './ui/UIController.js';
@@ -128,16 +111,16 @@ function init() {
     initClock(dom.clock);
     ui.initWindowControls();
 
-    // Check URL parameters for custom shared map specs
+    // Parse URL parameters to construct specific board geometries from shared seeds
     const config = ui.parseInitialConfig();
     if (config) {
         currentDifficulty = { ...config };
     }
 
-    // Attach Smiley Restart
+    // Bind central game termination and generation toggle
     dom.smileyBtn.addEventListener('click', () => startNewGame(currentDifficulty));
 
-    // Anti-F12 and DevTools blocks
+    // Suppress native browser development tool shortcuts to maintain immersive full screen environment
     window.addEventListener('keydown', (e) => {
         if (
             e.key === 'F12' ||
@@ -164,14 +147,16 @@ function startNewGame(difficulty, forcedSeed = null) {
     const seed = forcedSeed !== null ? forcedSeed : Math.floor(Math.random() * 0xffffffff);
     ui.generateShareLink(difficulty.rows, difficulty.cols, difficulty.mines, seed);
 
-    // Instead of using WebWorker for the exact phase, fallback to standard synchronous engine processing
-    // if Workers face CORS issues structurally on github pages locally. 
+    // Execute synchronous engine initialization. This bypasses asynchronous WebWorkers 
+    // to strictly prevent explicit cross origin isolation errors natively on static hosts. 
     shadowBoard = new BoardEngine(difficulty.rows, difficulty.cols, seed);
 
-    // Setup Spatial Index (using pixel coordinates for alignment with Camera)
+    // Initialize the primary spatial index map utilizing physical pixel boundaries 
+    // to maintain explicit alignment with the Camera transform matrix.
     quadTree = new QuadTree(new Rectangle(0, 0, difficulty.cols * CELL_SIZE, difficulty.rows * CELL_SIZE), 16);
 
-    // Push every single coordinate efficiently into the QuadTree mapping
+    // Traverse the logical one dimensional array and map explicit geometric boundaries 
+    // into the partitioning index for viewport culling optimization.
     for (let index = 0; index < shadowBoard.totalCells; index++) {
         const row = Math.floor(index / shadowBoard.cols);
         const col = index % shadowBoard.cols;
@@ -182,7 +167,7 @@ function startNewGame(difficulty, forcedSeed = null) {
 
     renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
 
-    // Watch for container resizes (e.g. on maximize/fullscreen) to keep board fitting
+    // Hook the ResizeObserver API to track viewport mutation and recalculate relative canvas dimensions.
     const resizeObserver = new ResizeObserver(() => {
         if (renderer) {
             renderer.resize();
@@ -203,7 +188,8 @@ function getGridPos(e) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Apply exact mathematical camera offsets
+    // Project the absolute window coordinates against the current affine transform matrix 
+    // to determine the specific grid node target.
     const scale = renderer.camera.zoom;
     const absX = (x / scale) + renderer.camera.x;
     const absY = (y / scale) + renderer.camera.y;
@@ -221,13 +207,14 @@ let isMiddleDown = false;
 let lastPanPos = { x: 0, y: 0 };
 
 function bindCanvasEvents() {
-    // Prevent context menu globally for the canvas
+    // Suppress the native context menu specifically over the canvas element to capture right click events.
     dom.canvas.oncontextmenu = (e) => e.preventDefault();
 
-    // Prevent right-click globally on the document to stop "Save Image" blocks
+    // Suppress document wide native actions to prevent standard browser operations from interfering with the game interface.
     document.oncontextmenu = (e) => e.preventDefault();
 
-    // Remove old listeners specifically to prevent duplication caching
+    // Execute a deep clone replacement of the canvas node to aggressively clear any lingering 
+    // anonymous event listeners residing in browser memory.
     const newCanvas = dom.canvas.cloneNode(true);
     dom.canvas.parentNode.replaceChild(newCanvas, dom.canvas);
     dom.canvas = newCanvas;
@@ -242,9 +229,9 @@ function bindCanvasEvents() {
 function handleMouseDown(e) {
     if (gameState === GAME_STATE.WON || gameState === GAME_STATE.LOST) return;
 
-    if (e.button === 0) { // Left Click
+    if (e.button === 0) {
         ui.updateSmiley(SMILEY.PRESSING);
-    } else if (e.button === 1) { // Middle Click Pan
+    } else if (e.button === 1) {
         isMiddleDown = true;
         lastPanPos = { x: e.clientX, y: e.clientY };
     }
@@ -263,7 +250,7 @@ function handleMouseUp(e) {
     const pos = getGridPos(e);
     if (!pos) return;
 
-    if (e.button === 0) { // Left Click = Reveal
+    if (e.button === 0) {
         if (gameState === GAME_STATE.IDLE) {
             gameState = GAME_STATE.PLAYING;
             startTimer((s) => ui.updateTimer(s));
@@ -282,7 +269,7 @@ function handleMouseUp(e) {
                 });
             }
         }
-    } else if (e.button === 2) { // Right Click = Flag
+    } else if (e.button === 2) {
         if (!shadowBoard.isRevealed(pos.index)) {
             const added = shadowBoard.toggleFlag(pos.index);
             ui.updateMineCounter(currentDifficulty.mines, shadowBoard.flagsCount);
@@ -308,7 +295,7 @@ function handleWheel(e) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Scale dynamically
+    // Calculate logarithmic scaling projection
     const zoomFactor = -e.deltaY > 0 ? 1.1 : 0.9;
     renderer.camera.setZoom(renderer.camera.zoom * zoomFactor, x, y);
 }
@@ -331,16 +318,16 @@ function handleGameOver(fatalIndex) {
     stopTimer();
     ui.updateSmiley(SMILEY.LOST);
 
-    // Let the renderer selectively know exactly WHICH index blew us up
+    // Pass the specific index of the triggered unit to the renderer for specific isolated frame priority.
     renderer.fatalIndex = fatalIndex;
 
     for (let i = 0; i < shadowBoard.totalCells; i++) {
         if (shadowBoard.isMine(i)) {
-            // Flagged mines stay flagged (will render green)
-            // Unflagged mines stay unflagged (will render black/red)
+            // Flagged entities maintain state yielding positive assertion.
+            // Undiscovered logic triggers rendering sequences specifically highlighting failures.
             shadowBoard.setRevealed(i);
         } else if (shadowBoard.isFlagged(i)) {
-            // Bad flags (flag on empty cell) should also be revealed
+            // Expose false flags by triggering explicit layout reveals.
             shadowBoard.setRevealed(i);
         }
     }
@@ -361,7 +348,7 @@ function renderLoop() {
     requestAnimationFrame(renderLoop);
 }
 
-// Expose strictly standard custom dialog interactions from DOM into Main namespace bounds
+// Expose functional interaction capabilities strictly to the global namespace for HTML invocation bindings.
 window.setDifficulty = function (type) {
     if (DIFFICULTY[type]) {
         startNewGame(DIFFICULTY[type]);
