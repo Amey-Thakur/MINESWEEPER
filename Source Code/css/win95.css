@@ -598,6 +598,11 @@
     display: block;
 }
 
+#dropdown-help {
+    left: auto;
+    right: 0;
+}
+
 .menu-item.active .menu-label {
     background-color: var(--win95-menu-highlight);
     color: var(--win95-menu-hl-text);
