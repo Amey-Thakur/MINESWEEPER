@@ -79,6 +79,14 @@ export function initMenus(callbacks) {
         });
 
         // specific start menu triggers
+        const smNewGame = document.getElementById('sm-newgame');
+        if (smNewGame) {
+            smNewGame.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                if (callbacks.onNew) callbacks.onNew();
+            });
+        }
+
         const smHelp = document.getElementById('sm-help');
         if (smHelp) {
             smHelp.addEventListener('click', () => {

@@ -70,23 +70,29 @@
                 <span class="sidebar-text">Windows 95</span>
             </div>
             <div class="start-menu-body">
-                <button class="start-menu-item" id="sm-programs">
-                    <span class="sm-icon">📁</span>
-                    <span class="sm-text">Programs</span>
-                    <span class="sm-arrow">▶</span>
+                <button class="start-menu-item" id="sm-newgame">
+                    <span class="sm-icon">🎮</span>
+                    <span class="sm-text">New Game</span>
+                </button>
+                <div class="sm-divider"></div>
+                <button class="start-menu-item" id="sm-author"
+                    onclick="window.open('https://github.com/Amey-Thakur', '_blank')">
+                    <span class="sm-icon">👨🏻‍💻</span>
+                    <span class="sm-text">Amey Thakur (GitHub)</span>
                 </button>
                 <button class="start-menu-item" id="sm-documents"
                     onclick="window.open('https://github.com/Amey-Thakur/MINESWEEPER', '_blank')">
-                    <span class="sm-icon">📄</span>
-                    <span class="sm-text">GitHub Repo</span>
+                    <span class="sm-icon">📁</span>
+                    <span class="sm-text">Source Code Repository</span>
                 </button>
                 <div class="sm-divider"></div>
                 <button class="start-menu-item" id="sm-help">
                     <span class="sm-icon">❓</span>
                     <span class="sm-text">Help</span>
                 </button>
-                <button class="start-menu-item" id="sm-run" onclick="alert('Run dialog not implemented.')">
-                    <span class="sm-icon">🏃</span>
+                <button class="start-menu-item" id="sm-run"
+                    onclick="const p = prompt('Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.', ''); if(p) window.open('https://duckduckgo.com/?q=' + encodeURIComponent(p), '_blank');">
+                    <span class="sm-icon">🏃🏻</span>
                     <span class="sm-text">Run...</span>
                 </button>
                 <div class="sm-divider"></div>
