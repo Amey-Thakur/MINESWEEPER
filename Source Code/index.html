@@ -107,7 +107,7 @@
                     <button class="start-menu-item" id="sm-help">
                         <img src="./assets/icons/help.svg" class="tab-icon-img" alt="" style="margin-right: 8px;">
                         <span class="sm-text">Help</span>
-                        <img src="./assets/icons/arrow_down.svg" class="sm-arrow-icon" alt="">
+                        <img src="./assets/icons/arrow_side.svg" class="sm-arrow-icon" alt="">
                     </button>
                     <div class="start-sub-menu hidden" id="sm-help-sub">
                         <button class="start-menu-item" id="sm-about-trigger">
@@ -213,11 +213,15 @@
                     <span class="menu-label">Help</span>
                     <div class="menu-dropdown" id="dropdown-help">
                         <button class="menu-option" id="menu-about">
-                            <img src="./assets/icons/stats.svg" class="menu-icon-img" alt=""
-                                style="width:12px; height:12px; margin-right:6px;">
+                            <img src="./assets/icons/author.svg" class="menu-icon-img" alt=""
+                                style="width:14px; height:14px; margin-right:6px;">
                             About Minesweeper
                         </button>
-                        <button class="menu-option" id="menu-how-to-play">How to Play</button>
+                        <button class="menu-option" id="menu-how-to-play">
+                            <img src="./assets/icons/help.svg" class="menu-icon-img" alt=""
+                                style="width:14px; height:14px; margin-right:6px;">
+                            How to Play
+                        </button>
                     </div>
                 </div>
             </div>
@@ -367,18 +371,10 @@
             <p style="margin-bottom: 15px;">The goal of the game is to uncover all the squares that do not contain
                 mines.</p>
             <ul style="list-style: none; padding: 0; margin-bottom: 15px;">
-                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_left.svg"
-                        style="width:18px; vertical-align:middle; margin-right:8px;"><strong>Left-Click:</strong> Reveal
-                    a square.</li>
-                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_left.svg"
-                        style="width:18px; vertical-align:middle; margin-right:8px; filter: hue-rotate(90deg);"><strong>Right-Click:</strong>
-                    Plant a flag.</li>
-                <li style="margin-bottom:8px;"><img src="./assets/icons/mouse_both.svg"
-                        style="width:18px; vertical-align:middle; margin-right:8px;"><strong>Middle-Click:</strong> Pan
-                    camera.</li>
-                <li style="margin-bottom:8px;"><span
-                        style="display:inline-block; width:18px; text-align:center; margin-right:8px;">🖱️</span><strong>Scroll:</strong>
-                    Zoom in/out.</li>
+                <li style="margin-bottom:8px;"><strong>🖱️ Left-Click:</strong> Reveal a square.</li>
+                <li style="margin-bottom:8px;"><strong>🖱️ Right-Click:</strong> Plant a flag.</li>
+                <li style="margin-bottom:8px;"><strong>🖱️ Middle-Click:</strong> Pan camera.</li>
+                <li style="margin-bottom:8px;"><strong>🖱️ Scroll:</strong> Zoom in/out.</li>
             </ul>
             <p>If you reveal a mine, the game is over!</p>
             <div class="dialog-actions">
