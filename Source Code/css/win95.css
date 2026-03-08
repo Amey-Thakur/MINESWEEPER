@@ -583,7 +583,6 @@
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 200px;
     background-color: var(--win95-surface);
     z-index: 1000;
     padding: 2px;
@@ -596,11 +595,6 @@
 
 .menu-item.active .menu-dropdown {
     display: block;
-}
-
-#dropdown-help {
-    left: auto;
-    right: 0;
 }
 
 .menu-item.active .menu-label {
