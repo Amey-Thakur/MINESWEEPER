@@ -201,7 +201,7 @@
                             Custom...
                         </button>
                         <div class="menu-separator"></div>
-                        <button class="menu-option" id="menu-seed">Enter Seed...</button>
+                        <button class="menu-option" id="menu-seed">Seed Manager...</button>
                     </div>
                 </div>
                 <div class="menu-item" id="menu-help">
@@ -279,22 +279,64 @@
         </div>
     </div>
 
-    <!-- Manual seed input modal -->
-    <div id="seed-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="seed-dialog-title">
+    <!-- Enhanced Seed Manager Dialog (Tabbed) -->
+    <div id="seed-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="seed-dialog-title"
+        style="width: 320px;">
         <div class="win95-dialog-titlebar">
-            <span id="seed-dialog-title">Enter Seed</span>
+            <span id="seed-dialog-title">Seed Manager</span>
             <button class="title-btn close-btn" id="seed-dialog-close" aria-label="Close">x</button>
         </div>
-        <div class="win95-dialog-body">
-            <div class="dialog-field">
-                <label for="seed-input">Seed (number):</label>
-                <input type="number" id="seed-input" min="1" value="42">
+        <div class="win95-dialog-body" style="padding: 6px;">
+            <!-- Tab Strip -->
+            <div class="seed-tab-strip">
+                <div class="seed-tab active" id="seed-tab-enter" role="tab">Enter Seed</div>
+                <div class="seed-tab" id="seed-tab-share" role="tab">Share Seed</div>
             </div>
-            <p class="dialog-note">Same seed + same settings = same board. Share with friends to compete!</p>
-            <div class="dialog-actions">
-                <button id="seed-ok" class="win95-btn">OK</button>
-                <button id="seed-cancel" class="win95-btn">Cancel</button>
+
+            <!-- Tab Panels -->
+            <div class="seed-tab-panel active" id="seed-panel-enter">
+                <div class="dialog-field" style="margin-top: 10px;">
+                    <label for="seed-input-manual">Seed (number):</label>
+                    <input type="number" id="seed-input-manual" class="win95-input-recessed" min="1" value="42">
+                </div>
+                <p class="dialog-note" style="margin-top: 15px;">Same seed + same settings = same board.</p>
+                <div class="dialog-actions" style="margin-top: 25px;">
+                    <button id="seed-ok-btn" class="win95-btn">OK</button>
+                    <button class="win95-btn win95-dialog-close">Cancel</button>
+                </div>
             </div>
+
+            <div class="seed-tab-panel" id="seed-panel-share">
+                <div class="seed-share-group">
+                    <div class="seed-share-label">Current Seed:</div>
+                    <div class="seed-share-value-row">
+                        <span class="seed-share-value" id="seed-value">0</span>
+                        <button class="win95-btn btn-sm" id="seed-copy-seed">Copy</button>
+                    </div>
+                </div>
+
+                <div class="seed-share-group">
+                    <div class="seed-share-label">Settings:</div>
+                    <div class="seed-share-value" id="seed-settings" style="font-weight: normal; font-size: 11px;">9x9,
+                        10 mines</div>
+                </div>
+
+                <div class="seed-share-group">
+                    <div class="seed-share-label">Share Link:</div>
+                    <div class="seed-share-link-row">
+                        <input type="text" id="seed-link" readonly class="win95-input-recessed" style="width: 100%;">
+                        <button class="win95-btn btn-sm" id="seed-copy-link">Copy</button>
+                    </div>
+                </div>
+
+                <div class="dialog-actions" style="margin-top: 25px;">
+                    <button class="win95-btn" id="seed-native-share">Share...</button>
+                    <button class="win95-btn win95-dialog-close">Close</button>
+                </div>
+            </div>
+
+            <!-- Toast notification for copy confirmation -->
+            <div id="seed-copy-feedback" class="seed-copy-feedback hidden">Copied to clipboard!</div>
         </div>
     </div>
 

@@ -33,6 +33,7 @@ import { BoardEngine } from './engine/BoardEngine.js';
 import { CELL_SIZE } from './constants.js';
 import { startTimer, stopTimer, resetTimer, initClock, setClockFormat } from './ui/TimerController.js';
 import { initMenus } from './ui/MenuController.js';
+import { initSeedDialog, setSeedState, showSeedDialog } from './ui/SeedController.js';
 
 // -------------------------------------------------------
 // Constants
@@ -98,12 +99,7 @@ function init() {
         onIntermediate: () => startNewGame(DIFFICULTY.INTERMEDIATE),
         onExpert: () => startNewGame(DIFFICULTY.EXPERT),
         onCustom: () => setDifficulty('CUSTOM'),
-        onSeed: () => {
-            const seed = prompt("Enter a seed ID:");
-            if (seed && !isNaN(parseInt(seed))) {
-                startNewGame(currentDifficulty, parseInt(seed));
-            }
-        },
+        onSeed: () => showSeedDialog('enter'),
         onAbout: () => {
             import('./ui/MenuController.js').then(m => m.showAbout());
         },
@@ -117,6 +113,11 @@ function init() {
     });
     initClock(dom.clock);
     ui.initWindowControls();
+
+    // Link the advanced Seed Manager Modal internally pointing to local state mutations
+    initSeedDialog((enteredSeed) => {
+        startNewGame(currentDifficulty, enteredSeed);
+    });
 
     // Parse URL parameters to construct specific board geometries from shared seeds
     const config = ui.parseInitialConfig();
@@ -152,7 +153,10 @@ function startNewGame(difficulty, forcedSeed = null) {
     ui.updateMineCounter(difficulty.mines, 0);
 
     const seed = forcedSeed !== null ? forcedSeed : Math.floor(Math.random() * 0xffffffff);
-    ui.generateShareLink(difficulty.rows, difficulty.cols, difficulty.mines, seed);
+    const shareUrl = ui.generateShareLink(difficulty.rows, difficulty.cols, difficulty.mines, seed);
+
+    // Inject parameters natively to Seed Controller interface rendering state map.
+    setSeedState(seed, difficulty.rows, difficulty.cols, difficulty.mines, shareUrl);
 
     // Execute synchronous engine initialization. This bypasses asynchronous WebWorkers 
     // to strictly prevent explicit cross origin isolation errors natively on static hosts. 
