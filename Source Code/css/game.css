@@ -58,12 +58,15 @@
 
 .lcd-counter {
     background-color: #000;
-    padding: 1px;
+    padding: 2px;
     display: flex;
     gap: 1px;
-    height: 25px;
-    min-width: 41px;
-    /* 3 digits * 13px + gap */
+    height: 33px;
+    width: 44px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
     /* Sunken bevel */
     border-top: 2px solid var(--win95-shadow);
@@ -74,9 +77,10 @@
 
 .lcd-digit {
     width: 13px;
-    height: 23px;
+    height: 100%;
     flex-shrink: 0;
     image-rendering: pixelated;
+    object-fit: contain;
 }
 
 
