@@ -7,17 +7,13 @@
   Release Date : March 5, 2026
   License      : MIT
 
-  Tech Stack   : HTML5, CSS3 (Custom Properties), ES6 Modules, Canvas API
+  Tech Stack   : HTML5, CSS3, ES6 Modules, Canvas API
 
-  Description  : Entry point for a high-performance Minesweeper engine that
-                 uses QuadTree spatial indexing for viewport culling on boards
-                 up to 1,000,000 cells, a Constraint Satisfaction Problem (CSP)
-                 solver for guaranteed no-guess board generation, BFS-based
-                 flood-fill with bitmask state tracking, and bit-packed
-                 TypedArrays for cache-friendly memory layout. The interface
-                 is a pixel-perfect recreation of the Windows 95 aesthetic,
-                 rendered entirely on HTML5 Canvas with zero runtime
-                 dependencies. Deployed as a static site on GitHub Pages.
+  Description  : The primary entry point for the Minesweeper engine. This file 
+                 constructs the foundational DOM structure, serving as the canvas
+                 for the emulated Windows 95 graphical user interface. It 
+                 initializes the styling layers and scripts responsible for game 
+                 logic, spatial management, and rendering.
 -->
 
 <!DOCTYPE html>
@@ -39,16 +35,21 @@
     <title>Minesweeper</title>
     <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
 
-    <!--
-    VT323 gives the classic monospaced LCD look for the mine counter
-    and the timer display. This font is a recreation of the VT320
-    terminal typeface from the early 1980s.
-  -->
+    <!-- 
+      Integrate the VT323 typography asset. This font provides a monospaced, 
+      pixelated appearance critical for replicating the authentic seven-segment 
+      LCD styling of the classic game counters.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
-    <!-- Style layers: reset first, then theme, then game-specific. -->
+    <!-- 
+      Establish the styling hierarchy. 
+      1. reset.css  : Normalizes default browser styling for cross-browser consistency.
+      2. win95.css  : Defines the design tokens, colors, and global structural components for the Windows 95 UI.
+      3. game.css   : Overrides and specifies styling strictly tied to the game board and interior window elements.
+    -->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/win95.css">
     <link rel="stylesheet" href="css/game.css">
@@ -56,11 +57,11 @@
 
 <body>
 
-    <!-- ===================== DESKTOP =====================
-       The full page acts as a Windows 95 desktop surface.
-       The teal background and taskbar sit behind the
-       draggable game window.
-       ==================================================== -->
+    <!-- 
+      Construct the primary desktop surface. This overarching container 
+      acts as the background canvas, providing the iconic teal color and 
+      managing the absolute positioning of the game window and icons.
+    -->
     <div id="desktop" class="win95-desktop">
 
         <div class="desktop-icons">
@@ -78,9 +79,11 @@
             </div>
         </div>
 
-        <!-- =================== START MENU =================
-         Hidden by default. Pops up when Start is clicked.
-         ================================================= -->
+        <!-- 
+          Define the Start Menu component. This element remains hidden from the 
+          DOM visually until invoked via the Taskbar. It contains system-level 
+          navigation and application commands.
+        -->
         <div id="start-menu" class="win95-start-menu hidden">
             <div class="start-menu-sidebar">
                 <span class="sidebar-text">Windows 95</span>
@@ -103,7 +106,7 @@
                     <span class="sm-text">Source Code Repository</span>
                 </button>
                 <div class="sm-divider"></div>
-                <!-- Help with sub-menu -->
+                <!-- Sub-menu container for secondary navigation paths -->
                 <div class="start-menu-item-container" id="sm-help-container">
                     <button class="start-menu-item" id="sm-help">
                         <img src="./assets/icons/help.svg" class="tab-icon-img" alt="" style="margin-right: 8px;">
@@ -134,10 +137,7 @@
             </div>
         </div>
 
-        <!-- =================== TASKBAR ====================
-         Fixed bar along the bottom edge. Contains a Start
-         button and a clock, just like the real thing.
-         ================================================= -->
+        <!-- Taskbar and Start button -->
         <div id="taskbar" class="win95-taskbar">
             <button id="start-button" class="win95-start-button">
                 <svg class="start-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
@@ -150,7 +150,7 @@
             </button>
             <div class="taskbar-divider"></div>
 
-            <!-- =================== TASKBAR APPS ================ -->
+            <!-- Open windows in taskbar -->
             <div id="taskbar-apps" class="taskbar-apps">
                 <button id="minesweeper-tab" class="taskbar-app-tab active">
                     <img src="./assets/icons/minesweeper.ico" class="tab-icon-img" alt="">
@@ -168,14 +168,10 @@
             </div>
         </div>
 
-        <!-- ================ GAME WINDOW ===================
-         The main Minesweeper window. Follows the classic
-         Win95 window anatomy: title bar, menu bar, game
-         content area, and a status bar at the bottom.
-         ================================================= -->
+        <!-- Main Game Window -->
         <div id="game-window" class="win95-window">
 
-            <!-- Title bar with the window controls -->
+            <!-- Window Top Bar -->
             <div id="title-bar" class="win95-title-bar">
                 <div class="title-bar-icon">
                     <img src="./assets/icons/minesweeper.ico" alt="">
@@ -188,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- Menu bar: Game and Help dropdowns -->
+            <!-- Window Menu Strip -->
             <div id="menu-bar" class="win95-menu-bar">
                 <div class="menu-item" id="menu-game">
                     <span class="menu-label">Game</span>
@@ -225,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Game header: mine counter on the left, smiley in the middle, timer on the right -->
+            <!-- HUD: Mines Left, Status Face, Time Elapsed -->
             <div id="game-header" class="game-header">
                 <div id="mine-counter" class="lcd-counter" aria-label="Remaining mines">
                     <img class="lcd-digit" src="./assets/icons/t0.svg" alt="0">
@@ -242,12 +238,12 @@
                 </div>
             </div>
 
-            <!-- The canvas lives here. All cell rendering is handled in JS. -->
+            <!-- Main Canvas Container -->
             <div id="game-container" class="game-container">
                 <canvas id="game-canvas" aria-label="Minesweeper game board"></canvas>
             </div>
 
-            <!-- Status bar at the bottom of the window -->
+            <!-- Window Footer -->
             <div id="status-bar" class="win95-status-bar">
                 <span id="status-text">Ready</span>
                 <span id="status-seed"></span>
@@ -257,10 +253,7 @@
 
     </div>
 
-    <!-- ================ CUSTOM GAME DIALOG ================
-       Pops up when "Custom..." is selected from the Game
-       menu. Lets the player pick rows, cols, and mine count.
-       ====================================================== -->
+    <!-- Custom settings configuration modal -->
     <div id="custom-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="custom-dialog-title">
         <div class="win95-dialog-titlebar">
             <span id="custom-dialog-title">Custom Field</span>
@@ -286,10 +279,7 @@
         </div>
     </div>
 
-    <!-- ================ SEED DIALOG ================
-       Enter a numeric seed so that two people can play
-       the exact same board layout.
-       ================================================ -->
+    <!-- Manual seed input modal -->
     <div id="seed-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="seed-dialog-title">
         <div class="win95-dialog-titlebar">
             <span id="seed-dialog-title">Enter Seed</span>
@@ -308,7 +298,7 @@
         </div>
     </div>
 
-    <!-- ================ ABOUT DIALOG ================ -->
+    <!-- About app modal -->
     <div id="about-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="about-dialog-title">
         <div class="win95-dialog-titlebar">
             <span id="about-dialog-title">About Minesweeper</span>
@@ -359,7 +349,7 @@
         </div>
     </div>
 
-    <!-- ================ HOW TO PLAY DIALOG ================ -->
+    <!-- Instructions modal -->
     <div id="howtoplay-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="howtoplay-dialog-title">
         <div class="win95-dialog-titlebar">
             <span id="howtoplay-dialog-title">How To Play</span>
@@ -381,10 +371,10 @@
         </div>
     </div>
 
-    <!-- Semi-transparent backdrop behind any open dialog -->
+    <!-- Background dimming layer for active modals -->
     <div id="dialog-overlay" class="dialog-overlay hidden"></div>
 
-    <!-- ================ SHUTDOWN SCREEN ================ -->
+    <!-- Turn off computer screen overlay -->
     <div id="shutdown-overlay" class="shutdown-overlay hidden">
         <div class="shutdown-text">
             <h1 style="color: #c0c0c0; font-size: 32px; margin-bottom: 20px;">
@@ -400,10 +390,7 @@
 
 
 
-    <!--
-    All game logic is loaded as ES6 modules.
-    main.js is the entry point that wires everything together.
-  -->
+    <!-- Main script execution -->
     <script type="module" src="js/main.js"></script>
 
 </body>
