@@ -781,10 +781,12 @@
     margin-bottom: 4px;
 }
 
-.icon-img {
+.icon-img,
+.retro-icon {
     width: 32px;
     height: 32px;
     image-rendering: pixelated;
+    display: block;
 }
 
 .icon-label {
@@ -862,8 +864,11 @@
     max-height: none !important;
     transform: none !important;
 }
-.tab-icon-img {
+
+.tab-icon-img,
+.tab-retro-icon {
     width: 16px;
     height: 16px;
     image-rendering: pixelated;
+    display: block;
 }
