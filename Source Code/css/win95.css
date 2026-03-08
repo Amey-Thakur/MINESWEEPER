@@ -448,8 +448,15 @@
 }
 
 .title-bar-icon {
-    font-size: 14px;
+    display: flex;
+    align-items: center;
     margin-right: 4px;
+}
+
+.title-bar-icon img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
 }
 
 .title-bar-text {
