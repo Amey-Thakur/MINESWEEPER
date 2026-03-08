@@ -9,11 +9,14 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6), HTML5 Canvas
  *
- * Description  : Core rendering loop tying the abstract BoardEngine state over
- *                to the visual SpriteSheet graphic components. Queries the
- *                QuadTree specifically for the visible rectangle provided by
- *                the active Camera view, drastically omitting off-screen
- *                elements and preserving unblemished 60 FPS output.
+ * Description  : Orchestrates the visual synthesis of the BoardEngine state. 
+ *                This module implements a localized rendering pipeline that 
+ *                integrates HiDPI resolution scaling with a QuadTree-driven 
+ *                spatial culling algorithm.
+ *                
+ *                By selectively querying only visible nodes from the spatial 
+ *                index, the renderer maintains O(log N + k) performance, 
+ *                ensuring fluid 60 FPS across massive grid dimensions.
  */
 
 import { SpriteSheet } from './SpriteSheet.js';
@@ -129,11 +132,14 @@ export class GameRenderer {
         ctx.scale(camera.zoom, camera.zoom);
         ctx.translate(-camera.x, -camera.y);
 
-        // Fetch exclusively what aligns perfectly within our specific bounds
+        // Execute a spatial query against the QuadTree index to retrieve nodes 
+        // strictly overlapping the current viewport frustum.
         const visibleRect = camera.getVisibleBounds();
         const activeCells = quadTree.query(visibleRect);
 
-        // Batch rendering operations per quadrant
+        // Iteratively render the queried cell subset. 
+        // Note: Batching and culling allow massive boards to render efficiently 
+        // regardless of total cell count (N).
         for (const cell of activeCells) {
             const index = board.getIndex(cell.row, cell.col);
             const x = cell.col * CELL_SIZE;

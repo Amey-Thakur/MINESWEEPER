@@ -9,10 +9,13 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Coordinates the classic DOM interactions separate from the
- *                Canvas Engine. Manages the URL query string parsing to inject
- *                shareable map Seeds instantly. Coordinates Smiley states,
- *                mines-remaining LCD counters, and pop-up Dialog triggers.
+ * Description  : Orchestrates the high-level graphical state machine separate 
+ *                from the rendering pipeline. This module manages the recursive 
+ *                DOM tree for Window components and facilitates deterministic 
+ *                Seed injection via URLSearchParams. 
+ *                
+ *                It maintains the synchronization between discrete game events 
+ *                and the Windows 95 visual shell components.
  */
 
 import { formatLCD } from './TimerController.js';

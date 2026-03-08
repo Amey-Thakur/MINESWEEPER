@@ -50,8 +50,19 @@ export class Rectangle {
 }
 
 
-// Recursive spatial partition implementation subdividing coordinate blocks 
-// upon threshold exhaustion.
+// Recursive spatial partition implementation used to subdivide a two-dimensional 
+// coordinate plane into four navigable quadrants. This data structure facilitates 
+// efficient spatial indexing by reducing the search space from O(N) to O(log N).
+//
+// Quadrant Topology:
+//   NW | NE
+//   -------
+//   SW | SE
+//
+// Computational Complexity:
+//   - Insertion : O(log N) average; ensures contiguous point distribution.
+//   - Querying  : O(log N + k) where k represents the local result set density.
+//   - Clearing  : O(1) by severing the root reference for GC reclamation.
 
 export class QuadTree {
 

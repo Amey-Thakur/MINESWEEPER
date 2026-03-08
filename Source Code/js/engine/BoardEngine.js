@@ -10,15 +10,26 @@
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
  * Description  : Core state manager for the board grid. Implements a contiguous 
- *                Uint8Array to achieve explicit memory alignment. Individual cell 
- *                state variables (mine presence, revealed status, flag assertion, 
- *                and local neighbor count) are compressed into single bytes via 
- *                strict bit mask logic. This approach mitigates garbage collection 
- *                pressure when manipulating theoretically boundless Cartesian grids.
+ *                Uint8Array to achieve explicit memory alignment and cache locality. 
+ *                Individual cell state variables (mine presence, revealed status, 
+ *                flag assertion, and local neighbor count) are compressed into 
+ *                single bytes via strict bit mask logic. 
+ *                
+ *                This approach yields O(1) attribute access and mitigates garbage 
+ *                collection pressure when manipulating massive grid topologies, 
+ *                as the entire board occupies a single block of heap memory.
  */
 
 import { SeedRNG } from './SeedRNG.js';
 
+// Binary state masks allocated within the Uint8 memory buffer.
+// Bits are structured to maintain optimal lookup speed via bitwise AND operations.
+// 
+// Byte Architecture (8-bits per cell):
+// [7] : Mine presence (0 = safe, 1 = lethal)
+// [6] : Exposure status (0 = hidden, 1 = revealed)
+// [5] : User marker (0 = none, 1 = flagged)
+// [3:0] : Integer representation of adjacent nodes with lethal presence (0 through 8)
 export const CELL_MINE = 0b10000000;
 export const CELL_REVEALED = 0b01000000;
 export const CELL_FLAGGED = 0b00100000;

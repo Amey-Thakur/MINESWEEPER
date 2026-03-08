@@ -16,6 +16,13 @@
  *                
  *                It manages the global game state loop, input event delegation to the 
  *                camera matrix, and URL parameter parsing for deterministic seed validation.
+ *
+ *                Module Topology:
+ *                [Core Engine]  -->  [Spatial Index]  -->  [GPU/Canvas Pipeline]
+ *                (BoardEngine)       (QuadTree)             (GameRenderer)
+ *
+ *                [UI Controller]  <-- [Interactive Context] --> [main.js Host]
+ *                (HTML5 Shell)         (Event Listeners)        (Global Orchestrator)
  */
 
 import { UIController } from './ui/UIController.js';

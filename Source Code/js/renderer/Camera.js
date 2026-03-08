@@ -9,10 +9,14 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Handles panning and zooming across large boards. Computes the
- *                active viewing bounds relative to the screen, passing the 
- *                visible range directly into the QuadTree logic to filter out
- *                and draw only exactly what fits inside the HTML Canvas.
+ * Description  : Manages the affine transformation matrix governing the viewport 
+ *                projection. Specifically, this module calculates the translation 
+ *                (panning) and scaling (zooming) vectors required to map board 
+ *                coordinates to screen-space pixels.
+ *                
+ *                It satisfies spatial query requirements by computing the 
+ *                visible geometric intersection, which is then utilized by 
+ *                the QuadTree to facilitate high-performance occlusion culling.
  */
 
 import { Rectangle } from '../engine/QuadTree.js';
@@ -34,10 +38,14 @@ export class Camera {
         this.maxZoom = 4.0;
         this.minZoom = 0.5;
 
-        // Centers the board strictly inside the viewing pane if it shrinks
+        // Initialize spatial constraints ensuring the board remains clamped 
+        // within the viewport boundaries during initial load.
         this.updateConstraints();
     }
 
+    // Clamps the camera origin to prevent excessive panning beyond map boundaries.
+    // If the logical map dimension is smaller than the current scaled viewport, 
+    // the system defaults to an centered anatomical alignment.
     updateConstraints() {
         const scaledVP_W = this.vpW / this.zoom;
         const scaledVP_H = this.vpH / this.zoom;
@@ -45,7 +53,6 @@ export class Camera {
         const maxX = this.mapW - scaledVP_W;
         const maxY = this.mapH - scaledVP_H;
 
-        // If the viewport is larger than the map, center it by setting x/y to half the difference
         if (maxX < 0) {
             this.x = maxX / 2;
         } else {
@@ -65,23 +72,24 @@ export class Camera {
         this.updateConstraints();
     }
 
-    // Pinch or Wheel Zooming
+    // Modifies the current scaling factor while maintaining the focal point 
+    // of the user's cursor. This requires calculating a delta shift in 
+    // world-coordinates to prevent spatial drift during magnification transitions.
     setZoom(targetZoom, focusX, focusY) {
         const previousZoom = this.zoom;
         this.zoom = Math.max(this.minZoom, Math.min(targetZoom, this.maxZoom));
 
-        // Shift coordinates relative to where exactly the user's cursor focused
         const scaleChange = this.zoom - previousZoom;
         const zoomRate = scaleChange / previousZoom;
 
-        // Adjust camera origin strictly towards the focal point mathematically
         this.x += (focusX / previousZoom) * zoomRate;
         this.y += (focusY / previousZoom) * zoomRate;
 
         this.updateConstraints();
     }
 
-    // Get the logical rectangle range of visible coordinates relative to the 0/0 grid
+    // Calculates the current visible geometric rectangle in world coordinates.
+    // This value is passed to the spatial partition tree for efficient culling.
     getVisibleBounds() {
         return new Rectangle(
             this.x,

@@ -9,10 +9,11 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6 Modules), Web Workers
  *
- * Description  : Offloads the intensive Game Engine calculations (flood fills,
- *                quad-tree partitioning, grid generation) off the main UI
- *                rendering thread. Allows constant 60 FPS drawing via
- *                asynchronous messaging even on 1-million cell boards.
+ * Description  : Encapsulates the compute-heavy logic within a secondary 
+ *                execution context to preserve main-thread responsiveness. 
+ *                This architecture utilizes asynchronous messaging to 
+ *                effectively isolate the BoardEngine state and traversal 
+ *                algorithms from the UI rendering loop.
  */
 
 import { BoardEngine } from '../engine/BoardEngine.js';

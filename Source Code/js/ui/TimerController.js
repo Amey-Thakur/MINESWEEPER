@@ -9,9 +9,10 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : Manages the game timer and the taskbar clock. Provides
- *                start, stop, and reset controls, and formats numbers
- *                for the 3-digit LCD counter displays.
+ * Description  : Managed utility for high-precision game timing and the OS 
+ *                clock module. Implements formatted LCD numerical masking 
+ *                and utilizes the setInterval API to propagate temporal 
+ *                deltas across the application state.
  */
 
 

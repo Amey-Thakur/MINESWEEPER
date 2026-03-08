@@ -9,10 +9,13 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : A deterministic uniform random number generator using the
- *                Mulberry32 algorithm. By providing the same initial state
- *                (seed), it perfectly reproduces the exact sequence of items
- *                for predictable, shareable board deployments.
+ * Description  : Implements a deterministic 32-bit pseudo-random number generator 
+ *                leveraging the Mulberry32 algorithm. This PRNG satisfies strict 
+ *                reproducibility requirements by maintaining an internal state 
+ *                derived from a singular integer seed. 
+ *                
+ *                This enables perfectly synchronous board generation across 
+ *                disparate application instances, crucial for shareable seeds.
  */
 
 export class SeedRNG {

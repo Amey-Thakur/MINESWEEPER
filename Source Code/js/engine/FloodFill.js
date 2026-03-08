@@ -10,10 +10,14 @@
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
  * Description  : Iterative Breadth-First Search (BFS) mechanism for uncloaking
- *                contiguous regions of empty cells. This custom queue-based
- *                implementation avoids standard array shift latency and fully
- *                bypasses standard recursion depth limits, guaranteeing safety 
- *                and performance on exponentially large board configurations.
+ *                contiguous regions of empty cells. This implementation 
+ *                utilizes a pointer-based queue to satisfy O(1) dequeue 
+ *                performance, bypassing the O(N) penalty associated with 
+ *                JavaScript's Array.prototype.shift().
+ *                
+ *                Complexity:
+ *                  - Time  : O(V + E) where V = revealed cells and E = neighbor bounds.
+ *                  - Space : O(V) to maintain the traversal frontier.
  */
 
 export function floodFill(board, startRow, startCol) {
@@ -25,6 +29,9 @@ export function floodFill(board, startRow, startCol) {
     }
 
     const revealedIndices = [];
+    // The 'head' pointer maintains an O(1) alternative to Array.shift().
+    // By traversing the queue via indices, we avoid shifting indices 
+    // and re-allocating memory during large-scale topological propagation.
     const queue = [startIndex];
     let head = 0;
 

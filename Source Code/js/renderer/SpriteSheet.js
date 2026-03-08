@@ -9,11 +9,14 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6), Canvas API
  *
- * Description  : Handles the procedural generation and caching of the classic
- *                Minesweeper aesthetic. Rather than requesting an external
- *                image file to be downloaded, this script programmatically
- *                renders numbers, flags, and blocks directly into an offscreen
- *                canvas for extreme 0-dependency portability.
+ * Description  : Orchestrates the procedural generation and spatial caching of 
+ *                graphical assets. To eliminate external dependency latency and 
+ *                IO overhead, this module programmatically rasterizes the classic 
+ *                Minesweeper iconography into an off-screen buffer.
+ *                
+ *                This pre-rendering strategy ensures O(1) blitting performance during 
+ *                active frame synthesis by reducing complex path-fill operations 
+ *                to simple canvas-to-canvas pixel transfers.
  */
 
 import { CELL_SIZE } from '../constants.js';
@@ -21,9 +24,9 @@ import { CELL_SIZE } from '../constants.js';
 export class SpriteSheet {
 
     constructor() {
-        // Offscreen canvas to hold all pre-rendered sprites
+        // Static off-screen buffer to store procedurally rasterized textures.
         this.canvas = document.createElement('canvas');
-        this.canvas.width = CELL_SIZE * 16; // Accommodate up to index 15
+        this.canvas.width = CELL_SIZE * 16;
         this.canvas.height = CELL_SIZE;
         this.ctx = this.canvas.getContext('2d', { alpha: false });
 
