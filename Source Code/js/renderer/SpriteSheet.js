@@ -35,6 +35,7 @@ export class SpriteSheet {
             QUESTION: 4,
             MINE_RED: 5,
             MINE_CROSSED: 6,
+            FLAG_GREEN: 15,
             NUM_1: 7,
             NUM_2: 8,
             NUM_3: 9,
@@ -100,6 +101,10 @@ export class SpriteSheet {
         this.drawFlat(6 * CELL_SIZE);
         this.drawMine(6 * CELL_SIZE);
         // Cross deleted as requested
+
+        // 15: Green Flag (Correctly flagged mine at game over)
+        this.drawBevel(15 * CELL_SIZE, true);
+        this.drawFlag(15 * CELL_SIZE, '#008000'); // Green
 
         // 7-14: Numbers 1 through 8
         for (let i = 1; i <= 8; i++) {
@@ -231,7 +236,7 @@ export class SpriteSheet {
         ctx.restore();
     }
 
-    drawFlag(x) {
+    drawFlag(x, color = 'red') {
         const ctx = this.ctx;
         const vW = 355.303;
         const vH = 444.127;
@@ -249,10 +254,10 @@ export class SpriteSheet {
         ctx.translate(offsetX, offsetY);
         ctx.scale(scale, scale);
 
-        // Path 1 (Red Flag)
+        // Path 1 (Colored Flag)
         ctx.save();
         ctx.transform(0.44413, 0, 0, 0.44413, 86.605, 122.579);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = color;
         ctx.fill(new Path2D("M105 174v-50H-95V24h-100V-76h100v-100h200v-100h200v500H105Z"));
         ctx.restore();
 

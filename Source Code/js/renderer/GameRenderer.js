@@ -154,7 +154,7 @@ export class GameRenderer {
                     if (this.fatalIndex === index) {
                         sprites.draw(ctx, sprites.sprites.MINE_RED, x, y);
                     } else if (board.isFlagged(index)) {
-                        sprites.draw(ctx, sprites.sprites.FLAG, x, y); // Safe
+                        sprites.draw(ctx, sprites.sprites.FLAG_GREEN, x, y); // Safe
                     } else {
                         sprites.draw(ctx, sprites.sprites.MINE, x, y); // Standard open mine
                     }
