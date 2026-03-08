@@ -308,4 +308,33 @@ With the grid backing ready, Phase 4 will introduce the BFS flood-fill mechanism
 
 ---
 
+## Phase 4: BFS Flood-Fill with Bitmask
+
+### 4.1 Overview
+
+Whenever a player clicks a cell surrounded by zero mines, the game must automatically uncover every adjacent cell. If those newly exposed cells also register zero mines, their neighbors too are subsequently revealed. For simple logic, a recursive approach typically looks fine; however, with our goals targeting boards extending vertically to 1,000,000 total cells, classic recursive flood-fill triggers maximum call stack size exhaustion in JavaScript rendering engines rapidly.
+
+Phase 4 avoids the recursion limits via a bespoke custom Breadth-First Search (BFS) operation leveraging an iterative queue sequence.
+
+The deliverable for this phase is:
+- `js/engine/FloodFill.js`
+
+### 4.2 Array Latency vs Head Tracing
+
+The most intuitive iteration involves pulling objects directly from array lists using `Array.prototype.shift()`. However, shifting natively rearranges index positioning behind the current position which runs at severe O(n) penalty time. Repeating this operation millions of times causes deep browser lag.
+
+To resolve this latency drop definitively, `FloodFill.js` deploys an index tracing strategy initialized to `let head = 0`. Instead of removing items forcefully from tracking, the algorithm iteratively progresses read positions (`queue[head++]`).
+
+### 4.3 Redundant Bypassing
+
+Because multiple empty cells routinely neighbor a single un-revealed tile side-by-side simultaneously, `floodFill()` forces the cell index evaluation directly into the bit-packed `board.isRevealed()` check beforehand. Redundant evaluations immediately bounce off, preventing duplication from multiplying traversal lengths. 
+
+By passing out an array of `revealedIndices`, the user-interfaces can iteratively step off solely exactly new cell coordinates that need visual refreshing later during Phase 6 animations.
+
+### 4.4 What Comes Next
+
+Phase 5 introduces our intelligent mathematical Constraint Satisfaction Problem (CSP) solver script that guarantees "no-guess" logic to ensure that an algorithmically spawned layout of 99 mines will *always* guarantee an analytical solution.
+
+---
+
 *Document continues in subsequent phases.*
