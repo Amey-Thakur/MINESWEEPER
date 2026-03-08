@@ -734,3 +734,16 @@
 .hidden {
     display: none !important;
 }
+.win95-link {
+    color: #0000ee;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.win95-link:hover {
+    color: #551a8b;
+}
+
+.win95-link:active {
+    color: #ee0000;
+}
