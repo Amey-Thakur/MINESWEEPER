@@ -60,7 +60,7 @@ export class SpriteSheet {
         this.numberPaths = {
             1: "M0 105.758v-11.75H23.502V47.003H0V35.253H11.751V23.502H23.502V11.75H35.253V0H58.755v94.007H82.256v23.502H0Z",
             2: "M0 99.883V82.256H11.751V70.505H35.253v-11.75H58.755V47.004H82.256V23.502H35.253V35.253H0V11.75H11.751V0h94.007V11.751H117.51v35.253H105.758V58.755H94.007v11.75H70.505V82.256H47.004V94.007h70.505v23.502H0Z",
-            3: "M0 105.758v-11.75h82.256V70.505H35.253V47.003h47.003V23.502H0V0h105.759V11.751h11.75v35.253H105.758V70.505H117.51v35.253H105.758V117.51H0Z",
+            3: "M0 11.751h11.75V0h94.007v11.751h11.752v35.253h-11.752v11.751h-23.502v11.75h23.502v11.751h11.752v35.253h-11.752V117.51H11.751V105.759H0v-17.627h35.253v11.75h58.754v-17.626H70.505v-11.751h23.502v-17.627H35.253v11.751H0Z",
             4: "M70.505 94.007V70.505H0V47.004H11.751V23.502H23.502V0h35.253V23.502H47.004V47.004H70.505V0h35.253v47.004H117.51V70.505H105.758v47.004H70.505Z",
             5: "M0 105.758v-11.75h82.256V70.505H0V0h117.509V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H0Z",
             6: "M11.75 111.634v-5.876H0V11.751H11.751V0h94.007V23.502H35.253V47.004h70.505V58.755H117.51v47.003H105.758V117.51H11.751Zm70.506-29.378v-11.75H35.253V94.006h47.003z",
@@ -145,12 +145,11 @@ export class SpriteSheet {
         const pathData = this.numberPaths[num];
         if (!pathData) return;
 
-        // ViewBox is either 82.256x117.509 (for '1') or 117.509x117.509 (others)
         const isOne = num === 1;
         const vW = isOne ? 82.256 : 117.509;
         const vH = 117.509;
 
-        const scale = (CELL_SIZE * 0.7) / vH; // 70% of cell height
+        const scale = (CELL_SIZE * 0.55) / vH; // 55% of cell height for numbers
         const offsetX = x + (CELL_SIZE - vW * scale) / 2;
         const offsetY = (CELL_SIZE - vH * scale) / 2;
 
@@ -164,10 +163,11 @@ export class SpriteSheet {
 
     drawMine(x) {
         const ctx = this.ctx;
-        const scale = CELL_SIZE / 117.509; // Scale from SVG viewBox (117.509) to cell size
+        const scale = (CELL_SIZE * 0.75) / 117.509;
+        const offset = (CELL_SIZE - 117.509 * scale) / 2;
 
         ctx.save();
-        ctx.translate(x, 0);
+        ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
         const p = new Path2D("M35.134 34.736h20.478v20.612H35.134z"); // Highlight
@@ -183,14 +183,14 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
-        const scale = CELL_SIZE / 444.127;
-        const offsetX = (CELL_SIZE - 355.303 * scale) / 2;
+        // Flag SVG native size is roughly based on 444 viewport but content is smaller
+        const scale = (CELL_SIZE * 0.75) / 444.127;
+        const offset = (CELL_SIZE - 444.127 * scale) / 2;
 
         ctx.save();
-        ctx.translate(x + offsetX, 0);
+        ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // Use the exact matrix from SVG transform attribute
         const matrix = [0.44413, 0, 0, 0.44413, 86.605, 122.579];
 
         // Red flag part
@@ -211,12 +211,12 @@ export class SpriteSheet {
     }
 
     drawCross(x) {
-        // drawMine(x) is already called before this in generateSprites for ID 6
         const ctx = this.ctx;
-        const scale = CELL_SIZE / 117.509;
+        const scale = (CELL_SIZE * 0.75) / 117.509; // Match mine scale
+        const offset = (CELL_SIZE - 117.509 * scale) / 2;
 
         ctx.save();
-        ctx.translate(x, 0);
+        ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
         ctx.fillStyle = "red";
