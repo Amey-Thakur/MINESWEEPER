@@ -183,20 +183,20 @@ export class SpriteSheet {
 
     drawFlag(x) {
         const ctx = this.ctx;
-        const scale = (CELL_SIZE * 0.70) / 100;
+        const scale = (CELL_SIZE * 0.85) / 100;
         const offset = (CELL_SIZE - 100 * scale) / 2;
 
         ctx.save();
         ctx.translate(x + offset, offset);
         ctx.scale(scale, scale);
 
-        // Flag body (red)
+        // Flag body (Vibrant RED triangle - pointing RIGHT)
         ctx.fillStyle = "red";
-        ctx.fill(new Path2D("M30 10h40v40H30V10z"));
+        ctx.fill(new Path2D("M35 10l50 30-50 30V10z"));
 
-        // Pole and base (black)
+        // Classic pole and stepped base (Solid BLACK - pole on LEFT)
         ctx.fillStyle = "#000";
-        ctx.fill(new Path2D("M25 50h50v10H25V50z M60 10v70h10V10H60z M35 70h30v10H35V70z"));
+        ctx.fill(new Path2D("M25 10h10v75H25V10z M10 80h40v7H10v-7z M0 87h60v10H0v-10z"));
 
         ctx.restore();
     }
