@@ -1,0 +1,57 @@
+# deploy.yml
+#
+# Author:       Amey Thakur
+# GitHub:       https://github.com/Amey-Thakur
+# Repository:   https://github.com/Amey-Thakur/MINESWEEPER
+# Release Date: March 5, 2026
+# License:      MIT
+#
+# Tech Stack:   GitHub Actions, GitHub Pages
+#
+# Description:  CI/CD workflow that deploys the static site to GitHub Pages
+#               on every push to the main branch. No build step is needed
+#               because the project uses plain HTML, CSS, and ES6 modules.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+# Grant the GITHUB_TOKEN permission to deploy to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only allow one deployment at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './Source Code'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,161 @@
+/*
+ * game.css
+ *
+ * Author:       Amey Thakur
+ * GitHub:       https://github.com/Amey-Thakur
+ * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date: March 5, 2026
+ * License:      MIT
+ *
+ * Tech Stack:   CSS3
+ *
+ * Description:  Styling for the Minesweeper game interface components:
+ *               the LCD counters (mine count and timer), the smiley
+ *               reset button, and the Canvas container. The game board
+ *               itself is rendered via the Canvas API in JavaScript;
+ *               this stylesheet only controls the surrounding chrome.
+ */
+
+
+/* ===========================================================
+   GAME HEADER
+   
+   Sits between the menu bar and the game board. Contains
+   three elements in a row:
+     [Mine Counter]  [Smiley Button]  [Timer]
+   
+   The whole panel is sunken (inset bevel) to match how
+   the original Minesweeper looked.
+   =========================================================== */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    margin: 4px;
+    gap: 8px;
+    background-color: var(--win95-surface);
+
+    /* Sunken panel */
+    border-top: 2px solid var(--win95-shadow);
+    border-left: 2px solid var(--win95-shadow);
+    border-bottom: 2px solid var(--win95-highlight);
+    border-right: 2px solid var(--win95-highlight);
+}
+
+
+/* ===========================================================
+   LCD COUNTER
+   
+   Used for both the mine counter and the timer. The original
+   Minesweeper used a 7-segment LED-style display: red digits
+   on a near-black background.
+   
+   The VT323 font does a good job of approximating that look
+   without needing custom bitmap rendering.
+   =========================================================== */
+
+.lcd-counter {
+    font-family: var(--font-lcd);
+    font-size: var(--fs-lcd);
+    color: #ff0000;
+    background-color: #1a0000;
+    padding: 2px 6px;
+    min-width: 56px;
+    text-align: right;
+    letter-spacing: 2px;
+    line-height: 1;
+
+    /* Sunken bevel */
+    border-top: 2px solid var(--win95-shadow);
+    border-left: 2px solid var(--win95-shadow);
+    border-bottom: 2px solid var(--win95-highlight);
+    border-right: 2px solid var(--win95-highlight);
+}
+
+
+/* ===========================================================
+   SMILEY BUTTON
+   
+   The central reset button between the two counters.
+   Win95 used four smiley states:
+     - Normal:    standard happy face
+     - Clicking:  surprised face (mouth open)
+     - Won:       sunglasses face
+     - Lost:      dead face (X eyes)
+   
+   State changes are handled in JS by swapping the emoji.
+   =========================================================== */
+
+.smiley-button {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--win95-btn-face);
+
+    /* Raised bevel */
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-bottom: 2px solid var(--win95-dark-shadow);
+    border-right: 2px solid var(--win95-dark-shadow);
+}
+
+.smiley-button:active {
+    border-top-color: var(--win95-dark-shadow);
+    border-left-color: var(--win95-dark-shadow);
+    border-bottom-color: var(--win95-highlight);
+    border-right-color: var(--win95-highlight);
+}
+
+
+/* ===========================================================
+   GAME CONTAINER
+   
+   Wraps the HTML5 Canvas where all cells are drawn. The
+   sunken border matches the original game field look.
+   =========================================================== */
+
+.game-container {
+    margin: 0 4px 4px 4px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--win95-surface);
+
+    /* Sunken panel */
+    border-top: 3px solid var(--win95-shadow);
+    border-left: 3px solid var(--win95-shadow);
+    border-bottom: 3px solid var(--win95-highlight);
+    border-right: 3px solid var(--win95-highlight);
+}
+
+
+/* The canvas size is set in JS to match the board dimensions.
+   crisp-edges keeps the pixel art look sharp when scaling. */
+
+#game-canvas {
+    cursor: pointer;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+
+/* ===========================================================
+   GAME STATE FEEDBACK
+   
+   These classes get toggled on the game container by JS
+   to change the cursor based on the current game state.
+   =========================================================== */
+
+.game-container.pressing {
+    cursor: pointer;
+}
+
+.game-container.won,
+.game-container.lost {
+    cursor: default;
+}

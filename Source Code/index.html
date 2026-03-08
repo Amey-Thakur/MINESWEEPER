@@ -1,0 +1,230 @@
+<!--
+  index.html
+
+  Author:       Amey Thakur
+  GitHub:       https://github.com/Amey-Thakur
+  Repository:   https://github.com/Amey-Thakur/MINESWEEPER
+  Release Date: March 5, 2026
+  License:      MIT
+
+  Tech Stack:   HTML5, CSS3 (Custom Properties), ES6 Modules, Canvas API
+
+  Description:  Entry point for a high-performance Minesweeper engine that
+                uses QuadTree spatial indexing for viewport culling on boards
+                up to 1,000,000 cells, a Constraint Satisfaction Problem (CSP)
+                solver for guaranteed no-guess board generation, BFS-based
+                flood-fill with bitmask state tracking, and bit-packed
+                TypedArrays for cache-friendly memory layout. The interface
+                is a pixel-perfect recreation of the Windows 95 aesthetic,
+                rendered entirely on HTML5 Canvas with zero runtime
+                dependencies. Deployed as a static site on GitHub Pages.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="High-performance Minesweeper game built with QuadTree spatial indexing and a pixel-perfect Windows 95 look. Zero dependencies.">
+    <meta name="keywords" content="Minesweeper, Windows 95, QuadTree, Canvas, Game, Data Structures, Algorithms">
+    <meta name="author" content="Amey Thakur">
+    <meta name="theme-color" content="#008080">
+
+    <meta property="og:title" content="Minesweeper">
+    <meta property="og:description" content="Minesweeper with QuadTree spatial indexing and a Windows 95 aesthetic.">
+    <meta property="og:type" content="website">
+
+    <title>Minesweeper</title>
+
+    <!--
+    VT323 gives the classic monospaced LCD look for the mine counter
+    and the timer display. This font is a recreation of the VT320
+    terminal typeface from the early 1980s.
+  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <!-- Style layers: reset first, then theme, then game-specific. -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/win95.css">
+    <link rel="stylesheet" href="css/game.css">
+</head>
+
+<body>
+
+    <!-- ===================== DESKTOP =====================
+       The full page acts as a Windows 95 desktop surface.
+       The teal background and taskbar sit behind the
+       draggable game window.
+       ==================================================== -->
+    <div id="desktop" class="win95-desktop">
+
+        <!-- =================== TASKBAR ====================
+         Fixed bar along the bottom edge. Contains a Start
+         button and a clock, just like the real thing.
+         ================================================= -->
+        <div id="taskbar" class="win95-taskbar">
+            <button id="start-button" class="win95-start-button">
+                <span class="start-text">Start</span>
+            </button>
+            <div class="taskbar-divider"></div>
+            <div id="taskbar-clock" class="win95-clock"></div>
+        </div>
+
+        <!-- ================ GAME WINDOW ===================
+         The main Minesweeper window. Follows the classic
+         Win95 window anatomy: title bar, menu bar, game
+         content area, and a status bar at the bottom.
+         ================================================= -->
+        <div id="game-window" class="win95-window">
+
+            <!-- Title bar with the window controls -->
+            <div id="title-bar" class="win95-title-bar">
+                <div class="title-bar-icon">*</div>
+                <div class="title-bar-text">Minesweeper</div>
+                <div class="title-bar-controls">
+                    <button class="title-btn minimize-btn" id="btn-minimize" aria-label="Minimize">_</button>
+                    <button class="title-btn maximize-btn" id="btn-maximize" aria-label="Maximize">□</button>
+                    <button class="title-btn close-btn" id="btn-close" aria-label="Close">×</button>
+                </div>
+            </div>
+
+            <!-- Menu bar: Game and Help dropdowns -->
+            <div id="menu-bar" class="win95-menu-bar">
+                <div class="menu-item" id="menu-game">
+                    <span class="menu-label">Game</span>
+                    <div class="menu-dropdown" id="dropdown-game">
+                        <button class="menu-option" id="menu-new">New Game</button>
+                        <div class="menu-separator"></div>
+                        <button class="menu-option" id="menu-beginner">Beginner (9x9, 10 mines)</button>
+                        <button class="menu-option" id="menu-intermediate">Intermediate (16x16, 40 mines)</button>
+                        <button class="menu-option" id="menu-expert">Expert (30x16, 99 mines)</button>
+                        <div class="menu-separator"></div>
+                        <button class="menu-option" id="menu-custom">Custom...</button>
+                        <div class="menu-separator"></div>
+                        <button class="menu-option" id="menu-seed">Enter Seed...</button>
+                    </div>
+                </div>
+                <div class="menu-item" id="menu-help">
+                    <span class="menu-label">Help</span>
+                    <div class="menu-dropdown" id="dropdown-help">
+                        <button class="menu-option" id="menu-about">About Minesweeper</button>
+                        <button class="menu-option" id="menu-how-to-play">How to Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game header: mine counter on the left, smiley in the middle, timer on the right -->
+            <div id="game-header" class="game-header">
+                <div id="mine-counter" class="lcd-counter" aria-label="Remaining mines">000</div>
+                <button id="smiley-button" class="smiley-button" aria-label="New game">
+                    <span id="smiley-face">🙂</span>
+                </button>
+                <div id="timer" class="lcd-counter" aria-label="Elapsed time">000</div>
+            </div>
+
+            <!-- The canvas lives here. All cell rendering is handled in JS. -->
+            <div id="game-container" class="game-container">
+                <canvas id="game-canvas" aria-label="Minesweeper game board"></canvas>
+            </div>
+
+            <!-- Status bar at the bottom of the window -->
+            <div id="status-bar" class="win95-status-bar">
+                <span id="status-text">Ready</span>
+                <span id="status-seed"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================ CUSTOM GAME DIALOG ================
+       Pops up when "Custom..." is selected from the Game
+       menu. Lets the player pick rows, cols, and mine count.
+       ====================================================== -->
+    <div id="custom-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="custom-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="custom-dialog-title">Custom Field</span>
+            <button class="title-btn close-btn" id="custom-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body">
+            <div class="dialog-field">
+                <label for="custom-rows">Height (rows):</label>
+                <input type="number" id="custom-rows" min="9" max="1000" value="16">
+            </div>
+            <div class="dialog-field">
+                <label for="custom-cols">Width (columns):</label>
+                <input type="number" id="custom-cols" min="9" max="1000" value="30">
+            </div>
+            <div class="dialog-field">
+                <label for="custom-mines">Mines:</label>
+                <input type="number" id="custom-mines" min="1" max="999" value="99">
+            </div>
+            <div class="dialog-actions">
+                <button id="custom-ok" class="win95-btn">OK</button>
+                <button id="custom-cancel" class="win95-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ SEED DIALOG ================
+       Enter a numeric seed so that two people can play
+       the exact same board layout.
+       ================================================ -->
+    <div id="seed-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="seed-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="seed-dialog-title">Enter Seed</span>
+            <button class="title-btn close-btn" id="seed-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body">
+            <div class="dialog-field">
+                <label for="seed-input">Seed (number):</label>
+                <input type="number" id="seed-input" min="1" value="42">
+            </div>
+            <p class="dialog-note">Same seed + same settings = same board. Share with friends to compete!</p>
+            <div class="dialog-actions">
+                <button id="seed-ok" class="win95-btn">OK</button>
+                <button id="seed-cancel" class="win95-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ ABOUT DIALOG ================ -->
+    <div id="about-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="about-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="about-dialog-title">About Minesweeper</span>
+            <button class="title-btn close-btn" id="about-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body about-body">
+            <h2>Minesweeper</h2>
+            <p>A high-performance Minesweeper engine.</p>
+            <ul>
+                <li>QuadTree spatial indexing for massive boards</li>
+                <li>Constraint Satisfaction solver for no-guess boards</li>
+                <li>BFS flood-fill with bitmask optimization</li>
+                <li>Bit-packed TypedArrays for memory efficiency</li>
+                <li>Seeded PRNG for reproducible, shareable games</li>
+            </ul>
+            <p><strong>Author:</strong> Amey Thakur</p>
+            <p><strong>License:</strong> MIT</p>
+            <div class="dialog-actions">
+                <button id="about-ok" class="win95-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Semi-transparent backdrop behind any open dialog -->
+    <div id="dialog-overlay" class="dialog-overlay hidden"></div>
+
+    <!--
+    All game logic is loaded as ES6 modules.
+    main.js is the entry point that wires everything together.
+  -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

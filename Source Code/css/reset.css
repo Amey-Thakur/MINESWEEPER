@@ -1,0 +1,108 @@
+/*
+ * reset.css
+ *
+ * Author:       Amey Thakur
+ * GitHub:       https://github.com/Amey-Thakur
+ * Repository:   https://github.com/Amey-Thakur/MINESWEEPER
+ * Release Date: March 5, 2026
+ * License:      MIT
+ *
+ * Tech Stack:   CSS3
+ *
+ * Description:  Browser normalization layer that strips default margins,
+ *               paddings, and box model inconsistencies across Chrome,
+ *               Firefox, Safari, and Edge. Establishes a predictable
+ *               baseline for the Win95 design system to build on top of.
+ */
+
+
+
+/* Apply border-box globally. Without this, padding and border
+   get added on top of width/height, which makes layout math
+   unpredictable. */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Lock the viewport so nothing scrolls. The game window is
+   fixed-size, and the desktop fills the screen. */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* Buttons should inherit font settings from their parent
+   instead of using the browser default (usually Times). */
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+
+/* Same deal for inputs. */
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+
+/* Lists are only used inside the About dialog, and they
+   get custom styling there. Strip the default bullets. */
+
+ul,
+ol {
+  list-style: none;
+}
+
+
+/* Links are not really used in the game, but just in case. */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* Canvas elements should be block-level so they do not
+   introduce a phantom gap below them (inline elements
+   sit on the text baseline, which leaves a few pixels). */
+
+canvas {
+  display: block;
+}
+
+
+/* Kill the blue tap highlight on mobile devices. */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Utility class to prevent text selection during play.
+   Applied to the desktop container via JS. */
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
