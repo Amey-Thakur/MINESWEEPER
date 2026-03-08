@@ -90,9 +90,11 @@ export function initMenus(callbacks) {
         const smHelp = document.getElementById('sm-help');
         const smHelpSub = document.getElementById('sm-help-sub');
         if (smHelp && smHelpSub) {
-            // Mobile/Click fallback for the hover menu
+            // Hover logic is mostly CSS, but we can add programmatic toggles if needed.
+            // Click for mobile/fallback:
             smHelp.addEventListener('click', (e) => {
                 e.stopPropagation();
+                e.stopImmediatePropagation(); // Block the generic 'close menu' listener
                 smHelpSub.classList.toggle('hidden');
             });
         }
