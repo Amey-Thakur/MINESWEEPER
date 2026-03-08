@@ -115,11 +115,10 @@ function init() {
             }
         },
         onAbout: () => {
-            document.getElementById('about-dialog').style.display = 'flex';
-            document.getElementById('dialog-overlay').style.display = 'block';
+            import('./ui/MenuController.js').then(m => m.showAbout());
         },
         onHowToPlay: () => {
-            alert("Classic Rules:\nRight-click to flag a mine.\nLeft-click to reveal.\nMiddle-click/Scroll to Pan/Zoom.");
+            import('./ui/MenuController.js').then(m => m.showHowToPlay());
         },
         onClock12Sec: () => setClockFormat('12h-sec', dom.clock),
         onClock12NoSec: () => setClockFormat('12h-nosec', dom.clock),
