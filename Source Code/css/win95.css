@@ -9,26 +9,23 @@
  *
  * Tech Stack   : CSS3, CSS Custom Properties (Variables)
  *
- * Description  : Complete design system recreating the Microsoft Windows 95
- *                visual language. All color values, border widths, and font
- *                choices are derived from the original Win95 system metrics.
- *                Uses CSS custom properties for a single-source theming
- *                approach, making the palette easy to maintain or extend
- *                to other Windows-era themes (98, XP, etc.).
- *
- * The signature "3D" look is done with asymmetric borders:
- *   - Top and left edges get the highlight (light) color.
- *   - Bottom and right edges get the shadow (dark) color.
- * This fakes a light source in the upper-left corner, which
- * was the defining design trait of that entire era.
+ * Description  : Comprehensive design system replicating the Microsoft Windows 95
+ *                visual language. Color paradigms, geometrical border measurements, 
+ *                and typographic families are synthesized directly from legacy 
+ *                Windows OS physical metrics.
+ *                
+ *                The system leverages CSS Custom Properties to establish a 
+ *                single source of truth for chromatic theming. Physical depth 
+ *                and the signature beveling effect is achieved via asymmetric 
+ *                border color allocations to simulate a static, top-left 
+ *                originating light source.
  */
 
 
-/* ----- Design Tokens -----
- *
- * Everything is defined as CSS variables so the theme is easy
- * to tweak in one place. These map directly to the named
- * system colors from the Win95 Display Properties panel.
+/* 
+ * Design System Tokens
+ * Defines mutable physical and chromatic properties configured to directly 
+ * map to legacy named system colors from the Windows 95 registry.
  */
 
 :root {
@@ -62,7 +59,7 @@
     --win95-menu-hl-text: #ffffff;
     /* Selected menu item text             */
 
-    /* Typography */
+    /* Typographical Standards */
     --font-system: 'Segoe UI', 'MS Sans Serif', Tahoma, Geneva, sans-serif;
     --font-lcd: 'VT323', 'Courier New', monospace;
     --fs-base: 12px;
@@ -70,7 +67,7 @@
     --fs-menu: 12px;
     --fs-title: 12px;
 
-    /* Spacing and sizing */
+    /* Geometric Constraints */
     --border-w: 2px;
     --window-pad: 3px;
     --titlebar-h: 22px;
@@ -80,9 +77,11 @@
 }
 
 
-/* ===========================================================
-   DESKTOP
-   =========================================================== */
+/* 
+ * Desktop Environment 
+ * Provides the overarching background construct functioning as the host 
+ * for absolute positioned window coordinates and grid execution.
+ */
 
 .win95-desktop {
     width: 100vw;
@@ -100,7 +99,7 @@
     align-items: center;
     user-select: none;
     position: relative;
-    /* Old monitor turn on animation */
+    /* Hardware power sequence animation */
     animation: crt-turn-on 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
@@ -148,9 +147,10 @@
     animation: crt-turn-off 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-/* ===========================================================
-   SHUTDOWN OVERLAY
-   =========================================================== */
+/* 
+ * Shutdown Sequence Overlay
+ * Manages the visibility and styling for the legacy safe-to-turn-off view. 
+ */
 
 .shutdown-overlay {
     position: fixed;
@@ -193,10 +193,11 @@
     }
 }
 
-/* ===========================================================
-   START MENU
-   Pops up from bottom-left corner when Start is clicked
-   =========================================================== */
+/* 
+ * Start Menu Architecture Navigation 
+ * Container governing the system command palette accessed via the primary 
+ * taskbar entry sequence. 
+ */
 
 .win95-start-menu {
     position: absolute;
@@ -338,11 +339,11 @@
 }
 
 
-/* ===========================================================
-   TASKBAR
-   Fixed along the bottom. Has a Start button on the left
-   and a clock on the right, separated by a subtle divider.
-   =========================================================== */
+/* 
+ * OS Taskbar 
+ * Fixed anchoring bar maintaining global system controls including the clock
+ * logic module and application minimization tabs.
+ */
 
 .win95-taskbar {
     position: fixed;
@@ -368,7 +369,7 @@
     font-weight: bold;
     font-size: var(--fs-base);
 
-    /* Raised bevel */
+    /* Volumetric inset definition */
     border-top: 2px solid var(--win95-highlight);
     border-left: 2px solid var(--win95-highlight);
     border-bottom: 2px solid var(--win95-dark-shadow);
@@ -376,7 +377,7 @@
 }
 
 .win95-start-button:active {
-    /* Pressed state: flip the bevel direction */
+    /* Active depression state mutation */
     border-top-color: var(--win95-dark-shadow);
     border-left-color: var(--win95-dark-shadow);
     border-bottom-color: var(--win95-highlight);
@@ -400,7 +401,7 @@
     padding: 2px 8px;
     font-size: 11px;
 
-    /* Sunken look for the clock area */
+    /* Apply internal recession */
     border-top: 1px solid var(--win95-shadow);
     border-left: 1px solid var(--win95-shadow);
     border-bottom: 1px solid var(--win95-highlight);
@@ -426,19 +427,14 @@
     height: 8px;
     margin-left: auto;
     filter: brightness(0.5);
-    /* Subtle dark arrow */
+    /* Muted directional glyph */
 }
 
-/* ===========================================================
-   WINDOW
-   
-   The Win95 window has a layered border system that gives it
-   the double-bevel depth effect:
-     Outer layer: black shadow on bottom-right, white on top-left
-     Inner layer: gray shadow inside, light gray highlight inside
-   
-   This combination creates the chunky, tactile feel.
-   =========================================================== */
+/* 
+ * Application Container Envelope 
+ * Establishes the z-index hierarchy and double-bevel physical borders 
+ * for the floating window interface.
+ */
 
 .win95-window {
     background-color: var(--win95-surface);
@@ -446,7 +442,7 @@
     flex-direction: column;
     position: relative;
 
-    /* Outer raised bevel */
+    /* Outer border constraints */
     border-top: 2px solid var(--win95-highlight);
     border-left: 2px solid var(--win95-highlight);
     border-bottom: 2px solid var(--win95-dark-shadow);
@@ -459,7 +455,7 @@
     overflow: hidden;
     z-index: 100;
 
-    /* App open animation */
+    /* DOM insertion sequence */
     animation: window-open 0.2s ease-out;
 }
 
@@ -478,11 +474,10 @@
 
 
 
-/* ===========================================================
-   TITLE BAR
-   The blue gradient bar at the top of the window. In Win95,
-   active windows had a navy-to-cyan gradient.
-   =========================================================== */
+/* 
+ * Window Title Bar Component
+ * Secures interactive drag capability bounds and active gradient identification.
+ */
 
 .win95-title-bar {
     display: flex;
@@ -545,11 +540,10 @@
 }
 
 
-/* ===========================================================
-   MENU BAR
-   Sits right below the title bar. Each menu item has a
-   dropdown that appears on click.
-   =========================================================== */
+/* 
+ * Configuration Menu Navigation
+ * Nested sub-menu interaction zone handling core parameter reconfiguration.
+ */
 
 .win95-menu-bar {
     display: flex;
@@ -576,7 +570,7 @@
     color: var(--win95-menu-hl-text);
 }
 
-/* The dropdown panel. Hidden by default, toggled via JS. */
+/* Absolute positioned command list */
 
 .menu-dropdown {
     display: none;
@@ -642,11 +636,10 @@
 }
 
 
-/* ===========================================================
-   STATUS BAR
-   Thin bar along the bottom of the window. Shows the current
-   game seed and other status info.
-   =========================================================== */
+/* 
+ * System Status Bar Container 
+ * Defines the footer boundaries delivering read-only string mutations.
+ */
 
 .win95-status-bar {
     display: flex;
@@ -657,7 +650,7 @@
     font-size: 11px;
     margin: 2px;
 
-    /* Sunken look */
+    /* Structural depression */
     border-top: 1px solid var(--win95-shadow);
     border-left: 1px solid var(--win95-shadow);
     border-bottom: 1px solid var(--win95-highlight);
@@ -665,11 +658,11 @@
 }
 
 
-/* ===========================================================
-   DIALOG BOXES
-   Used for the Custom game, Seed input, and About dialogs.
-   Centered on screen with a semi-transparent overlay behind.
-   =========================================================== */
+/* 
+ * Global Prompt Modals 
+ * Forces blocking layout patterns to capture focused input streams 
+ * during parameter adjustments.
+ */
 
 .dialog-overlay {
     position: fixed;
@@ -752,7 +745,7 @@
     font-size: var(--fs-base);
     background: white;
 
-    /* Sunken input border */
+    /* Recessed input matrix styling */
     border-top: 2px solid var(--win95-shadow);
     border-left: 2px solid var(--win95-shadow);
     border-bottom: 2px solid var(--win95-highlight);
@@ -772,7 +765,7 @@
     margin-top: 16px;
 }
 
-/* Standard button used in dialogs. Raised bevel. */
+/* Reusable elevated control button instance */
 
 .win95-btn {
     padding: 4px 24px;
@@ -793,9 +786,7 @@
 }
 
 
-/* ===========================================================
-   UTILITY
-   =========================================================== */
+/* Overriding Helper Utilities */
 
 .hidden {
     display: none !important;
@@ -815,9 +806,10 @@
     color: #ee0000;
 }
 
-/* ===========================================================
-   DESKTOP ICONS
-   =========================================================== */
+/* 
+ * Navigational System Nodes 
+ * Desktop coordinate points allowing immediate application or resource opening.
+ */
 
 .desktop-icons {
     position: absolute;
@@ -871,9 +863,10 @@
     outline: 1px dotted white;
 }
 
-/* ===========================================================
-   TASKBAR TABS
-   =========================================================== */
+/*
+ * Foreground Application Access Nodes 
+ * Defines the minimizing queue structure mounted in the OS generic bar.
+ */
 
 .taskbar-apps {
     display: flex;
@@ -917,9 +910,10 @@
     font-size: 14px;
 }
 
-/* ===========================================================
-   WINDOW STATES
-   =========================================================== */
+/* 
+ * Coordinate Transformations
+ * Overwrites specific spatial properties for minimization/maximization.
+ */
 
 .win95-window.minimized {
     display: none !important;
