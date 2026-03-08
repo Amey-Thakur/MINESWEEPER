@@ -130,21 +130,22 @@ export class SpriteSheet {
     }
 
     drawMine(x) {
-        const cx = x + CELL_SIZE / 2;
-        const cy = CELL_SIZE / 2;
+        const ctx = this.ctx;
+        const scale = CELL_SIZE / 117.509; // Scale from SVG viewBox (117.509) to cell size
 
-        this.ctx.fillStyle = '#000000';
-        this.ctx.beginPath();
-        this.ctx.arc(cx, cy, 5, 0, Math.PI * 2);
-        this.ctx.fill();
+        ctx.save();
+        ctx.translate(x, 0);
+        ctx.scale(scale, scale);
 
-        // Spikes
-        this.ctx.fillRect(cx - 7, cy - 1, 14, 2);
-        this.ctx.fillRect(cx - 1, cy - 7, 2, 14);
+        const p = new Path2D("M35.134 34.736h20.478v20.612H35.134z"); // Highlight
+        ctx.fillStyle = "#fff";
+        ctx.fill(p);
 
-        // Highlight
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.fillRect(cx - 2, cy - 2, 2, 2);
+        const p2 = new Path2D("M54.29 108.46v-9.047H36.192v-9.049h-9.048v9.049h-9.049v-9.049h9.049v-9.048h-9.049V63.22H0V54.289h18.096V36.193h9.049v-9.048h-9.049v-9.049h9.049v9.049h9.048v-9.049h18.096V0H63.22v18.096h18.096v9.049h9.048v-9.049h9.049v9.049h-9.049v9.048h9.049v18.096h18.096V63.22H99.413v18.096h-9.049v9.048h9.049v9.049h-9.049v-9.049h-9.048v9.049H63.22v18.096H54.289zm0-63.219v-9.048H36.192v18.096h18.096z");
+        ctx.fillStyle = "#000";
+        ctx.fill(p2);
+
+        ctx.restore();
     }
 
     drawFlag(x) {

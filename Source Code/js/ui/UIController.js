@@ -61,7 +61,7 @@ export class UIController {
     // -------------------------------------------------------
 
     updateSmiley(face) {
-        this.dom.smiley.textContent = face;
+        this.dom.smiley.src = face;
     }
 
     updateMineCounter(minesTotal, flagsPlaced) {

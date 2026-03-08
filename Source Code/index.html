@@ -107,7 +107,7 @@
                     <button class="start-menu-item" id="sm-help">
                         <span class="sm-icon">❓</span>
                         <span class="sm-text">Help</span>
-                        <span class="sm-arrow">▶</span>
+                        <img src="./assets/icons/arrow_down.svg" class="sm-arrow-icon" alt="">
                     </button>
                     <div class="start-sub-menu hidden" id="sm-help-sub">
                         <button class="start-menu-item" id="sm-about-trigger">
@@ -122,7 +122,7 @@
                 </div>
                 <button class="start-menu-item" id="sm-run"
                     onclick="const p = prompt('Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.', ''); if(p) window.open('https://www.google.com/search?q=' + encodeURIComponent(p), '_blank');">
-                    <span class="sm-icon">🏃🏻</span>
+                    <img src="./assets/icons/gear.svg" class="tab-icon-img" alt="" style="margin-right: 8px;">
                     <span class="sm-text">Run...</span>
                 </button>
                 <div class="sm-divider"></div>
@@ -216,7 +216,7 @@
             <div id="game-header" class="game-header">
                 <div id="mine-counter" class="lcd-counter" aria-label="Remaining mines">000</div>
                 <button id="smiley-button" class="smiley-button" aria-label="New game">
-                    <span id="smiley-face">🙂</span>
+                    <img id="smiley-icon" src="./assets/icons/smiley_normal.svg" alt="Smiley">
                 </button>
                 <div id="timer" class="lcd-counter" aria-label="Elapsed time">000</div>
             </div>

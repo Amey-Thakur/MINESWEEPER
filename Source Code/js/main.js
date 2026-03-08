@@ -62,10 +62,10 @@ const GAME_STATE = {
 };
 
 const SMILEY = {
-    IDLE: '🙂',
-    PRESSING: '😮',
-    WON: '😎',
-    LOST: '💀',
+    IDLE: './assets/icons/smiley_normal.svg',
+    PRESSING: './assets/icons/smiley_worried.svg',
+    WON: './assets/icons/smiley_won.svg',
+    LOST: './assets/icons/smiley_dead.svg',
 };
 
 // -------------------------------------------------------
@@ -77,7 +77,7 @@ const dom = {
     container: document.getElementById('game-container'),
     mineCounter: document.getElementById('mine-counter'),
     timer: document.getElementById('timer'),
-    smiley: document.getElementById('smiley-face'),
+    smiley: document.getElementById('smiley-icon'),
     smileyBtn: document.getElementById('smiley-button'),
     window: document.getElementById('game-window'),
     titleBar: document.getElementById('title-bar'),
