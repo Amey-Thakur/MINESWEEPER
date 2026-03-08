@@ -277,9 +277,14 @@
 }
 
 .sm-arrow-icon {
-    width: 6px;
+    width: 10px;
     height: 10px;
     margin-left: auto;
+    image-rendering: pixelated;
+}
+
+.start-menu-item:hover .sm-arrow-icon {
+    filter: brightness(0) invert(1);
 }
 
 .sm-divider {
