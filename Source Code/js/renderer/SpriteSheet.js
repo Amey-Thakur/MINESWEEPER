@@ -100,7 +100,7 @@ export class SpriteSheet {
         // 6: Crossed Mine (Wrongly flagged)
         this.drawFlat(6 * CELL_SIZE);
         this.drawMine(6 * CELL_SIZE);
-        // Cross deleted as requested
+        this.drawCross(6 * CELL_SIZE);
 
         // 15: Green Flag (Correctly flagged mine at game over)
         this.drawBevel(15 * CELL_SIZE, true);
@@ -269,6 +269,17 @@ export class SpriteSheet {
         ctx.restore();
 
         ctx.restore();
+    }
+
+    drawCross(x) {
+        this.ctx.strokeStyle = '#ff0000';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + 4, 4);
+        this.ctx.lineTo(x + CELL_SIZE - 4, CELL_SIZE - 4);
+        this.ctx.moveTo(x + CELL_SIZE - 4, 4);
+        this.ctx.lineTo(x + 4, CELL_SIZE - 4);
+        this.ctx.stroke();
     }
 
     // Retrieve a specific tile directly
