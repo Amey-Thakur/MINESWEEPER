@@ -947,17 +947,17 @@
     position: relative;
     z-index: 2;
     margin-bottom: -2px;
-    padding-left: 4px;
+    padding-left: 2px;
 }
 
 .seed-tab {
-    padding: 4px 8px 2px 8px;
-    margin-right: 2px;
+    padding: 3px 12px;
+    margin-right: 0px;
     background: var(--win95-surface);
     border-top: 2px solid var(--win95-highlight);
     border-left: 2px solid var(--win95-highlight);
     border-right: 2px solid var(--win95-dark-shadow);
-    border-bottom: none;
+    border-bottom: 2px solid var(--win95-shadow);
     box-shadow: inset -1px 0 var(--win95-shadow);
     cursor: default;
     font-size: 11px;
@@ -968,9 +968,11 @@
 
 .seed-tab.active {
     top: 0;
+    padding-top: 5px;
     padding-bottom: 4px;
     z-index: 3;
     border-bottom: 2px solid var(--win95-surface);
+    box-shadow: none;
 }
 
 .seed-tab-panel {
@@ -984,6 +986,8 @@
     box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
     z-index: 1;
+    min-height: 164px;
+    /* Maintain structural consistency across tabs */
 }
 
 .seed-tab-panel.active {
