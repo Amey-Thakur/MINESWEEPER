@@ -9,21 +9,15 @@
  *
  * Tech Stack   : Vanilla JavaScript (ES6)
  *
- * Description  : QuadTree implementation for spatial indexing of cells
- *                on the Minesweeper board. Allows O(log N + k) rectangle
- *                queries instead of O(N) iteration, where N is the total
- *                cell count and k is the number of results. This makes
- *                viewport culling practical on boards with up to 1,000,000
- *                cells.
+ * Description  : Implements a recursive spatial partitioning tree structure.
+ *                This architecture enables logarithmic time complexity queries
+ *                against two-dimensional cartesian coordinate bounds, allowing 
+ *                the rendering pipeline to efficiently cull off-screen geometry.
  */
 
 
-// -------------------------------------------------------
-// Rectangle (axis-aligned bounding box)
-//
-// Used both as the boundary of each QuadTree node and as
-// the query region when searching for visible cells.
-// -------------------------------------------------------
+// Defines an axis-aligned bounding box utilized for both node boundaries 
+// and absolute viewport query perimeters.
 
 export class Rectangle {
 
@@ -34,7 +28,7 @@ export class Rectangle {
         this.h = height;
     }
 
-    // Check if a point (px, py) falls inside this rectangle.
+    // Validates inclusive geometric inclusion of a specific coordinate vector.
     contains(px, py) {
         return (
             px >= this.x &&
@@ -44,9 +38,7 @@ export class Rectangle {
         );
     }
 
-    // Check if another rectangle overlaps with this one.
-    // Two rectangles overlap when neither is fully to the
-    // left, right, above, or below the other.
+    // Validates if two independent geometric bounds share overlapping area.
     intersects(range) {
         return !(
             range.x >= this.x + this.w ||
@@ -58,23 +50,8 @@ export class Rectangle {
 }
 
 
-// -------------------------------------------------------
-// QuadTree
-//
-// A region-based QuadTree that subdivides space into four
-// equal quadrants when a node exceeds its capacity. Each
-// leaf stores up to `capacity` points before splitting.
-//
-// Quadrant layout:
-//   NW | NE
-//   -------
-//   SW | SE
-//
-// Time complexity:
-//   insert:  O(log N) average
-//   query:   O(log N + k) where k = number of results
-//   clear:   O(1) (just reset the root)
-// -------------------------------------------------------
+// Recursive spatial partition implementation subdividing coordinate blocks 
+// upon threshold exhaustion.
 
 export class QuadTree {
 
@@ -84,7 +61,7 @@ export class QuadTree {
         this.points = [];
         this.divided = false;
 
-        // Child nodes (created on first subdivision)
+        // Child pointers instantiated upon threshold breach
         this.nw = null;
         this.ne = null;
         this.sw = null;
@@ -92,13 +69,8 @@ export class QuadTree {
     }
 
 
-    // Insert a point into the tree. Each point is an object
-    // with at least { x, y } properties. Additional data
-    // (like row, col, cell state) can be attached.
-    //
-    // Returns true if the point was inserted, false if it
-    // falls outside the boundary.
-
+    // Injects a coordinate target into the appropriate geometric node wrapper.
+    // Will dynamically shift capacity recursively if the node threshold overflows.
     insert(point) {
         if (!this.boundary.contains(point.x, point.y)) {
             return false;
@@ -122,8 +94,8 @@ export class QuadTree {
     }
 
 
-    // Split this node into four children and redistribute
-    // any existing points among them.
+    // Generates four discrete recursive boundary objects distributing geometry 
+    // constraints uniformly across the active area.
 
     subdivide() {
         const { x, y, w, h } = this.boundary;
@@ -135,7 +107,7 @@ export class QuadTree {
         this.sw = new QuadTree(new Rectangle(x, y + hh, hw, hh), this.capacity);
         this.se = new QuadTree(new Rectangle(x + hw, y + hh, hw, hh), this.capacity);
 
-        // Move existing points down into children
+        // Reallocate locally retained nodes into updated boundary structures
         for (const p of this.points) {
             this.nw.insert(p) ||
                 this.ne.insert(p) ||
@@ -148,12 +120,8 @@ export class QuadTree {
     }
 
 
-    // Find all points within a rectangular region.
-    //
-    // This is the key operation for viewport culling: given
-    // the camera's visible area, return only the cells that
-    // need to be drawn. On a 1000x1000 board, this returns
-    // around 500 cells instead of scanning all 1,000,000.
+    // Recursively retrieves arrays of valid coordinates bounded strictly within 
+    // the requested geometric parameter bounds. Primarily utilized for offscreen culling.
 
     query(range, found = []) {
         if (!this.boundary.intersects(range)) {
@@ -177,8 +145,7 @@ export class QuadTree {
     }
 
 
-    // Remove all points and collapse all subdivisions.
-    // Used when starting a new game.
+    // Destroys references forcing the garbage collector to purge the nested tree structure.
 
     clear() {
         this.points = [];
@@ -190,8 +157,7 @@ export class QuadTree {
     }
 
 
-    // Count the total number of points stored in the tree.
-    // Useful for debugging and validation.
+    // Performs an exhaustive count query across the nested logical structure.
 
     size() {
         let count = this.points.length;
