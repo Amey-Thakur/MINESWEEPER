@@ -747,3 +747,112 @@
 .win95-link:active {
     color: #ee0000;
 }
+
+/* ===========================================================
+   DESKTOP ICONS
+   =========================================================== */
+
+.desktop-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 10;
+}
+
+.desktop-icon {
+    width: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: default;
+}
+
+.icon-img-container {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.icon-label {
+    color: white;
+    font-size: 11px;
+    padding: 2px 4px;
+    text-shadow: 1px 1px 1px black;
+}
+
+.desktop-icon:hover .icon-label {
+    background-color: var(--win95-title-active);
+}
+
+.desktop-icon.selected .icon-label {
+    background-color: var(--win95-title-active);
+    outline: 1px dotted white;
+}
+
+/* ===========================================================
+   TASKBAR TABS
+   =========================================================== */
+
+.taskbar-apps {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    padding: 0 4px;
+}
+
+.taskbar-app-tab {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 160px;
+    height: 26px;
+    padding: 2px 6px;
+    background-color: var(--win95-btn-face);
+    font-size: 11px;
+    font-weight: bold;
+    border-top: 2px solid var(--win95-highlight);
+    border-left: 2px solid var(--win95-highlight);
+    border-bottom: 2px solid var(--win95-dark-shadow);
+    border-right: 2px solid var(--win95-dark-shadow);
+    cursor: default;
+}
+
+.taskbar-app-tab.active {
+    background-color: var(--win95-surface);
+    border-top: 2px solid var(--win95-dark-shadow);
+    border-left: 2px solid var(--win95-dark-shadow);
+    border-bottom: 2px solid var(--win95-highlight);
+    border-right: 2px solid var(--win95-highlight);
+    box-shadow: inset 1px 1px 0 var(--win95-shadow);
+}
+
+.tab-icon {
+    font-size: 14px;
+}
+
+/* ===========================================================
+   WINDOW STATES
+   =========================================================== */
+
+.win95-window.minimized {
+    display: none !important;
+}
+
+.win95-window.maximized {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: calc(100vh - var(--taskbar-h)) !important;
+    max-width: none !important;
+    max-height: none !important;
+    transform: none !important;
+}
