@@ -947,31 +947,34 @@
     position: relative;
     z-index: 2;
     margin-bottom: -2px;
-    padding-left: 2px;
+    padding-left: 8px;
+    /* Classic Win95 offset */
 }
 
 .seed-tab {
     padding: 3px 12px;
-    margin-right: 0px;
+    margin-right: -1px;
     background: var(--win95-surface);
     border-top: 2px solid var(--win95-highlight);
     border-left: 2px solid var(--win95-highlight);
     border-right: 2px solid var(--win95-dark-shadow);
-    border-bottom: 2px solid var(--win95-shadow);
+    border-bottom: 2px solid var(--win95-highlight);
+    /* Merges with panel top border */
     box-shadow: inset -1px 0 var(--win95-shadow);
     cursor: default;
     font-size: 11px;
     position: relative;
-    top: 2px;
+    top: 0;
     z-index: 1;
 }
 
 .seed-tab.active {
-    top: 0;
+    top: -2px;
     padding-top: 5px;
     padding-bottom: 4px;
     z-index: 3;
     border-bottom: 2px solid var(--win95-surface);
+    /* Masks panel top border */
     box-shadow: none;
 }
 
@@ -986,8 +989,9 @@
     box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
     z-index: 1;
-    min-height: 164px;
-    /* Maintain structural consistency across tabs */
+    height: 180px;
+    /* Locked height to prevent dialog resize jitter */
+    overflow: hidden;
 }
 
 .seed-tab-panel.active {
