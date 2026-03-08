@@ -60,10 +60,9 @@
     background-color: #000;
     padding: 2px;
     display: flex;
-    gap: 1px;
-    height: 33px;
-    width: 44px;
-    box-sizing: border-box;
+    gap: 3px;
+    height: 40px;
+    width: 65px;
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -76,7 +75,7 @@
 }
 
 .lcd-digit {
-    width: 13px;
+    width: 17px;
     height: 100%;
     flex-shrink: 0;
     image-rendering: pixelated;
