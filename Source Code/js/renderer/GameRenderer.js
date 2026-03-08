@@ -147,7 +147,10 @@ export class GameRenderer {
 
             if (!board.isRevealed(index)) {
 
-                if (board.isFlagged(index)) {
+                // On win condition, all remaining unrevealed mines are explicitly granted green flags.
+                if (this.isWon && board.isMine(index)) {
+                    sprites.draw(ctx, sprites.sprites.FLAG_GREEN, x, y);
+                } else if (board.isFlagged(index)) {
                     sprites.draw(ctx, sprites.sprites.FLAG, x, y);
                 } else {
                     sprites.draw(ctx, sprites.sprites.HIDDEN, x, y);

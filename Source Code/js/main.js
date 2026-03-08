@@ -177,6 +177,7 @@ function startNewGame(difficulty, forcedSeed = null) {
     bindCanvasEvents();
 
     renderer = new GameRenderer(dom.canvas, shadowBoard, quadTree);
+    renderer.isWon = false;
 
     // Hook the ResizeObserver API to track viewport mutation and recalculate relative canvas dimensions.
     const resizeObserver = new ResizeObserver(() => {
@@ -321,6 +322,14 @@ function checkWinCondition() {
         gameState = GAME_STATE.WON;
         stopTimer();
         ui.updateSmiley(SMILEY.WON);
+
+        if (renderer) {
+            renderer.isWon = true;
+            renderer.render(); // Force redraw to turn flags green immediately
+        }
+
+        // Zero out the remaining mine counter since all remaining hidden cells are inherently mines.
+        ui.updateMineCounter(currentDifficulty.mines, currentDifficulty.mines);
     }
 }
 
