@@ -283,7 +283,8 @@
     image-rendering: pixelated;
 }
 
-.start-menu-item:hover .sm-arrow-icon {
+.start-menu-item:hover .sm-arrow-icon,
+.start-menu-item:hover .sm-invert {
     filter: brightness(0) invert(1);
 }
 
