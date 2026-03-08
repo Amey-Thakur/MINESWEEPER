@@ -36,11 +36,17 @@ export function initMenus(callbacks) {
         });
     });
 
+    const resetStartMenu = () => {
+        if (smHelpSub) smHelpSub.classList.add('hidden');
+        if (smHelp) smHelp.classList.remove('active-parent');
+    };
+
     // Close all menus on outside click
     document.addEventListener('click', () => {
         items.forEach((m) => m.classList.remove('active'));
         if (startMenu && !startMenu.classList.contains('hidden')) {
             startMenu.classList.add('hidden');
+            resetStartMenu();
         }
     });
 
@@ -61,8 +67,9 @@ export function initMenus(callbacks) {
     };
 
     for (const [id, handler] of Object.entries(bindings)) {
-        if (handler) {
-            document.getElementById(id).addEventListener('click', handler);
+        const el = document.getElementById(id);
+        if (el && handler) {
+            el.addEventListener('click', handler);
         }
     }
 
@@ -70,7 +77,9 @@ export function initMenus(callbacks) {
     if (startBtn && startMenu) {
         startBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Keep global click from instantly closing it
+            const isClosing = !startMenu.classList.contains('hidden');
             startMenu.classList.toggle('hidden');
+            if (isClosing) resetStartMenu();
         });
 
         // Prevent closing it if clicking inside the sidebar
