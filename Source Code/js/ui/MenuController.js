@@ -167,6 +167,15 @@ export function initMenus(callbacks) {
             });
         }
 
+        const smTechDocsTrigger = document.getElementById('sm-technical-docs');
+        if (smTechDocsTrigger) {
+            smTechDocsTrigger.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                resetStartMenu();
+                if (callbacks.onTechnicalDocs) callbacks.onTechnicalDocs();
+            });
+        }
+
         const smShutdown = document.getElementById('sm-shutdown');
         if (smShutdown) {
             smShutdown.addEventListener('click', () => {
