@@ -158,6 +158,15 @@ export function initMenus(callbacks) {
 
 
 
+        const smDeveloperTrigger = document.getElementById('sm-developer-info');
+        if (smDeveloperTrigger) {
+            smDeveloperTrigger.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                resetStartMenu();
+                if (callbacks.onDeveloper) callbacks.onDeveloper();
+            });
+        }
+
         const smShutdown = document.getElementById('sm-shutdown');
         if (smShutdown) {
             smShutdown.addEventListener('click', () => {
