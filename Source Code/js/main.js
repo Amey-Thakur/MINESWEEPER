@@ -129,6 +129,10 @@ function init() {
                 import('./ui/MenuController.js').then(m => m.triggerShutdown());
                 return true;
             }
+            if (cmd === 'author' || cmd === 'developer' || cmd === 'thakur' || cmd === 'amey') {
+                import('./ui/MenuController.js').then(m => m.showAuthorDialog());
+                return true;
+            }
             return false;
         }
     });

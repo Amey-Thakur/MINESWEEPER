@@ -418,6 +418,34 @@
         </div>
     </div>
 
+    <!-- Author modal -->
+    <div id="author-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="author-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="author-dialog-title">Developer Information</span>
+            <button class="title-btn close-btn" id="author-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body" style="width: 320px; text-align: center;">
+            <img src="./assets/icons/author.svg" alt="Author"
+                style="width: 48px; height: 48px; image-rendering: pixelated; margin-bottom: 15px;" class="sm-invert">
+            <h2 style="font-size: 16px; margin-bottom: 5px;">Amey Thakur</h2>
+            <p style="font-size: 11px; color: #444; margin-bottom: 15px;">Lead Software Engineer & Architect</p>
+
+            <div class="sm-divider" style="margin: 15px 0;"></div>
+
+            <div style="font-size: 11px; margin-bottom: 20px;">
+                <a href="https://github.com/Amey-Thakur" target="_blank" class="win95-link"
+                    style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <img src="./assets/icons/folder.svg" style="width: 16px; height: 16px;">
+                    Visit GitHub Profile
+                </a>
+            </div>
+
+            <div class="dialog-actions" style="justify-content: center;">
+                <button id="author-ok" class="win95-btn" style="min-width: 80px;">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Run modal -->
     <div id="run-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="run-dialog-title">
         <div class="win95-dialog-titlebar">

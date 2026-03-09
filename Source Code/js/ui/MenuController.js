@@ -309,6 +309,24 @@ export function showAbout() {
     overlay.classList.remove('hidden');
 }
 
+export function showAuthorDialog() {
+    const dialog = document.getElementById('author-dialog');
+    const overlay = document.getElementById('dialog-overlay');
+    const okBtn = document.getElementById('author-ok');
+    const closeBtn = document.getElementById('author-dialog-close');
+
+    const closeHandler = () => {
+        dialog.classList.add('hidden');
+        overlay.classList.add('hidden');
+    };
+
+    okBtn.onclick = closeHandler;
+    closeBtn.onclick = closeHandler;
+
+    dialog.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+}
+
 export function showRunDialog(onCommand) {
     const dialog = document.getElementById('run-dialog');
     const overlay = document.getElementById('dialog-overlay');
