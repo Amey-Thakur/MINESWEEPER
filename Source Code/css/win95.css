@@ -450,6 +450,7 @@
 
     box-shadow: 1px 1px 0 var(--win95-dark-shadow);
 
+    min-width: 250px;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - var(--taskbar-h) - 20px);
     overflow: hidden;
@@ -1010,9 +1011,9 @@
     box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
     z-index: 1;
-    height: 230px;
+    height: 180px;
     /* Locked height to prevent dialog resize jitter */
-    overflow: visible;
+    overflow: hidden;
 }
 
 .seed-tab-panel.active {
