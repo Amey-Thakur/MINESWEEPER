@@ -26,6 +26,12 @@
     ],
     "screenshots": [
         {
+            "src": "./assets/icons/pwa_wallpaper.jpg",
+            "sizes": "1920x1080",
+            "form_factor": "wide",
+            "label": "Minesweeper Engine - Scholarly Work"
+        },
+        {
             "src": "./assets/icons/pwa_gameboard.png",
             "sizes": "1280x720",
             "form_factor": "wide",
