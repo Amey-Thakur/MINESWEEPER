@@ -73,32 +73,21 @@ export function initDocSystem() {
         const tab = docTabs[key];
         const controls = docControls[key];
 
-        const isTopWindow = (el) => {
-            const windows = document.querySelectorAll('.win95-window:not(.hidden):not(.minimized)');
-            let maxZ = 0;
-            windows.forEach(w => {
-                const z = parseInt(w.style.zIndex) || 0;
-                if (z > maxZ) maxZ = z;
-            });
-            const currentZ = parseInt(el.style.zIndex) || 0;
-            return currentZ >= maxZ && maxZ > 0;
-        };
-
         const toggleMinimize = () => {
             if (win.classList.contains('minimized')) {
                 win.classList.remove('minimized');
-                bringToFront(win);
-            } else if (isTopWindow(win)) {
+                window.bringToFront(win);
+            } else if (window.isTopWindow(win)) {
                 win.classList.add('minimized');
                 if (tab) tab.classList.remove('active');
             } else {
-                bringToFront(win);
+                window.bringToFront(win);
             }
         };
 
         const toggleMaximize = () => {
             const isMaximized = win.classList.contains('maximized');
-            bringToFront(win);
+            window.bringToFront(win);
             if (isMaximized) {
                 win.classList.remove('maximized');
                 if (controls.max) controls.max.textContent = '□';
@@ -152,35 +141,6 @@ export function initDocSystem() {
 
     const taskbarApps = document.getElementById('taskbar-apps');
 
-    // Help: Bring window to front
-    const bringToFront = (el) => {
-        if (!el) return;
-        const windows = document.querySelectorAll('.win95-window, .win95-dialog');
-        let maxZ = 10000;
-        windows.forEach(w => {
-            const z = parseInt(w.style.zIndex) || 0;
-            if (z > maxZ) maxZ = z;
-        });
-        el.style.zIndex = maxZ + 1;
-
-        // Visual feedback: update active state on tabs
-        document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
-
-        // Find corresponding tab
-        const idMap = {
-            'game-window': 'minesweeper-tab',
-            'doc-quadtree': 'doc-quadtree-tab',
-            'doc-complexity': 'doc-complexity-tab',
-            'tech-docs-folder': 'tech-docs-tab'
-        };
-
-        const tabId = idMap[el.id];
-        const activeTab = document.getElementById(tabId);
-        if (activeTab) {
-            activeTab.classList.add('active');
-        }
-    };
-
     window.openTechnicalFolder = () => {
         const win = docWindows['folder'];
         const tab = docTabs['folder'];
@@ -196,7 +156,7 @@ export function initDocSystem() {
                     taskbarApps.appendChild(tab);
                 }
             }
-            bringToFront(win);
+            window.bringToFront(win);
         }
     };
 
@@ -214,7 +174,7 @@ export function initDocSystem() {
                     taskbarApps.appendChild(tab);
                 }
             }
-            bringToFront(docWindows[id]);
+            window.bringToFront(docWindows[id]);
         }
     };
 
@@ -265,9 +225,5 @@ export function initDocSystem() {
             openDoc(docId);
         });
     });
-
-    // Global Z-index management on click
-    document.querySelectorAll('.win95-window').forEach(win => {
-        win.addEventListener('mousedown', () => bringToFront(win));
-    });
 }
+

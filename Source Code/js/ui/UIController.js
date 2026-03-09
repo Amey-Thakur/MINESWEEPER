@@ -20,6 +20,57 @@
 
 import { formatLCD } from './TimerController.js';
 
+// -------------------------------------------------------
+// Global Window Management Helpers
+// -------------------------------------------------------
+
+window.isTopWindow = function (el) {
+    if (!el) return false;
+    const windows = document.querySelectorAll('.win95-window:not(.hidden):not(.minimized)');
+    let maxZ = 0;
+    windows.forEach(w => {
+        const z = parseInt(window.getComputedStyle(w).zIndex) || 0;
+        if (z > maxZ) maxZ = z;
+    });
+    const currentZ = parseInt(window.getComputedStyle(el).zIndex) || 0;
+    return currentZ >= maxZ && maxZ > 0;
+};
+
+window.bringToFront = function (el) {
+    if (!el) return;
+    const windows = document.querySelectorAll('.win95-window, .win95-dialog');
+    let maxZ = 10000;
+    windows.forEach(w => {
+        const z = parseInt(window.getComputedStyle(w).zIndex) || 0;
+        if (z > maxZ) maxZ = z;
+    });
+    el.style.zIndex = maxZ + 1;
+
+    // Visual feedback: update active state on tabs
+    document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
+
+    const idMap = {
+        'game-window': 'minesweeper-tab',
+        'doc-quadtree': 'doc-quadtree-tab',
+        'doc-complexity': 'doc-complexity-tab',
+        'tech-docs-folder': 'tech-docs-tab'
+    };
+
+    const activeTab = document.getElementById(idMap[el.id]);
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+};
+
+// Global mousedown listener for window focus using CAPTURING phase
+// This ensures we catch the click before the game engine can stop propagation
+document.addEventListener('mousedown', (e) => {
+    const win = e.target.closest('.win95-window, .win95-dialog');
+    if (win) {
+        window.bringToFront(win);
+    }
+}, true);
+
 export class UIController {
 
     constructor(dom) {
@@ -171,64 +222,25 @@ export class UIController {
         const maximizeBtn = document.getElementById('btn-maximize');
         const closeBtn = document.getElementById('btn-close');
         const taskbarTab = document.getElementById('minesweeper-tab');
-        const desktopIcon = document.getElementById('minesweeper-desktop-icon');
-        const githubIcon = document.getElementById('github-desktop-icon');
-        const taskbarApps = document.getElementById('taskbar-apps');
-
-        const bringToFront = (el) => {
-            if (!el) return;
-            const windows = document.querySelectorAll('.win95-window, .win95-dialog');
-            let maxZ = 10000;
-            windows.forEach(w => {
-                const z = parseInt(w.style.zIndex) || 0;
-                if (z > maxZ) maxZ = z;
-            });
-            el.style.zIndex = maxZ + 1;
-
-            // Visual feedback: update active state on tabs
-            document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
-            const idMap = {
-                'game-window': 'minesweeper-tab',
-                'doc-quadtree': 'doc-quadtree-tab',
-                'doc-complexity': 'doc-complexity-tab',
-                'tech-docs-folder': 'tech-docs-tab'
-            };
-            const activeTab = document.getElementById(idMap[el.id]);
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
-        };
-
-        this._bringToFrontHelper = bringToFront;
-
-        const isTopWindow = (el) => {
-            const windows = document.querySelectorAll('.win95-window:not(.hidden):not(.minimized)');
-            let maxZ = 0;
-            windows.forEach(w => {
-                const z = parseInt(w.style.zIndex) || 0;
-                if (z > maxZ) maxZ = z;
-            });
-            return (parseInt(el.style.zIndex) || 0) >= maxZ && maxZ > 0;
-        };
 
         const toggleMinimize = () => {
             if (win.classList.contains('minimized')) {
                 win.classList.remove('minimized');
-                bringToFront(win);
-            } else if (isTopWindow(win)) {
+                window.bringToFront(win);
+            } else if (window.isTopWindow(win)) {
                 win.classList.add('minimized');
                 if (taskbarTab) taskbarTab.classList.remove('active');
             } else {
-                bringToFront(win);
+                window.bringToFront(win);
             }
         };
 
         const toggleMaximize = () => {
             const isMaximized = win.classList.contains('maximized');
-            bringToFront(win);
+            window.bringToFront(win);
             if (isMaximized) {
                 win.classList.remove('maximized');
-                maximizeBtn.textContent = '□';
+                if (maximizeBtn) maximizeBtn.textContent = '□';
                 if (this._lastWindowPos) {
                     win.style.top = this._lastWindowPos.top;
                     win.style.left = this._lastWindowPos.left;
@@ -245,7 +257,7 @@ export class UIController {
                     transform: win.style.transform
                 };
                 win.classList.add('maximized');
-                maximizeBtn.textContent = '❐';
+                if (maximizeBtn) maximizeBtn.textContent = '❐';
             }
             if (window.renderer) window.renderer.resize();
         };
@@ -267,8 +279,6 @@ export class UIController {
         if (closeBtn) closeBtn.onclick = (e) => { e.stopPropagation(); closeWindow(); };
         if (taskbarTab) taskbarTab.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
 
-        win.addEventListener('mousedown', () => bringToFront(win));
-
         const setupIcon = (id, action) => {
             const icon = document.getElementById(id);
             if (!icon) return;
@@ -287,9 +297,12 @@ export class UIController {
         setupIcon('minesweeper-desktop-icon', () => this.openWindow());
         setupIcon('github-desktop-icon', () => window.open('https://github.com/Amey-Thakur', '_blank'));
 
-        document.getElementById('desktop').onclick = () => {
+        // Explicit capturing listener for the game window to ensure focus works
+        win.addEventListener('mousedown', () => window.bringToFront(win), true);
+
+        document.getElementById('desktop').addEventListener('click', () => {
             document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-        };
+        });
     }
 
     openWindow() {
@@ -300,7 +313,7 @@ export class UIController {
         if (win) {
             const wasHidden = tab && tab.style.display === 'none';
             win.classList.remove('minimized');
-            if (this._bringToFrontHelper) this._bringToFrontHelper(win);
+            window.bringToFront(win);
 
             if (tab) {
                 tab.style.display = 'flex';
