@@ -304,6 +304,12 @@
                     <button id="seed-ok-btn" class="win95-btn">OK</button>
                     <button class="win95-btn win95-dialog-close">Cancel</button>
                 </div>
+                <div class="sm-divider" style="margin: 20px 0 12px 0;"></div>
+                <div style="font-size: 11px; line-height: 1.5; color: #444;">
+                    <strong>Technical Note:</strong> Board generation is deterministic. The seed initializes the
+                    Pseudo-Random Number Generator (PRNG) to ensure that every player using this value encounters an
+                    identical mine configuration.
+                </div>
             </div>
 
             <div class="seed-tab-panel" id="seed-panel-share">
@@ -332,6 +338,11 @@
                 <div class="dialog-actions" style="margin-top: 25px;">
                     <button class="win95-btn" id="seed-native-share">Share...</button>
                     <button class="win95-btn win95-dialog-close">Close</button>
+                </div>
+                <div class="sm-divider" style="margin: 20px 0 12px 0;"></div>
+                <div style="font-size: 11px; line-height: 1.5; color: #444;">
+                    <strong>Synchronization:</strong> Sharing a link persists grid dimensions (Width, Height, Mines)
+                    alongside the Seed ID. This enables precise competitive matching across different browser sessions.
                 </div>
             </div>
 
