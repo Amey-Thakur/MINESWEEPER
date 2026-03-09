@@ -131,7 +131,7 @@ export function initDocSystem() {
         }
     });
 
-    // Helper: Bring window to front
+    // Help: Bring window to front
     const bringToFront = (el) => {
         const windows = document.querySelectorAll('.win95-window, .win95-dialog');
         let maxZ = 10000;
@@ -140,11 +140,9 @@ export function initDocSystem() {
             if (z > maxZ) maxZ = z;
         });
         el.style.zIndex = maxZ + 1;
-
-        // Reset sidebar apps active state if needed, though mostly handled individually
     };
 
-    const openFolder = () => {
+    window.openTechnicalFolder = () => {
         const win = docWindows['folder'];
         const tab = docTabs['folder'];
         if (win) {
@@ -177,7 +175,7 @@ export function initDocSystem() {
             e.stopPropagation();
             const now = Date.now();
             if (now - lastClick < 500) {
-                openFolder();
+                window.openTechnicalFolder();
             }
             lastClick = now;
 
@@ -187,34 +185,34 @@ export function initDocSystem() {
 
         techDocsIcon.addEventListener('dblclick', (e) => {
             e.stopPropagation();
-            openFolder();
+            window.openTechnicalFolder();
         });
-    }
-
-    if (folderCloseBtn) {
-        folderCloseBtn.onclick = closeFolder;
     }
 
     // Folder Grid Listeners
     docOpeners.forEach(opener => {
-        opener.addEventListener('dblclick', (e) => {
-            e.stopPropagation();
-            const docId = opener.getAttribute('data-doc');
-            openDoc(docId);
-        });
-
         let lastClick = 0;
         opener.addEventListener('click', (e) => {
-            e.stopPropagation();
             const now = Date.now();
-            if (now - lastClick < 300) {
-                openDoc(opener.getAttribute('data-doc'));
+            const docId = opener.getAttribute('data-doc');
+
+            if (now - lastClick < 400) {
+                openDoc(docId);
             }
             lastClick = now;
 
             // Local selection in folder
-            document.querySelectorAll('.folder-item').forEach(item => item.style.backgroundColor = 'transparent');
-            opener.style.backgroundColor = 'rgba(0,0,128,0.2)';
+            document.querySelectorAll('.folder-item').forEach(item => {
+                item.style.backgroundColor = 'transparent';
+                item.style.border = '1px solid transparent';
+            });
+            opener.style.backgroundColor = 'rgba(0,0,128,0.1)';
+            opener.style.border = '1px dotted #808080';
+        });
+
+        opener.addEventListener('dblclick', (e) => {
+            const docId = opener.getAttribute('data-doc');
+            openDoc(docId);
         });
     });
 

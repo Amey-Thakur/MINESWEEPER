@@ -949,6 +949,7 @@
 }
 
 .win95-window.maximized {
+    display: flex !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;

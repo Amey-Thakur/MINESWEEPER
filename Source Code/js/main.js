@@ -122,8 +122,7 @@ function init() {
             import('./ui/MenuController.js').then(m => m.showAuthorDialog());
         },
         onTechnicalDocs: () => {
-            const folder = document.getElementById('tech-docs-folder');
-            if (folder) folder.classList.remove('hidden');
+            if (window.openTechnicalFolder) window.openTechnicalFolder();
         },
         onClock12Sec: () => setClockFormat('12h-sec', dom.clock),
         onClock12NoSec: () => setClockFormat('12h-nosec', dom.clock),
