@@ -190,7 +190,25 @@ export class UIController {
             if (isMaximized) {
                 win.classList.remove('maximized');
                 maximizeBtn.textContent = '□';
+
+                // Restore previous coordinates to prevent top-left snapping
+                if (this._lastWindowPos) {
+                    win.style.top = this._lastWindowPos.top;
+                    win.style.left = this._lastWindowPos.left;
+                    win.style.position = this._lastWindowPos.position;
+                    win.style.margin = this._lastWindowPos.margin;
+                    win.style.transform = this._lastWindowPos.transform;
+                }
             } else {
+                // Cache current state before maximizing
+                this._lastWindowPos = {
+                    top: win.style.top,
+                    left: win.style.left,
+                    position: win.style.position,
+                    margin: win.style.margin,
+                    transform: win.style.transform
+                };
+
                 win.classList.add('maximized');
                 maximizeBtn.textContent = '❐';
             }
