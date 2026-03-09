@@ -26,10 +26,22 @@
     ],
     "screenshots": [
         {
-            "src": "./assets/icons/smiley_normal.svg",
-            "sizes": "128x128",
-            "type": "image/svg+xml",
-            "label": "Minesweeper Engine Interface Implementation"
+            "src": "./assets/icons/pwa_gameboard.png",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Minesweeper Engine - Gameboard"
+        },
+        {
+            "src": "./assets/icons/pwa_developer.png",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Developer Information"
+        },
+        {
+            "src": "./assets/icons/pwa_about.png",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "About Minesweeper"
         }
     ]
 }
