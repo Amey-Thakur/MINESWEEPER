@@ -50,7 +50,7 @@ window.bringToFront = function (el) {
         el.style.position = 'absolute';
     }
 
-    let maxZ = 10000;
+    let maxZ = 1000;
     windows.forEach(w => {
         const style = window.getComputedStyle(w);
         const z = parseInt(style.zIndex);

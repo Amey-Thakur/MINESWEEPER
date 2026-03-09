@@ -362,7 +362,7 @@
     display: flex;
     align-items: center;
     padding: 2px 4px;
-    z-index: 9999;
+    z-index: 99999;
 }
 
 .win95-start-button {
@@ -459,7 +459,7 @@
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - var(--taskbar-h) - 20px);
     overflow: hidden;
-    z-index: 100;
+    z-index: 1000;
 
     /* DOM insertion sequence */
     animation: window-open 0.2s ease-out;

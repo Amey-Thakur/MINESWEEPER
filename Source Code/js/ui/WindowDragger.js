@@ -59,6 +59,11 @@ export class WindowDragger {
         this.isDragging = true;
         this.win.classList.add('dragging');
 
+        // Ensure the window comes to the front when the user initiates interaction
+        if (window.bringToFront) {
+            window.bringToFront(this.win);
+        }
+
         const pointerX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const pointerY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
 
