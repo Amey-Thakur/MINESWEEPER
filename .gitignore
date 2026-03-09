@@ -1,25 +1,39 @@
-# Minesweeper Project Ignore
-# Excludes temporary files and environment-specific bloat
+# MINESWEEPER
+# Exclusion patterns for local development and system-generated artifacts
 
-# OS Generated
-Thumbs.db
-Desktop.ini
+# System files
+[Tt]humbs.db
+[Dd]esktop.ini
 .DS_Store
 
-# Development Tools
+# Environment and workspace configuration
 .vscode/
 .idea/
-*.suo
-*.user
-*.log
+*.swp
+*.swo
+*~
 
-# Web/Node (if applicable)
+# Dependency and build directories
 node_modules/
 dist/
 build/
 .env
+.npm
+.eslintcache
 
-# Project Specific
-DOCUMENTATION.md.bak
+# Temporary and log files
 Source Code/temp/
+Source Code/logs/
 *.tmp
+*.log
+*.bak
+*.sav
+*.old
+
+# Documentation and archive artifacts
+DOCUMENTATION.md.bak
+README.md.bak
+*.zip
+*.tar.gz
+*.rar
+*.7z
