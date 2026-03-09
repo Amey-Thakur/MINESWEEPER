@@ -191,6 +191,10 @@
                     <img src="./assets/icons/document.svg" class="tab-icon-img" alt="">
                     <span class="tab-text">Complexity.md - Note...</span>
                 </button>
+                <button id="tech-docs-tab" class="taskbar-app-tab hidden">
+                    <img src="./assets/icons/folder.svg" class="tab-icon-img" alt="">
+                    <span class="tab-text">Technical Documents</span>
+                </button>
             </div>
             <div class="menu-item" id="menu-clock" style="margin-left: auto;">
                 <div id="taskbar-clock" class="win95-clock menu-label"></div>
@@ -298,17 +302,20 @@
 
     <!-- Technical Documents Folder Window -->
     <div id="tech-docs-folder" class="win95-window hidden"
-        style="width: 400px; height: 300px; z-index: 10005; position: absolute; top: 50px; left: 100px;">
+        style="z-index: 10005; position: absolute; top: 50px; left: 100px; width: 400px;">
         <div class="win95-title-bar" id="tech-docs-folder-title">
             <div class="title-bar-icon">
                 <img src="./assets/icons/folder.svg" alt="">
             </div>
             <div class="title-bar-text">Technical Documents</div>
             <div class="title-bar-controls">
-                <button class="title-btn close-btn" id="tech-docs-folder-close">×</button>
+                <button class="title-btn minimize-btn" id="tech-docs-folder-minimize" aria-label="Minimize">_</button>
+                <button class="title-btn maximize-btn" id="tech-docs-folder-maximize" aria-label="Maximize">□</button>
+                <button class="title-btn close-btn" id="tech-docs-folder-close" aria-label="Close">×</button>
             </div>
         </div>
-        <div class="win95-window-body" style="background: white; flex: 1; padding: 10px; overflow-y: auto;">
+        <div class="win95-window-body"
+            style="background: white; flex: 1; padding: 10px; overflow-y: auto; min-height: 200px;">
             <div class="folder-grid">
                 <div class="folder-item doc-opener" data-doc="quadtree">
                     <img src="./assets/icons/document.svg" alt="">

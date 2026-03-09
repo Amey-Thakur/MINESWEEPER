@@ -25,17 +25,20 @@ export function initDocSystem() {
 
     const docWindows = {
         'quadtree': document.getElementById('doc-quadtree'),
-        'complexity': document.getElementById('doc-complexity')
+        'complexity': document.getElementById('doc-complexity'),
+        'folder': techDocsFolder
     };
 
     const docTitles = {
         'quadtree': document.getElementById('doc-quadtree-title'),
-        'complexity': document.getElementById('doc-complexity-title')
+        'complexity': document.getElementById('doc-complexity-title'),
+        'folder': document.getElementById('tech-docs-folder-title')
     };
 
     const docTabs = {
         'quadtree': document.getElementById('doc-quadtree-tab'),
-        'complexity': document.getElementById('doc-complexity-tab')
+        'complexity': document.getElementById('doc-complexity-tab'),
+        'folder': document.getElementById('tech-docs-tab')
     };
 
     const docControls = {
@@ -48,15 +51,21 @@ export function initDocSystem() {
             min: document.getElementById('doc-complexity-minimize'),
             max: document.getElementById('doc-complexity-maximize'),
             close: document.getElementById('doc-complexity-close')
+        },
+        'folder': {
+            min: document.getElementById('tech-docs-folder-minimize'),
+            max: document.getElementById('tech-docs-folder-maximize'),
+            close: document.getElementById('tech-docs-folder-close')
         }
     };
 
     const windowState = {
         'quadtree': { lastPos: null },
-        'complexity': { lastPos: null }
+        'complexity': { lastPos: null },
+        'folder': { lastPos: null }
     };
 
-    // Initialize Draggers for Doc Windows
+    // Initialize Draggers for Windows
     Object.keys(docWindows).forEach(key => {
         new WindowDragger(docWindows[key], docTitles[key]);
 
@@ -68,11 +77,11 @@ export function initDocSystem() {
             const isMinimized = win.classList.contains('minimized');
             if (isMinimized) {
                 win.classList.remove('minimized');
-                tab.classList.add('active');
+                if (tab) tab.classList.add('active');
                 bringToFront(win);
             } else {
                 win.classList.add('minimized');
-                tab.classList.remove('active');
+                if (tab) tab.classList.remove('active');
             }
         };
 
@@ -89,27 +98,32 @@ export function initDocSystem() {
                     win.style.margin = lp.margin;
                     win.style.transform = lp.transform;
                     win.style.width = lp.width;
+                    const body = win.querySelector('.win95-window-body');
+                    if (body) body.style.height = lp.bodyHeight;
                 }
             } else {
+                const body = win.querySelector('.win95-window-body');
                 windowState[key].lastPos = {
                     top: win.style.top,
                     left: win.style.left,
                     position: win.style.position,
                     margin: win.style.margin,
                     transform: win.style.transform,
-                    width: win.style.width
+                    width: win.style.width,
+                    bodyHeight: body ? body.style.height : null
                 };
                 win.classList.add('maximized');
                 controls.max.textContent = '❐';
+                if (body) body.style.height = '100%';
             }
         };
 
-        controls.min.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
-        controls.max.onclick = (e) => { e.stopPropagation(); toggleMaximize(); };
-        controls.close.onclick = (e) => {
+        if (controls.min) controls.min.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
+        if (controls.max) controls.max.onclick = (e) => { e.stopPropagation(); toggleMaximize(); };
+        if (controls.close) controls.close.onclick = (e) => {
             e.stopPropagation();
             win.classList.add('hidden');
-            tab.classList.add('hidden');
+            if (tab) tab.classList.add('hidden');
         };
 
         if (tab) {
@@ -131,12 +145,17 @@ export function initDocSystem() {
     };
 
     const openFolder = () => {
-        techDocsFolder.classList.remove('hidden');
-        bringToFront(techDocsFolder);
-    };
-
-    const closeFolder = () => {
-        techDocsFolder.classList.add('hidden');
+        const win = docWindows['folder'];
+        const tab = docTabs['folder'];
+        if (win) {
+            win.classList.remove('hidden');
+            win.classList.remove('minimized');
+            if (tab) {
+                tab.classList.remove('hidden');
+                tab.classList.add('active');
+            }
+            bringToFront(win);
+        }
     };
 
     const openDoc = (id) => {
