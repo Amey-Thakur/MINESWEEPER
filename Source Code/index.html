@@ -60,6 +60,12 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/win95.css">
     <link rel="stylesheet" href="css/game.css">
+
+    <!-- KaTeX for Scholarly Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </head>
 
 <body>
@@ -341,6 +347,11 @@
             <p style="font-size: 12px;">By decomposing the 2D plane into four quadrants recursively, retrieval
                 complexity is reduced from $O(N)$ to $O(\log N)$. This ensures that only visible grid sectors are
                 emitted to the rendering pipeline, maintaining high frame consistency.</p>
+
+            <div class="sm-divider" style="margin: 20px 0 10px 0;"></div>
+            <p style="font-size: 11px; color: #444;">Author: Amey Thakur</p>
+            <p style="font-size: 10px; color: #666;">Source: <a href="https://github.com/Amey-Thakur/MINESWEEPER"
+                    target="_blank" class="win95-link">https://github.com/Amey-Thakur/MINESWEEPER</a></p>
         </div>
     </div>
 
@@ -392,6 +403,11 @@
 
             <p style="font-size: 11px; font-style: italic; color: #555;">Note: Space complexity scales linearly $O(M)$
                 where M is the total cell count, minimized via TypedArray allocations.</p>
+
+            <div class="sm-divider" style="margin: 20px 0 10px 0;"></div>
+            <p style="font-size: 11px; color: #444;">Author: Amey Thakur</p>
+            <p style="font-size: 10px; color: #666;">Source: <a href="https://github.com/Amey-Thakur/MINESWEEPER"
+                    target="_blank" class="win95-link">https://github.com/Amey-Thakur/MINESWEEPER</a></p>
         </div>
     </div>
 
