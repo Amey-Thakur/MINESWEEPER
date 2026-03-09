@@ -161,6 +161,15 @@ export function initMenus(callbacks) {
             });
         }
 
+        const smRun = document.getElementById('sm-run');
+        if (smRun) {
+            smRun.addEventListener('click', () => {
+                startMenu.classList.add('hidden');
+                resetStartMenu();
+                showRunDialog();
+            });
+        }
+
         // Hide the menu if any internal button (like GitHub) is clicked
         const smItems = startMenu.querySelectorAll('.start-menu-item');
         smItems.forEach(item => {
@@ -298,6 +307,44 @@ export function showAbout() {
 
     dialog.classList.remove('hidden');
     overlay.classList.remove('hidden');
+}
+
+export function showRunDialog() {
+    const dialog = document.getElementById('run-dialog');
+    const overlay = document.getElementById('dialog-overlay');
+    const input = document.getElementById('run-input');
+    const okBtn = document.getElementById('run-ok');
+    const cancelBtn = document.getElementById('run-cancel');
+    const closeBtn = document.getElementById('run-dialog-close');
+
+    const closeHandler = () => {
+        dialog.classList.add('hidden');
+        overlay.classList.add('hidden');
+        input.value = '';
+    };
+
+    const handleRun = () => {
+        const query = input.value.trim();
+        if (query) {
+            window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+        }
+        closeHandler();
+    };
+
+    okBtn.onclick = handleRun;
+    cancelBtn.onclick = closeHandler;
+    closeBtn.onclick = closeHandler;
+
+    // Support Enter key for the input
+    input.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+            handleRun();
+        }
+    };
+
+    dialog.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    input.focus();
 }
 
 

@@ -124,8 +124,7 @@
                         </button>
                     </div>
                 </div>
-                <button class="start-menu-item" id="sm-run"
-                    onclick="const p = prompt('Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.', ''); if(p) window.open('https://www.google.com/search?q=' + encodeURIComponent(p), '_blank');">
+                <button class="start-menu-item" id="sm-run">
                     <img src="./assets/icons/run.svg" class="tab-icon-img" alt="" style="margin-right: 8px;">
                     <span class="sm-text">Run...</span>
                 </button>
@@ -415,6 +414,36 @@
             <p>If you reveal a mine, the game is over!</p>
             <div class="dialog-actions">
                 <button id="howtoplay-ok" class="win95-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Run modal -->
+    <div id="run-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="run-dialog-title">
+        <div class="win95-dialog-titlebar">
+            <span id="run-dialog-title">Run</span>
+            <button class="title-btn close-btn" id="run-dialog-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body" style="width: 380px;">
+            <div style="display: flex; gap: 15px; align-items: flex-start;">
+                <img src="./assets/icons/run.svg" alt="Run"
+                    style="width: 32px; height: 32px; image-rendering: pixelated;">
+                <div style="font-size: 11px; line-height: 1.4;">
+                    Type the name of a program, folder, document, or Internet resource, and Windows will open it for
+                    you.
+                </div>
+            </div>
+
+            <div class="dialog-field" style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
+                <label for="run-input" style="font-size: 11px;">Open:</label>
+                <input type="text" id="run-input" class="win95-input-recessed" style="flex: 1; padding: 2px 4px;">
+            </div>
+
+            <div class="dialog-actions" style="margin-top: 20px; justify-content: flex-end;">
+                <button id="run-ok" class="win95-btn" style="min-width: 75px;">OK</button>
+                <button id="run-cancel" class="win95-btn" style="min-width: 75px;">Cancel</button>
+                <button id="run-browse" class="win95-btn"
+                    style="min-width: 75px; opacity: 0.6; cursor: not-allowed;">Browse...</button>
             </div>
         </div>
     </div>
