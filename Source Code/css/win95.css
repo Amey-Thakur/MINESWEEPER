@@ -699,7 +699,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.15);
-    z-index: 5000;
+    z-index: 10000;
 }
 
 .win95-dialog {
@@ -708,7 +708,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--win95-surface);
-    z-index: 5001;
+    z-index: 10001;
     min-width: 280px;
 
     border-top: 2px solid var(--win95-highlight);
