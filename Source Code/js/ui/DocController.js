@@ -87,6 +87,7 @@ export function initDocSystem() {
 
         const toggleMaximize = () => {
             const isMaximized = win.classList.contains('maximized');
+            bringToFront(win);
             if (isMaximized) {
                 win.classList.remove('maximized');
                 controls.max.textContent = '□';

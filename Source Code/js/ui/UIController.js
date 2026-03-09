@@ -176,12 +176,23 @@ export class UIController {
 
         const taskbarApps = document.getElementById('taskbar-apps');
 
+        const bringToFront = (el) => {
+            const windows = document.querySelectorAll('.win95-window, .win95-dialog');
+            let maxZ = 10000;
+            windows.forEach(w => {
+                const z = parseInt(w.style.zIndex) || 0;
+                if (z > maxZ) maxZ = z;
+            });
+            el.style.zIndex = maxZ + 1;
+        };
+
         const toggleMinimize = () => {
             const isMinimized = win.classList.contains('minimized');
             if (isMinimized) {
                 win.classList.remove('minimized');
                 taskbarTab.classList.add('active');
                 if (taskbarApps) taskbarApps.appendChild(taskbarTab);
+                bringToFront(win);
             } else {
                 win.classList.add('minimized');
                 taskbarTab.classList.remove('active');
@@ -190,6 +201,7 @@ export class UIController {
 
         const toggleMaximize = () => {
             const isMaximized = win.classList.contains('maximized');
+            bringToFront(win);
             if (isMaximized) {
                 win.classList.remove('maximized');
                 maximizeBtn.textContent = '□';
@@ -231,6 +243,9 @@ export class UIController {
         if (maximizeBtn) maximizeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(); });
         if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeWindow(); });
         if (taskbarTab) taskbarTab.addEventListener('click', toggleMinimize);
+
+        // Global Z-index management on click for main window
+        win.addEventListener('mousedown', () => bringToFront(win));
 
         // Selection / DblClick for MINESWEEPER
         if (desktopIcon) {
@@ -285,7 +300,21 @@ export class UIController {
         const win = this.dom.window;
         const taskbarTab = document.getElementById('minesweeper-tab');
         const taskbarApps = document.getElementById('taskbar-apps');
-        if (win) win.classList.remove('minimized');
+
+        const bringToFront = (el) => {
+            const windows = document.querySelectorAll('.win95-window, .win95-dialog');
+            let maxZ = 10000;
+            windows.forEach(w => {
+                const z = parseInt(w.style.zIndex) || 0;
+                if (z > maxZ) maxZ = z;
+            });
+            el.style.zIndex = maxZ + 1;
+        };
+
+        if (win) {
+            win.classList.remove('minimized');
+            bringToFront(win);
+        }
         if (taskbarTab) {
             taskbarTab.style.display = 'flex';
             taskbarTab.classList.add('active');
