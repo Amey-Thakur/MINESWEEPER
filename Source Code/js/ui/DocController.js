@@ -73,15 +73,26 @@ export function initDocSystem() {
         const tab = docTabs[key];
         const controls = docControls[key];
 
+        const isTopWindow = (el) => {
+            const windows = document.querySelectorAll('.win95-window:not(.hidden):not(.minimized)');
+            let maxZ = 0;
+            windows.forEach(w => {
+                const z = parseInt(w.style.zIndex) || 0;
+                if (z > maxZ) maxZ = z;
+            });
+            const currentZ = parseInt(el.style.zIndex) || 0;
+            return currentZ >= maxZ && maxZ > 0;
+        };
+
         const toggleMinimize = () => {
-            const isMinimized = win.classList.contains('minimized');
-            if (isMinimized) {
+            if (win.classList.contains('minimized')) {
                 win.classList.remove('minimized');
-                if (tab) tab.classList.add('active');
                 bringToFront(win);
-            } else {
+            } else if (isTopWindow(win)) {
                 win.classList.add('minimized');
                 if (tab) tab.classList.remove('active');
+            } else {
+                bringToFront(win);
             }
         };
 
@@ -90,7 +101,7 @@ export function initDocSystem() {
             bringToFront(win);
             if (isMaximized) {
                 win.classList.remove('maximized');
-                controls.max.textContent = '□';
+                if (controls.max) controls.max.textContent = '□';
                 if (windowState[key].lastPos) {
                     const lp = windowState[key].lastPos;
                     win.style.top = lp.top;
@@ -114,12 +125,16 @@ export function initDocSystem() {
                     bodyHeight: body ? body.style.height : null
                 };
                 win.classList.add('maximized');
-                controls.max.textContent = '❐';
+                if (controls.max) controls.max.textContent = '❐';
                 if (body) body.style.height = '100%';
             }
         };
 
-        if (controls.min) controls.min.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
+        if (controls.min) controls.min.onclick = (e) => {
+            e.stopPropagation();
+            win.classList.add('minimized');
+            if (tab) tab.classList.remove('active');
+        };
         if (controls.max) controls.max.onclick = (e) => { e.stopPropagation(); toggleMaximize(); };
         if (controls.close) controls.close.onclick = (e) => {
             e.stopPropagation();
@@ -128,12 +143,18 @@ export function initDocSystem() {
         };
 
         if (tab) {
-            tab.onclick = toggleMinimize;
+            tab.onclick = (e) => {
+                e.stopPropagation();
+                toggleMinimize();
+            };
         }
     });
 
+    const taskbarApps = document.getElementById('taskbar-apps');
+
     // Help: Bring window to front
     const bringToFront = (el) => {
+        if (!el) return;
         const windows = document.querySelectorAll('.win95-window, .win95-dialog');
         let maxZ = 10000;
         windows.forEach(w => {
@@ -141,9 +162,25 @@ export function initDocSystem() {
             if (z > maxZ) maxZ = z;
         });
         el.style.zIndex = maxZ + 1;
-    };
 
-    const taskbarApps = document.getElementById('taskbar-apps');
+        // Visual feedback: update active state on tabs
+        document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
+
+        // Find corresponding tab
+        const idMap = {
+            'game-window': 'minesweeper-tab',
+            'doc-quadtree': 'doc-quadtree-tab',
+            'doc-complexity': 'doc-complexity-tab',
+            'tech-docs-folder': 'tech-docs-tab'
+        };
+
+        const tabId = idMap[el.id];
+        const activeTab = document.getElementById(tabId);
+        if (activeTab) {
+            activeTab.classList.add('active');
+            if (taskbarApps) taskbarApps.appendChild(activeTab);
+        }
+    };
 
     window.openTechnicalFolder = () => {
         const win = docWindows['folder'];

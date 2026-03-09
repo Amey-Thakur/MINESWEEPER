@@ -944,10 +944,6 @@
  * Overwrites specific spatial properties for minimization/maximization.
  */
 
-.win95-window.minimized {
-    display: none !important;
-}
-
 .win95-window.maximized {
     display: flex !important;
     position: fixed !important;
@@ -958,7 +954,12 @@
     max-width: none !important;
     max-height: none !important;
     transform: none !important;
-    z-index: 1000 !important;
+    z-index: 1000;
+}
+
+.win95-window.minimized,
+.win95-window.hidden {
+    display: none !important;
 }
 
 .tab-icon-img,

@@ -173,10 +173,10 @@ export class UIController {
         const taskbarTab = document.getElementById('minesweeper-tab');
         const desktopIcon = document.getElementById('minesweeper-desktop-icon');
         const githubIcon = document.getElementById('github-desktop-icon');
-
         const taskbarApps = document.getElementById('taskbar-apps');
 
         const bringToFront = (el) => {
+            if (!el) return;
             const windows = document.querySelectorAll('.win95-window, .win95-dialog');
             let maxZ = 10000;
             windows.forEach(w => {
@@ -184,18 +184,43 @@ export class UIController {
                 if (z > maxZ) maxZ = z;
             });
             el.style.zIndex = maxZ + 1;
+
+            // Visual feedback: update active state on tabs
+            document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
+            const idMap = {
+                'game-window': 'minesweeper-tab',
+                'doc-quadtree': 'doc-quadtree-tab',
+                'doc-complexity': 'doc-complexity-tab',
+                'tech-docs-folder': 'tech-docs-tab'
+            };
+            const activeTab = document.getElementById(idMap[el.id]);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                if (taskbarApps) taskbarApps.appendChild(activeTab);
+            }
+        };
+
+        this._bringToFrontHelper = bringToFront;
+
+        const isTopWindow = (el) => {
+            const windows = document.querySelectorAll('.win95-window:not(.hidden):not(.minimized)');
+            let maxZ = 0;
+            windows.forEach(w => {
+                const z = parseInt(w.style.zIndex) || 0;
+                if (z > maxZ) maxZ = z;
+            });
+            return (parseInt(el.style.zIndex) || 0) >= maxZ && maxZ > 0;
         };
 
         const toggleMinimize = () => {
-            const isMinimized = win.classList.contains('minimized');
-            if (isMinimized) {
+            if (win.classList.contains('minimized')) {
                 win.classList.remove('minimized');
-                taskbarTab.classList.add('active');
-                if (taskbarApps) taskbarApps.appendChild(taskbarTab);
                 bringToFront(win);
-            } else {
+            } else if (isTopWindow(win)) {
                 win.classList.add('minimized');
-                taskbarTab.classList.remove('active');
+                if (taskbarTab) taskbarTab.classList.remove('active');
+            } else {
+                bringToFront(win);
             }
         };
 
@@ -205,8 +230,6 @@ export class UIController {
             if (isMaximized) {
                 win.classList.remove('maximized');
                 maximizeBtn.textContent = '□';
-
-                // Restore previous coordinates to prevent top-left snapping
                 if (this._lastWindowPos) {
                     win.style.top = this._lastWindowPos.top;
                     win.style.left = this._lastWindowPos.left;
@@ -215,7 +238,6 @@ export class UIController {
                     win.style.transform = this._lastWindowPos.transform;
                 }
             } else {
-                // Cache current state before maximizing
                 this._lastWindowPos = {
                     top: win.style.top,
                     left: win.style.left,
@@ -223,7 +245,6 @@ export class UIController {
                     margin: win.style.margin,
                     transform: win.style.transform
                 };
-
                 win.classList.add('maximized');
                 maximizeBtn.textContent = '❐';
             }
@@ -232,93 +253,52 @@ export class UIController {
 
         const closeWindow = () => {
             win.classList.add('minimized');
-            taskbarTab.style.display = 'none';
+            if (taskbarTab) {
+                taskbarTab.style.display = 'none';
+                taskbarTab.classList.remove('active');
+            }
         };
 
-        const openGithub = () => {
-            window.open('https://github.com/Amey-Thakur', '_blank');
+        if (minimizeBtn) minimizeBtn.onclick = (e) => {
+            e.stopPropagation();
+            win.classList.add('minimized');
+            if (taskbarTab) taskbarTab.classList.remove('active');
         };
+        if (maximizeBtn) maximizeBtn.onclick = (e) => { e.stopPropagation(); toggleMaximize(); };
+        if (closeBtn) closeBtn.onclick = (e) => { e.stopPropagation(); closeWindow(); };
+        if (taskbarTab) taskbarTab.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
 
-        if (minimizeBtn) minimizeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMinimize(); });
-        if (maximizeBtn) maximizeBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMaximize(); });
-        if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeWindow(); });
-        if (taskbarTab) taskbarTab.addEventListener('click', toggleMinimize);
-
-        // Global Z-index management on click for main window
         win.addEventListener('mousedown', () => bringToFront(win));
 
-        // Selection / DblClick for MINESWEEPER
-        if (desktopIcon) {
-            desktopIcon.addEventListener('dblclick', (e) => {
-                e.stopPropagation();
-                this.openWindow();
-            });
-
-            let lastMinesweeperClick = 0;
-            desktopIcon.addEventListener('click', (e) => {
+        const setupIcon = (id, action) => {
+            const icon = document.getElementById(id);
+            if (!icon) return;
+            let last = 0;
+            icon.onclick = (e) => {
                 e.stopPropagation();
                 const now = Date.now();
-                if (now - lastMinesweeperClick < 300) {
-                    this.openWindow();
-                }
-                lastMinesweeperClick = now;
+                if (now - last < 300) action();
+                last = now;
+                document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+                icon.classList.add('selected');
+            };
+            icon.ondblclick = (e) => { e.stopPropagation(); action(); };
+        };
 
-                // Deselect all others
-                document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
-                desktopIcon.classList.add('selected');
-            });
-        }
+        setupIcon('minesweeper-desktop-icon', () => this.openWindow());
+        setupIcon('github-desktop-icon', () => window.open('https://github.com/Amey-Thakur', '_blank'));
 
-        // Selection / DblClick for GITHUB
-        if (githubIcon) {
-            githubIcon.addEventListener('dblclick', (e) => {
-                e.stopPropagation();
-                openGithub();
-            });
-
-            let lastGithubClick = 0;
-            githubIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const now = Date.now();
-                if (now - lastGithubClick < 300) {
-                    openGithub();
-                }
-                lastGithubClick = now;
-
-                // Deselect all others
-                document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
-                githubIcon.classList.add('selected');
-            });
-        }
-
-        document.getElementById('desktop').addEventListener('click', () => {
-            document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
-        });
+        document.getElementById('desktop').onclick = () => {
+            document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+        };
     }
 
     openWindow() {
-        const win = this.dom.window;
-        const taskbarTab = document.getElementById('minesweeper-tab');
-        const taskbarApps = document.getElementById('taskbar-apps');
-
-        const bringToFront = (el) => {
-            const windows = document.querySelectorAll('.win95-window, .win95-dialog');
-            let maxZ = 10000;
-            windows.forEach(w => {
-                const z = parseInt(w.style.zIndex) || 0;
-                if (z > maxZ) maxZ = z;
-            });
-            el.style.zIndex = maxZ + 1;
-        };
-
-        if (win) {
-            win.classList.remove('minimized');
-            bringToFront(win);
+        if (this.dom.window) {
+            this.dom.window.classList.remove('minimized');
+            if (this._bringToFrontHelper) this._bringToFrontHelper(this.dom.window);
         }
-        if (taskbarTab) {
-            taskbarTab.style.display = 'flex';
-            taskbarTab.classList.add('active');
-            if (taskbarApps) taskbarApps.appendChild(taskbarTab);
-        }
+        const tab = document.getElementById('minesweeper-tab');
+        if (tab) tab.style.display = 'flex';
     }
 }
