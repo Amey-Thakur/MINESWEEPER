@@ -989,9 +989,9 @@
     box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
     z-index: 1;
-    height: 180px;
+    height: 230px;
     /* Locked height to prevent dialog resize jitter */
-    overflow: hidden;
+    overflow: visible;
 }
 
 .seed-tab-panel.active {
