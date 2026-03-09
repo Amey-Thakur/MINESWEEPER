@@ -643,19 +643,40 @@
 
 .win95-status-bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: var(--statusbar-h);
-    padding: 2px 8px;
-    font-size: 11px;
-    margin: 2px;
+    padding: 1px;
+    margin-top: 2px;
+    gap: 2px;
+}
 
-    /* Structural depression */
+.win95-status-bar span {
+    padding: 2px 6px;
+    font-size: 11px;
     border-top: 1px solid var(--win95-shadow);
     border-left: 1px solid var(--win95-shadow);
     border-bottom: 1px solid var(--win95-highlight);
     border-right: 1px solid var(--win95-highlight);
+    background: var(--win95-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+#status-text {
+    flex: 1;
+    /* Main message takes more space */
+}
+
+#status-seed {
+    min-width: 100px;
+}
+
+#status-seed:empty {
+    display: none;
+}
+
+
 
 
 /* 
