@@ -1,46 +1,31 @@
 {
-    "name": "Minesweeper | Amey Thakur",
+    "name": "Minesweeper Engine",
     "short_name": "Minesweeper",
-    "description": "High-performance Windows 95 Minesweeper Engine with QuadTree spatial indexing. Designed and developed by Amey Thakur.",
-    "start_url": ".",
+    "description": "Designed and developed by Amey Thakur.\nOptimizing grid traversal through recursive spatial partitioning and deterministic constraint systems.",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#008080",
     "theme_color": "#008080",
     "orientation": "any",
     "icons": [
         {
-            "src": "./assets/icons/pwa-icon-512.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "./assets/icons/pwa-icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
+            "src": "./assets/icons/minesweeper.ico",
+            "sizes": "16x16 32x32 48x48 64x64 128x128 256x256",
+            "type": "image/x-icon",
             "purpose": "any"
-        },
-        {
-            "src": "./assets/icons/pwa-icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "./assets/icons/favicon.ico",
-            "sizes": "16x16 32x32 48x48 64x64",
-            "type": "image/x-icon"
         }
     ],
     "categories": [
         "games",
         "utilities"
     ],
+    "iarc_rating_id": "e",
     "screenshots": [
         {
             "src": "./assets/icons/smiley_normal.svg",
             "sizes": "128x128",
             "type": "image/svg+xml",
-            "label": "Minesweeper Engine"
+            "label": "Minesweeper Engine by Amey Thakur"
         }
     ]
 }
