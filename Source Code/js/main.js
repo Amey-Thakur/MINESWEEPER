@@ -31,9 +31,10 @@ import { GameRenderer } from './renderer/GameRenderer.js';
 import { QuadTree, Rectangle } from './engine/QuadTree.js';
 import { BoardEngine } from './engine/BoardEngine.js';
 import { CELL_SIZE } from './constants.js';
-import { startTimer, stopTimer, resetTimer, initClock, setClockFormat } from './ui/TimerController.js';
+import { startTimer, stopTimer, resetTimer, initClock, setClockFormat, getElapsed } from './ui/TimerController.js';
 import { initMenus } from './ui/MenuController.js';
 import { initSeedDialog, setSeedState, showSeedDialog } from './ui/SeedController.js';
+import { initScoreDialogs, showBestTimes, checkHighScoreAndPrompt } from './ui/ScoreController.js';
 
 // -------------------------------------------------------
 // Constants
@@ -95,12 +96,20 @@ let shadowBoard = null;
 // -------------------------------------------------------
 
 function init() {
+    /**
+     * Initialization Routine
+     * Time Complexity  : O(1) - Surface level binding of event listeners.
+     * Space Complexity : O(1) - Finite state pointer allocations.
+     */
+    initScoreDialogs();
+
     initMenus({
         onNew: () => startNewGame(currentDifficulty),
         onBeginner: () => startNewGame(DIFFICULTY.BEGINNER),
         onIntermediate: () => startNewGame(DIFFICULTY.INTERMEDIATE),
         onExpert: () => startNewGame(DIFFICULTY.EXPERT),
         onCustom: () => setDifficulty('CUSTOM'),
+        onBestTimes: () => showBestTimes(),
         onSeed: () => showSeedDialog('enter'),
         onAbout: () => {
             import('./ui/MenuController.js').then(m => m.showAbout());
@@ -364,6 +373,20 @@ function checkWinCondition() {
 
         // Zero out the remaining mine counter since all remaining hidden cells are inherently mines.
         ui.updateMineCounter(currentDifficulty.mines, currentDifficulty.mines);
+
+        /**
+         * Benchmark Verification Sequence
+         * Time Complexity  : O(1) - Direct comparison against cached record.
+         * Space Complexity : O(1) - Minimal stack frames.
+         */
+        let mode = null;
+        if (currentDifficulty.rows === 9 && currentDifficulty.cols === 9 && currentDifficulty.mines === 10) mode = 'BEGINNER';
+        else if (currentDifficulty.rows === 16 && currentDifficulty.cols === 16 && currentDifficulty.mines === 40) mode = 'INTERMEDIATE';
+        else if (currentDifficulty.rows === 16 && currentDifficulty.cols === 30 && currentDifficulty.mines === 99) mode = 'EXPERT';
+
+        if (mode) {
+            checkHighScoreAndPrompt(mode, getElapsed());
+        }
     }
 }
 

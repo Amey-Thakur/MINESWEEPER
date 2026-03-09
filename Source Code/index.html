@@ -200,6 +200,8 @@
                             Custom...
                         </button>
                         <div class="menu-separator"></div>
+                        <button class="menu-option" id="menu-best-times">Best Times...</button>
+                        <div class="menu-separator"></div>
                         <button class="menu-option" id="menu-seed">Seed Manager...</button>
                     </div>
                 </div>
@@ -488,9 +490,6 @@
         </div>
     </div>
 
-    <!-- Background dimming layer for active modals -->
-    <div id="dialog-overlay" class="dialog-overlay hidden"></div>
-
     <!-- Turn off computer screen overlay -->
     <div id="shutdown-overlay" class="shutdown-overlay hidden">
         <div class="shutdown-text">
@@ -505,7 +504,62 @@
         </div>
     </div>
 
+    <!-- Highest Scores Viewer -->
+    <div id="best-times-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="best-times-title"
+        style="z-index: 10001;">
+        <div class="win95-dialog-titlebar">
+            <span id="best-times-title">Fastest Times</span>
+            <button class="title-btn close-btn" id="best-times-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body" style="width: 280px;">
+            <div
+                style="display: grid; grid-template-columns: 80px 40px auto; gap: 8px; margin-bottom: 20px; font-size: 11px;">
+                <div>Beginner:</div>
+                <div id="bt-beginner-time" style="text-align: right;">999</div>
+                <div id="bt-beginner-name" style="padding-left: 10px;">Anonymous</div>
 
+                <div>Intermediate:</div>
+                <div id="bt-intermediate-time" style="text-align: right;">999</div>
+                <div id="bt-intermediate-name" style="padding-left: 10px;">Anonymous</div>
+
+                <div>Expert:</div>
+                <div id="bt-expert-time" style="text-align: right;">999</div>
+                <div id="bt-expert-name" style="padding-left: 10px;">Anonymous</div>
+            </div>
+
+            <div class="dialog-actions" style="justify-content: space-between;">
+                <button id="best-times-reset" class="win95-btn" style="min-width: 80px;">Reset Scores</button>
+                <button id="best-times-ok" class="win95-btn" style="min-width: 80px;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New High Score Input Modal -->
+    <div id="new-record-dialog" class="win95-dialog hidden" role="dialog" aria-labelledby="new-record-title"
+        style="z-index: 10002;">
+        <div class="win95-dialog-titlebar">
+            <span id="new-record-title">Congratulations!</span>
+            <button class="title-btn close-btn" id="new-record-close" aria-label="Close">x</button>
+        </div>
+        <div class="win95-dialog-body" style="width: 320px;">
+            <div style="font-size: 11px; margin-bottom: 15px;" id="new-record-msg">
+                You have the fastest time for Beginner level.
+                <br>Please enter your name.
+            </div>
+
+            <div class="dialog-field" style="margin-bottom: 20px;">
+                <input type="text" id="new-record-input" class="win95-input-recessed" maxlength="16" value="Anonymous"
+                    style="width: 100%; padding: 4px;">
+            </div>
+
+            <div class="dialog-actions" style="justify-content: flex-end;">
+                <button id="new-record-ok" class="win95-btn" style="min-width: 80px;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal blocking layer -->
+    <div id="dialog-overlay" class="dialog-overlay hidden" style="z-index: 10000;"></div>
 
     <!-- Main script execution -->
     <script type="module" src="js/main.js"></script>

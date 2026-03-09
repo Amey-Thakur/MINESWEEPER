@@ -61,13 +61,18 @@ export function initMenus(callbacks) {
         }
     });
 
-    // Bind menu option callbacks
+    /**
+     * Menu Event Binding Orchestration
+     * Time Complexity  : O(N) where N is the number of interactive menu items.
+     * Space Complexity : O(N) for the static map allocation of callback pointers.
+     */
     const bindings = {
         'menu-new': callbacks.onNew,
         'menu-beginner': callbacks.onBeginner,
         'menu-intermediate': callbacks.onIntermediate,
         'menu-expert': callbacks.onExpert,
         'menu-custom': callbacks.onCustom,
+        'menu-best-times': callbacks.onBestTimes,
         'menu-seed': callbacks.onSeed,
         'menu-about': callbacks.onAbout,
         'menu-how-to-play': callbacks.onHowToPlay,
