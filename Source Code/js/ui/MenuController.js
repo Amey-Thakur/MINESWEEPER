@@ -182,7 +182,7 @@ export function initMenus(callbacks) {
     }
 }
 
-function triggerShutdown() {
+export function triggerShutdown() {
     playSystemSound('shutdown');
     const desktop = document.getElementById('desktop');
     const overlay = document.getElementById('shutdown-overlay');

@@ -125,6 +125,10 @@ function init() {
                 import('./ui/MenuController.js').then(m => m.showHowToPlay());
                 return true;
             }
+            if (cmd === 'shutdown' || cmd === 'shut down' || cmd === 'shot down' || cmd === 'exit') {
+                import('./ui/MenuController.js').then(m => m.triggerShutdown());
+                return true;
+            }
             return false;
         }
     });
