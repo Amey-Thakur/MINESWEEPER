@@ -132,7 +132,7 @@ function init() {
                 import('./ui/MenuController.js').then(m => m.triggerShutdown());
                 return true;
             }
-            if (cmd === 'author' || cmd === 'developer' || cmd === 'thakur' || cmd === 'amey') {
+            if (cmd === 'author' || cmd === 'developer' || cmd === 'thakur' || cmd === 'amey' || cmd === 'who' || cmd === 'whois' || cmd === 'dev') {
                 import('./ui/MenuController.js').then(m => m.showAuthorDialog());
                 return true;
             }
