@@ -28,6 +28,13 @@
     <meta name="author" content="Amey Thakur">
     <meta name="theme-color" content="#008080">
 
+    <!-- Progressive Web App Metadata and Authorship Attribution -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Minesweeper | Amey Thakur">
+    <link rel="apple-touch-icon" href="./assets/icons/favicon.ico">
+
     <meta property="og:title" content="Minesweeper">
     <meta property="og:description" content="Minesweeper with QuadTree spatial indexing and a Windows 95 aesthetic.">
     <meta property="og:type" content="website">
@@ -561,6 +568,24 @@
     <!-- Modal blocking layer -->
     <div id="dialog-overlay" class="dialog-overlay hidden" style="z-index: 10000;"></div>
 
+    <!-- 
+        Modular PWA Support: Service Worker Registration 
+        Implementation allows for seamless offline board generation and 
+        sprite management without impacting main-thread interactive cycles.
+    -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => {
+                        console.log('Minesweeper PWA: Service Worker Active for Amey Thakur.', reg.scope);
+                    })
+                    .catch(e => {
+                        console.error('Minesweeper PWA: Lifecycle registration exception.', e);
+                    });
+            });
+        }
+    </script>
     <!-- Main script execution -->
     <script type="module" src="js/main.js"></script>
 
