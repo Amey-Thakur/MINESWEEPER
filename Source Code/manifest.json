@@ -29,7 +29,7 @@
             "src": "./assets/icons/smiley_normal.svg",
             "sizes": "128x128",
             "type": "image/svg+xml",
-            "label": "Minesweeper Engine by Amey Thakur"
+            "label": "Minesweeper Engine Interface Implementation"
         }
     ]
 }
