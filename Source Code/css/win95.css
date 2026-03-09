@@ -1076,3 +1076,85 @@
     pointer-events: none;
     z-index: 1000;
 }
+
+/* 
+ * Doc System: Folder and Document Explorer 
+ */
+
+.folder-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+}
+
+.folder-item {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: default;
+    border: 1px solid transparent;
+    padding: 4px;
+}
+
+.folder-item:hover {
+    background-color: rgba(0, 0, 128, 0.05);
+    border: 1px dotted var(--win95-shadow);
+}
+
+.folder-item img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+    image-rendering: pixelated;
+}
+
+.folder-item span {
+    font-size: 11px;
+    word-break: break-all;
+}
+
+.win95-window-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.win95-status-bar {
+    height: var(--statusbar-h);
+    background-color: var(--win95-surface);
+    border-top: 1px solid var(--win95-shadow);
+    display: flex;
+    align-items: center;
+    padding: 0 2px;
+    font-size: 11px;
+}
+
+.status-bar-pane {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    border-right: 1px solid var(--win95-highlight);
+    border-left: 1px solid var(--win95-shadow);
+}
+
+.status-bar-pane:first-child {
+    border-left: none;
+}
+
+.status-bar-pane:last-child {
+    flex: 0 0 100px;
+    border-right: none;
+}
+
+.doc-window h1 {
+    font-family: var(--font-system);
+    font-weight: bold;
+}
+
+.mermaid-diagram {
+    user-select: text;
+}

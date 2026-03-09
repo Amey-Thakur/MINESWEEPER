@@ -84,6 +84,12 @@
                 </div>
                 <div class="icon-label">GitHub</div>
             </div>
+            <div id="tech-docs-icon" class="desktop-icon" title="Double click to view Technical Documents">
+                <div class="icon-img-container">
+                    <img src="./assets/icons/folder.svg" alt="Tech Docs" class="icon-img">
+                </div>
+                <div class="icon-label">Technical Documents</div>
+            </div>
         </div>
 
         <!-- 
@@ -562,6 +568,125 @@
             <div class="dialog-actions" style="justify-content: flex-end;">
                 <button id="new-record-ok" class="win95-btn" style="min-width: 80px;">OK</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Technical Documents Folder Window -->
+    <div id="tech-docs-folder" class="win95-window hidden" style="width: 400px; height: 300px; z-index: 10005;">
+        <div class="win95-title-bar" id="tech-docs-folder-title">
+            <div class="title-bar-icon">
+                <img src="./assets/icons/folder.svg" alt="">
+            </div>
+            <div class="title-bar-text">Technical Documents</div>
+            <div class="title-bar-controls">
+                <button class="title-btn close-btn" id="tech-docs-folder-close">×</button>
+            </div>
+        </div>
+        <div class="win95-window-body" style="background: white; flex: 1; padding: 10px; overflow-y: auto;">
+            <div class="folder-grid">
+                <div class="folder-item doc-opener" data-doc="quadtree">
+                    <img src="./assets/icons/document.svg" alt="">
+                    <span>QuadTree.md</span>
+                </div>
+                <div class="folder-item doc-opener" data-doc="complexity">
+                    <img src="./assets/icons/document.svg" alt="">
+                    <span>Complexity.md</span>
+                </div>
+            </div>
+        </div>
+        <div class="win95-status-bar">
+            <div class="status-bar-pane">2 object(s)</div>
+            <div class="status-bar-pane">0 bytes</div>
+        </div>
+    </div>
+
+    <!-- QuadTree Architecture Document -->
+    <div id="doc-quadtree" class="win95-window doc-window hidden" style="width: 500px; z-index: 10006;">
+        <div class="win95-title-bar" id="doc-quadtree-title">
+            <div class="title-bar-icon">
+                <img src="./assets/icons/document.svg" alt="">
+            </div>
+            <div class="title-bar-text">QuadTree.md - Notepad</div>
+            <div class="title-bar-controls">
+                <button class="title-btn close-btn" id="doc-quadtree-close">×</button>
+            </div>
+        </div>
+        <div class="win95-window-body"
+            style="background: white; padding: 20px; font-family: 'Segoe UI', sans-serif; height: 400px; overflow-y: auto;">
+            <h1 style="font-size: 18px; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px;">
+                QuadTree Spatial Partitioning</h1>
+
+            <p style="font-size: 12px; margin-bottom: 15px;">The engine utilizes a recursive QuadTree to facilitate
+                sub-ms spatial queries across grid surfaces exceeding 1,000,000 nodes.</p>
+
+            <div class="mermaid-diagram"
+                style="margin: 20px 0; border: 1px dashed #808080; padding: 15px; background: #f9f9f9; text-align: center;">
+                <!-- Simulated Diagram for Win95 feel -->
+                <div style="display: inline-block; text-align: left; font-family: monospace; font-size: 11px;">
+                    [Root Node: 1M Cells]<br>
+                    &nbsp;&nbsp;├── [NW: 250k]<br>
+                    &nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;└── [Leaf: 64px Grid Region]<br>
+                    &nbsp;&nbsp;├── [NE: 250k]<br>
+                    &nbsp;&nbsp;├── [SW: 250k]<br>
+                    &nbsp;&nbsp;└── [SE: 250k]
+                </div>
+                <p style="font-size: 10px; color: #666; margin-top: 10px;">Recursive Spatial Decomposition Strategy</p>
+            </div>
+
+            <h2 style="font-size: 14px; margin-top: 20px;">Architecture Overview</h2>
+            <p style="font-size: 12px;">By decomposing the 2D plane into four quadrants recursively, retrieval
+                complexity is reduced from $O(N)$ to $O(\log N)$. This ensures that only visible grid sectors are
+                emitted to the rendering pipeline, maintaining high frame consistency.</p>
+        </div>
+    </div>
+
+    <!-- Complexity Analysis Document -->
+    <div id="doc-complexity" class="win95-window doc-window hidden" style="width: 450px; z-index: 10007;">
+        <div class="win95-title-bar" id="doc-complexity-title">
+            <div class="title-bar-icon">
+                <img src="./assets/icons/document.svg" alt="">
+            </div>
+            <div class="title-bar-text">Complexity.md - Notepad</div>
+            <div class="title-bar-controls">
+                <button class="title-btn close-btn" id="doc-complexity-close">×</button>
+            </div>
+        </div>
+        <div class="win95-window-body" style="background: white; padding: 20px; font-family: 'Segoe UI', sans-serif;">
+            <h1 style="font-size: 18px; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px;">
+                Time/Space Complexity Analysis</h1>
+
+            <p style="font-size: 12px; margin-bottom: 15px;">Evaluation of the engine's core algorithms under
+                high-density game states.</p>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 15px;">
+                <thead>
+                    <tr style="background: #e0e0e0;">
+                        <th style="border: 1px solid #808080; padding: 4px; text-align: left;">Operation</th>
+                        <th style="border: 1px solid #808080; padding: 4px; text-align: left;">Complexity</th>
+                        <th style="border: 1px solid #808080; padding: 4px; text-align: left;">Mechanism</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #808080; padding: 4px;">Cell Retrieval</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">$O(\log N)$</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">QuadTree spatial search</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #808080; padding: 4px;">State Lookup</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">$O(1)$</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">Bit-packed bitmasks</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #808080; padding: 4px;">Solvability</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">$O(2^K)$</td>
+                        <td style="border: 1px solid #808080; padding: 4px;">CSP Backtracking (K=frontier)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="font-size: 11px; font-style: italic; color: #555;">Note: Space complexity scales linearly $O(M)$
+                where M is the total cell count, minimized via TypedArray allocations.</p>
         </div>
     </div>
 

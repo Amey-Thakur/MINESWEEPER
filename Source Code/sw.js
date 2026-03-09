@@ -17,7 +17,7 @@
  * Space Complexity          : O(M) for local persistence of M total asset bytes.
  */
 
-const CACHE_NAME = 'minesweeper-pwa-v12';
+const CACHE_NAME = 'minesweeper-pwa-v13';
 const ASSETS = [
     './',
     './index.html',
@@ -27,6 +27,7 @@ const ASSETS = [
     './assets/icons/pwa_gameboard.png',
     './assets/icons/pwa_developer.png',
     './assets/icons/pwa_about.png',
+    './assets/icons/document.svg',
     './css/reset.css',
     './css/win95.css',
     './css/game.css',

@@ -34,6 +34,7 @@ import { CELL_SIZE } from './constants.js';
 import { startTimer, stopTimer, resetTimer, initClock, setClockFormat, getElapsed } from './ui/TimerController.js';
 import { initMenus } from './ui/MenuController.js';
 import { initSeedDialog, setSeedState, showSeedDialog } from './ui/SeedController.js';
+import { initDocSystem } from './ui/DocController.js';
 import { initScoreDialogs, showBestTimes, checkHighScoreAndPrompt } from './ui/ScoreController.js';
 
 // -------------------------------------------------------
@@ -145,11 +146,17 @@ function init() {
                 import('./ui/MenuController.js').then(m => m.showAuthorDialog());
                 return true;
             }
+            if (cmd === 'docs' || cmd === 'technical' || cmd === 'tech' || cmd === 'system') {
+                const folder = document.getElementById('tech-docs-folder');
+                if (folder) folder.classList.remove('hidden');
+                return true;
+            }
             return false;
         }
     });
     initClock(dom.clock);
     ui.initWindowControls();
+    initDocSystem();
 
     // Link the advanced Seed Manager Modal internally pointing to local state mutations
     initSeedDialog((enteredSeed) => {
