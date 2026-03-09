@@ -142,6 +142,8 @@ export function initDocSystem() {
         el.style.zIndex = maxZ + 1;
     };
 
+    const taskbarApps = document.getElementById('taskbar-apps');
+
     window.openTechnicalFolder = () => {
         const win = docWindows['folder'];
         const tab = docTabs['folder'];
@@ -151,6 +153,8 @@ export function initDocSystem() {
             if (tab) {
                 tab.classList.remove('hidden');
                 tab.classList.add('active');
+                // Move tab to the rightmost position by appending it to the end
+                taskbarApps.appendChild(tab);
             }
             bringToFront(win);
         }
@@ -160,9 +164,12 @@ export function initDocSystem() {
         if (docWindows[id]) {
             docWindows[id].classList.remove('hidden');
             docWindows[id].classList.remove('minimized');
-            if (docTabs[id]) {
-                docTabs[id].classList.remove('hidden');
-                docTabs[id].classList.add('active');
+            const tab = docTabs[id];
+            if (tab) {
+                tab.classList.remove('hidden');
+                tab.classList.add('active');
+                // Move tab to the rightmost position
+                taskbarApps.appendChild(tab);
             }
             bringToFront(docWindows[id]);
         }

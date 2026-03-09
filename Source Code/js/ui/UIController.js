@@ -174,11 +174,14 @@ export class UIController {
         const desktopIcon = document.getElementById('minesweeper-desktop-icon');
         const githubIcon = document.getElementById('github-desktop-icon');
 
+        const taskbarApps = document.getElementById('taskbar-apps');
+
         const toggleMinimize = () => {
             const isMinimized = win.classList.contains('minimized');
             if (isMinimized) {
                 win.classList.remove('minimized');
                 taskbarTab.classList.add('active');
+                if (taskbarApps) taskbarApps.appendChild(taskbarTab);
             } else {
                 win.classList.add('minimized');
                 taskbarTab.classList.remove('active');
@@ -281,10 +284,12 @@ export class UIController {
     openWindow() {
         const win = this.dom.window;
         const taskbarTab = document.getElementById('minesweeper-tab');
+        const taskbarApps = document.getElementById('taskbar-apps');
         if (win) win.classList.remove('minimized');
         if (taskbarTab) {
             taskbarTab.style.display = 'flex';
             taskbarTab.classList.add('active');
+            if (taskbarApps) taskbarApps.appendChild(taskbarTab);
         }
     }
 }
