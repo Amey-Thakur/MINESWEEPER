@@ -36,17 +36,31 @@ window.isTopWindow = function (el) {
     return currentZ >= maxZ && maxZ > 0;
 };
 
+/**
+ * Global Helper: window.bringToFront
+ * Synchronizes the stacking hierarchy by calculating the maximum 
+ * current z-index and incrementing the target element. 
+ */
 window.bringToFront = function (el) {
     if (!el) return;
     const windows = document.querySelectorAll('.win95-window, .win95-dialog');
+
+    // Ensure the element is positioned absolutely to participate in the global stack
+    if (!el.classList.contains('maximized')) {
+        el.style.position = 'absolute';
+    }
+
     let maxZ = 10000;
     windows.forEach(w => {
-        const z = parseInt(window.getComputedStyle(w).zIndex) || 0;
-        if (z > maxZ) maxZ = z;
+        const style = window.getComputedStyle(w);
+        const z = parseInt(style.zIndex);
+        if (!isNaN(z) && z > maxZ) maxZ = z;
     });
-    el.style.zIndex = maxZ + 1;
 
-    // Visual feedback: update active state on tabs
+    // Increment and apply inline style to override CSS and existing inline definitions
+    el.style.zIndex = (maxZ + 1).toString();
+
+    // Synchronize taskbar active states
     document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
 
     const idMap = {
@@ -62,8 +76,8 @@ window.bringToFront = function (el) {
     }
 };
 
-// Global mousedown listener for window focus using CAPTURING phase
-// This ensures we catch the click before the game engine can stop propagation
+// Global event delegation for window focus
+// Utilizes the capturing phase to intercept input prior to module-specific suppression
 document.addEventListener('mousedown', (e) => {
     const win = e.target.closest('.win95-window, .win95-dialog');
     if (win) {
@@ -297,7 +311,7 @@ export class UIController {
         setupIcon('minesweeper-desktop-icon', () => this.openWindow());
         setupIcon('github-desktop-icon', () => window.open('https://github.com/Amey-Thakur', '_blank'));
 
-        // Explicit capturing listener for the game window to ensure focus works
+        // High-priority focus interceptor for the game window
         win.addEventListener('mousedown', () => window.bringToFront(win), true);
 
         document.getElementById('desktop').addEventListener('click', () => {
