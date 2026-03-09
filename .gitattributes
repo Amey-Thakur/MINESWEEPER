@@ -1,0 +1,21 @@
+# Minesweeper Project Attributes
+# Ensures binary consistency and correct language detection
+
+# Media & Assets (Binary handling via LFS where applicable)
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.svg text eol=lf
+
+# Documentation
+*.md text eol=lf
+DOCUMENTATION.md linguist-documentation
+
+# Web Core
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+
+# Git Configuration
+.gitignore text eol=lf
+.gitattributes text eol=lf

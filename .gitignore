@@ -1,0 +1,25 @@
+# Minesweeper Project Ignore
+# Excludes temporary files and environment-specific bloat
+
+# OS Generated
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Development Tools
+.vscode/
+.idea/
+*.suo
+*.user
+*.log
+
+# Web/Node (if applicable)
+node_modules/
+dist/
+build/
+.env
+
+# Project Specific
+DOCUMENTATION.md.bak
+Source Code/temp/
+*.tmp
