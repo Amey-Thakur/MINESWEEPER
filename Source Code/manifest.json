@@ -1,7 +1,7 @@
 {
     "name": "Minesweeper Engine",
     "short_name": "Minesweeper",
-    "description": "Designed and developed by Amey Thakur.\nEngineering a deterministic zero-guess game state through recursive spatial partitioning and high-performance grid algorithms.",
+    "description": "Designed and developed by Amey Thakur.\nEngineering a deterministic zero-guess game state through recursive QuadTree spatial partitioning and high-performance grid algorithms.",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#008080",
