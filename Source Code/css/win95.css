@@ -659,10 +659,6 @@
     border-right: 1px solid var(--win95-highlight);
     background: var(--win95-surface);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-    /* Prevents text length from expanding the flex parent */
 }
 
 #status-text {
@@ -1014,9 +1010,8 @@
     box-shadow: inset -1px -1px 0 var(--win95-shadow);
     position: relative;
     z-index: 1;
-    height: 180px;
-    /* Locked height to prevent dialog resize jitter */
-    overflow: hidden;
+    height: 230px;
+    /* Balanced height for Technical Note content */
 }
 
 .seed-tab-panel.active {

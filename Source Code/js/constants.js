@@ -36,4 +36,4 @@ export const SMILEY = {
     LOST: 'X(',
 };
 
-export const CELL_SIZE = 24;
+export const CELL_SIZE = 30;
