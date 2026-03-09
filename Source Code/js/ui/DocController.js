@@ -33,17 +33,88 @@ export function initDocSystem() {
         'complexity': document.getElementById('doc-complexity-title')
     };
 
-    const docCloseBtns = {
-        'quadtree': document.getElementById('doc-quadtree-close'),
-        'complexity': document.getElementById('doc-complexity-close')
+    const docTabs = {
+        'quadtree': document.getElementById('doc-quadtree-tab'),
+        'complexity': document.getElementById('doc-complexity-tab')
+    };
+
+    const docControls = {
+        'quadtree': {
+            min: document.getElementById('doc-quadtree-minimize'),
+            max: document.getElementById('doc-quadtree-maximize'),
+            close: document.getElementById('doc-quadtree-close')
+        },
+        'complexity': {
+            min: document.getElementById('doc-complexity-minimize'),
+            max: document.getElementById('doc-complexity-maximize'),
+            close: document.getElementById('doc-complexity-close')
+        }
+    };
+
+    const windowState = {
+        'quadtree': { lastPos: null },
+        'complexity': { lastPos: null }
     };
 
     // Initialize Draggers for Doc Windows
     Object.keys(docWindows).forEach(key => {
         new WindowDragger(docWindows[key], docTitles[key]);
-        docCloseBtns[key].onclick = () => {
-            docWindows[key].classList.add('hidden');
+
+        const win = docWindows[key];
+        const tab = docTabs[key];
+        const controls = docControls[key];
+
+        const toggleMinimize = () => {
+            const isMinimized = win.classList.contains('minimized');
+            if (isMinimized) {
+                win.classList.remove('minimized');
+                tab.classList.add('active');
+                bringToFront(win);
+            } else {
+                win.classList.add('minimized');
+                tab.classList.remove('active');
+            }
         };
+
+        const toggleMaximize = () => {
+            const isMaximized = win.classList.contains('maximized');
+            if (isMaximized) {
+                win.classList.remove('maximized');
+                controls.max.textContent = '□';
+                if (windowState[key].lastPos) {
+                    const lp = windowState[key].lastPos;
+                    win.style.top = lp.top;
+                    win.style.left = lp.left;
+                    win.style.position = lp.position;
+                    win.style.margin = lp.margin;
+                    win.style.transform = lp.transform;
+                    win.style.width = lp.width;
+                }
+            } else {
+                windowState[key].lastPos = {
+                    top: win.style.top,
+                    left: win.style.left,
+                    position: win.style.position,
+                    margin: win.style.margin,
+                    transform: win.style.transform,
+                    width: win.style.width
+                };
+                win.classList.add('maximized');
+                controls.max.textContent = '❐';
+            }
+        };
+
+        controls.min.onclick = (e) => { e.stopPropagation(); toggleMinimize(); };
+        controls.max.onclick = (e) => { e.stopPropagation(); toggleMaximize(); };
+        controls.close.onclick = (e) => {
+            e.stopPropagation();
+            win.classList.add('hidden');
+            tab.classList.add('hidden');
+        };
+
+        if (tab) {
+            tab.onclick = toggleMinimize;
+        }
     });
 
     // Helper: Bring window to front
@@ -55,6 +126,8 @@ export function initDocSystem() {
             if (z > maxZ) maxZ = z;
         });
         el.style.zIndex = maxZ + 1;
+
+        // Reset sidebar apps active state if needed, though mostly handled individually
     };
 
     const openFolder = () => {
@@ -69,6 +142,11 @@ export function initDocSystem() {
     const openDoc = (id) => {
         if (docWindows[id]) {
             docWindows[id].classList.remove('hidden');
+            docWindows[id].classList.remove('minimized');
+            if (docTabs[id]) {
+                docTabs[id].classList.remove('hidden');
+                docTabs[id].classList.add('active');
+            }
             bringToFront(docWindows[id]);
         }
     };

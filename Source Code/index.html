@@ -183,6 +183,14 @@
                     <img src="./assets/icons/minesweeper.ico" class="tab-icon-img" alt="">
                     <span class="tab-text">Minesweeper</span>
                 </button>
+                <button id="doc-quadtree-tab" class="taskbar-app-tab hidden">
+                    <img src="./assets/icons/document.svg" class="tab-icon-img" alt="">
+                    <span class="tab-text">QuadTree.md - Notepad</span>
+                </button>
+                <button id="doc-complexity-tab" class="taskbar-app-tab hidden">
+                    <img src="./assets/icons/document.svg" class="tab-icon-img" alt="">
+                    <span class="tab-text">Complexity.md - Note...</span>
+                </button>
             </div>
             <div class="menu-item" id="menu-clock" style="margin-left: auto;">
                 <div id="taskbar-clock" class="win95-clock menu-label"></div>
@@ -327,11 +335,12 @@
             </div>
             <div class="title-bar-text">QuadTree.md - Notepad</div>
             <div class="title-bar-controls">
-                <button class="title-btn close-btn" id="doc-quadtree-close">×</button>
+                <button class="title-btn minimize-btn" id="doc-quadtree-minimize" aria-label="Minimize">_</button>
+                <button class="title-btn maximize-btn" id="doc-quadtree-maximize" aria-label="Maximize">□</button>
+                <button class="title-btn close-btn" id="doc-quadtree-close" aria-label="Close">×</button>
             </div>
         </div>
-        <div class="win95-window-body"
-            style="background: white; padding: 20px; font-family: 'Segoe UI', sans-serif; height: 400px; overflow-y: auto;">
+        <div class="win95-window-body" style="background: white; padding: 20px; font-family: 'Segoe UI', sans-serif;">
             <h1 style="font-size: 18px; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px;">
                 QuadTree Spatial Partitioning</h1>
 
@@ -373,7 +382,9 @@
             </div>
             <div class="title-bar-text">Complexity.md - Notepad</div>
             <div class="title-bar-controls">
-                <button class="title-btn close-btn" id="doc-complexity-close">×</button>
+                <button class="title-btn minimize-btn" id="doc-complexity-minimize" aria-label="Minimize">_</button>
+                <button class="title-btn maximize-btn" id="doc-complexity-maximize" aria-label="Maximize">□</button>
+                <button class="title-btn close-btn" id="doc-complexity-close" aria-label="Close">×</button>
             </div>
         </div>
         <div class="win95-window-body" style="background: white; padding: 20px; font-family: 'Segoe UI', sans-serif;">
