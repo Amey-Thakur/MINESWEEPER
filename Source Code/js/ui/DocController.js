@@ -79,7 +79,7 @@ export function initDocSystem() {
         techDocsIcon.addEventListener('click', (e) => {
             e.stopPropagation();
             const now = Date.now();
-            if (now - lastClick < 300) {
+            if (now - lastClick < 500) {
                 openFolder();
             }
             lastClick = now;
