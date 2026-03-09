@@ -111,7 +111,22 @@ function init() {
         onClock12Sec: () => setClockFormat('12h-sec', dom.clock),
         onClock12NoSec: () => setClockFormat('12h-nosec', dom.clock),
         onClock24Sec: () => setClockFormat('24h-sec', dom.clock),
-        onClock24NoSec: () => setClockFormat('24h-nosec', dom.clock)
+        onClock24NoSec: () => setClockFormat('24h-nosec', dom.clock),
+        onRunCommand: (cmd) => {
+            if (cmd === 'minesweeper' || cmd === 'winmine' || cmd === 'game') {
+                ui.openWindow();
+                return true;
+            }
+            if (cmd === 'about') {
+                import('./ui/MenuController.js').then(m => m.showAbout());
+                return true;
+            }
+            if (cmd === 'help' || cmd === 'howto') {
+                import('./ui/MenuController.js').then(m => m.showHowToPlay());
+                return true;
+            }
+            return false;
+        }
     });
     initClock(dom.clock);
     ui.initWindowControls();

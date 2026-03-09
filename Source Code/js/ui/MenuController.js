@@ -166,7 +166,7 @@ export function initMenus(callbacks) {
             smRun.addEventListener('click', () => {
                 startMenu.classList.add('hidden');
                 resetStartMenu();
-                showRunDialog();
+                showRunDialog(callbacks.onRunCommand);
             });
         }
 
@@ -309,7 +309,7 @@ export function showAbout() {
     overlay.classList.remove('hidden');
 }
 
-export function showRunDialog() {
+export function showRunDialog(onCommand) {
     const dialog = document.getElementById('run-dialog');
     const overlay = document.getElementById('dialog-overlay');
     const input = document.getElementById('run-input');
@@ -324,9 +324,15 @@ export function showRunDialog() {
     };
 
     const handleRun = () => {
-        const query = input.value.trim();
+        const query = input.value.trim().toLowerCase();
         if (query) {
-            window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+            // Check for internal commands first
+            if (onCommand && onCommand(query)) {
+                // Handled internally
+            } else {
+                // Fallback to web search
+                window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+            }
         }
         closeHandler();
     };
