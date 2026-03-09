@@ -329,7 +329,7 @@ function checkWinCondition() {
         gameState = GAME_STATE.WON;
         stopTimer();
         ui.updateSmiley(SMILEY.WON);
-        ui.updateStatus('Game Over: Victory!');
+        ui.updateStatus('Victory!');
 
         if (renderer) {
             renderer.isWon = true;
@@ -345,7 +345,7 @@ function handleGameOver(fatalIndex) {
     gameState = GAME_STATE.LOST;
     stopTimer();
     ui.updateSmiley(SMILEY.LOST);
-    ui.updateStatus('Game Over: Mine Detonated');
+    ui.updateStatus('Explosion!');
 
     // Pass the specific index of the triggered unit to the renderer for specific isolated frame priority.
     renderer.fatalIndex = fatalIndex;
