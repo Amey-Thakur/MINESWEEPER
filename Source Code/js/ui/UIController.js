@@ -60,8 +60,11 @@ window.bringToFront = function (el) {
     // Increment and apply inline style to override CSS and existing inline definitions
     el.style.zIndex = (maxZ + 1).toString();
 
-    // Synchronize taskbar active states
+    // Synchronize taskbar and window active states
     document.querySelectorAll('.taskbar-app-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.win95-window, .win95-dialog').forEach(w => w.classList.remove('active'));
+
+    el.classList.add('active');
 
     const idMap = {
         'game-window': 'minesweeper-tab',

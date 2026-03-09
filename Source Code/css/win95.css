@@ -490,9 +490,14 @@
     align-items: center;
     height: var(--titlebar-h);
     padding: 2px 3px;
+    background: var(--win95-title-inactive);
+    color: var(--win95-light);
+    cursor: default;
+}
+
+.win95-window.active .win95-title-bar {
     background: linear-gradient(90deg, var(--win95-title-active), #1084d0);
     color: var(--win95-title-text);
-    cursor: default;
 }
 
 .title-bar-icon {
