@@ -196,7 +196,6 @@ export class UIController {
             const activeTab = document.getElementById(idMap[el.id]);
             if (activeTab) {
                 activeTab.classList.add('active');
-                if (taskbarApps) taskbarApps.appendChild(activeTab);
             }
         };
 
@@ -294,11 +293,19 @@ export class UIController {
     }
 
     openWindow() {
-        if (this.dom.window) {
-            this.dom.window.classList.remove('minimized');
-            if (this._bringToFrontHelper) this._bringToFrontHelper(this.dom.window);
-        }
+        const win = this.dom.window;
         const tab = document.getElementById('minesweeper-tab');
-        if (tab) tab.style.display = 'flex';
+        const apps = document.getElementById('taskbar-apps');
+
+        if (win) {
+            const wasHidden = tab && tab.style.display === 'none';
+            win.classList.remove('minimized');
+            if (this._bringToFrontHelper) this._bringToFrontHelper(win);
+
+            if (tab) {
+                tab.style.display = 'flex';
+                if (wasHidden && apps) apps.appendChild(tab);
+            }
+        }
     }
 }

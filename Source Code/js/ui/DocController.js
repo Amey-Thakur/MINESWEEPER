@@ -178,7 +178,6 @@ export function initDocSystem() {
         const activeTab = document.getElementById(tabId);
         if (activeTab) {
             activeTab.classList.add('active');
-            if (taskbarApps) taskbarApps.appendChild(activeTab);
         }
     };
 
@@ -189,10 +188,13 @@ export function initDocSystem() {
             win.classList.remove('hidden');
             win.classList.remove('minimized');
             if (tab) {
+                const wasHidden = tab.classList.contains('hidden');
                 tab.classList.remove('hidden');
                 tab.classList.add('active');
-                // Move tab to the rightmost position by appending it to the end
-                taskbarApps.appendChild(tab);
+                // Move tab to the rightmost position ONLY if it was hidden
+                if (wasHidden && taskbarApps) {
+                    taskbarApps.appendChild(tab);
+                }
             }
             bringToFront(win);
         }
@@ -204,10 +206,13 @@ export function initDocSystem() {
             docWindows[id].classList.remove('minimized');
             const tab = docTabs[id];
             if (tab) {
+                const wasHidden = tab.classList.contains('hidden');
                 tab.classList.remove('hidden');
                 tab.classList.add('active');
-                // Move tab to the rightmost position
-                taskbarApps.appendChild(tab);
+                // Move tab to the rightmost position ONLY if it was hidden
+                if (wasHidden && taskbarApps) {
+                    taskbarApps.appendChild(tab);
+                }
             }
             bringToFront(docWindows[id]);
         }
