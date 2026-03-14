@@ -1,5 +1,5 @@
 # Minesweeper Engine: Architectural Analysis and Implementation
-*Technical Specification and Engineering Documentation*
+*Technical Research and Architectural Analysis*
 
 ---
 
@@ -248,4 +248,4 @@ To support mobile devices, the system implements a touch-event matrix for flaggi
 </div>
 
 ---
-*End of Technical Specification*
+*End of Documentation*
