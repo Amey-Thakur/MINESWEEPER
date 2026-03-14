@@ -239,10 +239,12 @@ To support mobile devices, the system implements a touch-event matrix for flaggi
 
 <div align="center">
 
-  ### Navigation & Links
+  [↑ **Back to Top**](#top) &nbsp;·&nbsp; [← **Back to Home (README)**](README.md)
 
-  [↑ **Back to Top**](#top) &nbsp;·&nbsp; [← **Back to Home (README)**](README.md) &nbsp;·&nbsp; [🎮 **Play Minesweeper**](https://amey-thakur.github.io/MINESWEEPER/)
-  
+  <br>
+
+  💣 **[Minesweeper Engine](https://amey-thakur.github.io/MINESWEEPER/)**
+
 </div>
 
 ---
