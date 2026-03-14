@@ -110,7 +110,7 @@ MINESWEEPER/
 │   └── SPECIFICATION.md                # System engineering & architectural roadmap
 │
 ├── screenshots/                        # High-fidelity visual verification gallery
-│   ├── grid_simulation_1m.png          # 1M node spatial density visualization
+│   ├── grid_simulation_1m.png          # One Million node spatial density visualization
 │   ├── desktop_interface.png           # Pixel-perfect Windows 95 shell landing
 │   ├── about_engine_dialog.png         # Technical engine specification oversight
 │   ├── quadtree_docs_notepad.png       # Recursive spatial partitioning theory
@@ -165,53 +165,102 @@ MINESWEEPER/
 <h2>Results</h2>
 
   <div align="center">
-  <b>Main Interface: Windows 95 Design</b>
+  <b>Windows 95 Aesthetics: Graphical Foundation</b>
   <br>
-  <i>Initial system state with clean aesthetics and synchronized brand identity.</i>
-  <br>  <br>
-  <img src="screenshots/grid_simulation_1m.png" alt="Landing Page" width="90%">
+  <i>The iconic "Bliss" wallpaper serves as the high-fidelity aesthetic baseline for the environment.</i>
+  <br><br>
+  <img src="screenshots/wallpaper.jpg" alt="Bliss Wallpaper" width="90%">
+  <br><br><br>
+
+  <b>Minesweeper Engine: One Million Node Performance</b>
+  <br>
+  <i>Deterministic spatial simulation managing 1,000,000 (1 million) cells via recursive QuadTree.</i>
+  <br><br>
+  <img src="screenshots/grid_simulation_1m.png" alt="Grid Simulation" width="90%">
   <br>
   <sub><i>💡 <b>Interactive Element:</b> Fully functional taskbar and draggable window management system.</i></sub>
   <br><br><br>
 
-  <b>Authentic Shell: Desktop Emulation</b>
+  <b>Windows 95 Shell: Desktop Emulation</b>
   <br>
-  <i>Pixel-perfect reconstruction of the Windows 95 visual language and workspace.</i>
+  <i>Authentic reconstruction of the legacy workspace including icons and taskbar orchestration.</i>
   <br><br>
   <img src="screenshots/desktop_interface.png" alt="Desktop Interface" width="90%">
   <br><br><br>
 
-  <b>Interactive Polish: Engine Integration</b>
+  <b>Modular Architecture: High-Scale Logic</b>
   <br>
-  <i>Technical oversight of the spatial management and logical solver modules.</i>
+  <i>Technical oversight of the spatial management and logical constraint solver modules.</i>
   <br><br>
   <img src="screenshots/about_engine_dialog.png" alt="Engine UI" width="60%">
   <br><br><br>
 
+  <b>System Attribution: Developer Identity</b>
+  <br>
+  <i>Formal identification and creative credits within the simulated operating system.</i>
+  <br><br>
+  <img src="screenshots/developer_info_dialog.png" alt="Developer Credits" width="60%">
+  <br><br><br>
+
+  <b>Board Initialization: Deterministic Startup</b>
+  <br>
+  <i>The engine's initial state ready for high-fidelity interactive spatial study.</i>
+  <br><br>
+  <img src="screenshots/gameplay_initial.png" alt="Gameplay Initial" width="60%">
+  <br><br><br>
+
+  <b>User Guidance: Control Protocols</b>
+  <br>
+  <i>Clear instructional framework for interacting with the complex spatial environment.</i>
+  <br><br>
+  <img src="screenshots/how_to_play_instructions.png" alt="Instructions" width="60%">
+  <br><br><br>
+
   <b>Spatial Analysis: QuadTree Modeling</b>
   <br>
-  <i>In-depth documentation of the recursive partitioning used for coordinate culling.</i>
+  <i>In-depth documentation of the recursive partitioning used for One Million node culling.</i>
   <br><br>
   <img src="screenshots/quadtree_docs_notepad.png" alt="QuadTree Analysis" width="60%">
   <br><br><br>
 
-  <b>Performance Metrics: Real-Time Benchmarks</b>
+  <b>Performance Metrics: Complexity Benchmarks</b>
   <br>
-  <i>Quantifying retrieval and state lookup efficiency under high-density states.</i>
+  <i>Quantifying retrieval and state lookup efficiency under high-density board states.</i>
   <br><br>
   <img src="screenshots/complexity_analysis_notepad.png" alt="Benchmarks" width="60%">
   <br><br><br>
 
-  <b>Deterministic Networking: URL Sharing</b>
+  <b>Shell Utility: System Execution</b>
   <br>
-  <i>Sharing exact board configurations via encoded URL parameters for competition.</i>
+  <i>Simulating low-level command execution via the classic "Run" dialogue interface.</i>
   <br><br>
-  <img src="screenshots/seed_manager_sharing.png" alt="Seed Manager" width="60%">
+  <img src="screenshots/run_dialog.png" alt="Run Dialog" width="60%">
+  <br><br><br>
+
+  <b>State Control: Seed Management</b>
+  <br>
+  <i>Configuring deterministic board states via precise hexadecimal and integer seed input.</i>
+  <br><br>
+  <img src="screenshots/seed_manager_input.png" alt="Seed Input" width="60%">
+  <br><br><br>
+
+  <b>Deterministic Networking: Configuration Sharing</b>
+  <br>
+  <i>Sharing exact board configurations via encoded URL parameters for peer-to-peer logic replication.</i>
+  <br><br>
+  <img src="screenshots/seed_manager_sharing.png" alt="Seed Sharing" width="60%">
+  <br><br><br>
+
+  <b>Technical Repository: File Management</b>
+  <br>
+  <i>Browsing the scholarly documentation suite within the simulated "Technical Documents" folder.</i>
+  <br><br>
+  <img src="screenshots/technical_docs_folder.png" alt="Technical Folder" width="60%">
   <br><br><br>
 
   <b>System Finality: Exit Sequence</b>
   <br>
-  <i>Classic shutdown animation ensuring high-fidelity to the source operating system.</i>
+  <i>High-fidelity "Shut Down" animation ensuring total immersion in the legacy aesthetic.</i>
   <br><br>
   <img src="screenshots/shutdown_screen.png" alt="Shutdown Sequence" width="90%">
 </div>
