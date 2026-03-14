@@ -373,6 +373,8 @@ I focused on a few specific architectural areas where standard browser-based imp
 - **Logical Guarantees (CSP)**: I implemented a solver that works during board generation to ensure the user never has to guess. If a board requires a 50/50 guess, the engine rebuilds that specific section.
 - **Pure Vanilla JS Architecture**: By avoiding third-party frameworks, I was able to optimize the execution pipeline specifically for high-scale spatial simulation.
 
+For a comprehensive technical analysis of these innovations, please refer to the **[Architectural Research](RESEARCH.md)** report.
+
 **Connect:** [GitHub](https://github.com/Amey-Thakur) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/amey-thakur) &nbsp;·&nbsp; [ORCID](https://orcid.org/0000-0001-5644-1575)
 
 ---
