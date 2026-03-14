@@ -1,5 +1,5 @@
 # Minesweeper Engine: Architectural Analysis and Implementation
-*Technical Research and Architectural Analysis*
+*Architectural Research and Engineering Analysis*
 
 ---
 
