@@ -49,6 +49,10 @@
 
 **Minesweeper Engine** is a technical study in optimized spatial simulation, built to handle extremely large grid systems while guaranteeing that every generated board is logically solvable. Instead of standard 2D arrays, this engine uses a recursive **QuadTree** structure to index millions of cells, allowing a stateless Canvas renderer to draw only the visible portion of the grid at high frame rates.
 
+> [!IMPORTANT]
+> ### 📑 Architectural Research and Analysis
+> For a comprehensive technical analysis covering recursive spatial partitioning, bit-packed state management, and coordinate virtualization, refer to the **[RESEARCH.md](RESEARCH.md)** document. This report provides a granular examination of the engine's core innovations and architectural performance.
+
 > [!NOTE]
 > ### 💣 Defining Minesweeper Engine Architecture
 > In this project, "high-performance" refers to the ability to simulate millions of interactive elements without being limited by the browser's DOM performance. By using bit-packed data structures and a **QuadTree** for spatial indexing, the engine can manage a **1,000,000+ (One Million+) cell** grid. This approach keeps the interface responsive and ensures that rendering performance remains stable, regardless of the total board size.
