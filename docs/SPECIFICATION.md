@@ -33,7 +33,11 @@ graph TD
 
 ### 3. Graphics & UI
 -   **Virtualization Pipeline**: Utilizes an offscreen **SpriteSheet** generator to cache Win95 assets (bevels, digits, icons) in a single hardware-accelerated memory block, reducing draw-call latency.
--   **Win95 Shell Design**: Replicates the original Windows 95 visual language using CSS Custom Properties and asymmetric border-spacing to simulate light-source origins. The interface is optimized as a **PWA**, supporting offline execution and native desktop installation.
+-   **Win95 Shell Design**: Replicate the original Windows 95 visual language using CSS Custom Properties and asymmetric border-spacing to simulate light-source origins. The interface is optimized as a **PWA**, supporting offline execution and native desktop installation.
+-   **Mobile Interaction Model**: Implemented a surgical touch-event matrix supporting single-tap (reveal), long-press (flag), and pinch-to-zoom/drag-to-pan gestures. Visual components dynamically rescale via `@media` queries, ensuring the classic 95 aesthetic remains accessible on modern mobile viewports.
+
+### 4. Branding & Signature
+-   **Scholarly Attribution**: Integrates a persistent developer signature within the source code and a styled, high-visibility branding block in the browser developer console. This signature links the technical execution (QuadTree partitioning, BFS traversal) directly to the author's professional profile and repository.
 
 ---
 

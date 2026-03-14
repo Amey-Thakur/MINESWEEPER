@@ -19,6 +19,7 @@
 8. [Phase 8: Windows 95 UI Shell](#phase-8-windows-95-ui-shell)
 9. [Phase 9: Seed-Based URL Sharing](#phase-9-seed-based-url-sharing)
 10. [Phase 10: Testing, Benchmarks, and Polish](#phase-10-testing-benchmarks-and-polish)
+11. [Phase 11: Mobile Accessibility and Branding Signature](#phase-11-mobile-accessibility-and-branding-signature)
 
 ---
 
@@ -464,9 +465,33 @@ The ultimate deliverables completed herein encompass:
 
 ### 10.2 Final Wiring Mechanism
 
-`main.js` operates the central standard `requestAnimationFrame(renderLoop)` explicitly calling upon the underlying Phase 6 rendering class continuously natively updating hardware bounds visually independently off logic layers natively structured by the Phase 3 PRNG logic and the Phase 4 traversal scripts asynchronously! Inputs map straight dynamically against logical array limits. 
+### 10.3 Conclusion
 
 The application stands robustly completed, efficiently capable of deploying exponentially large 10,000x10,000 grids structurally bound identically to 24-pixel UI limits safely bounded securely inside standard desktop browsing structures flawlessly!
+
+---
+
+## Phase 11: Mobile Accessibility and Branding Signature
+
+### 11.1 Overview
+
+Modern mobile playability requires a shift from binary mouse triggers to a complex touch-event matrix. Phase 11 focuses on "Surgical Responsiveness"—ensuring the classic Win95 UI remains functional and centered on small screens without breaking the underlying engine or window management. This phase also introduces a digital signature in the developer console to formally attribute the project’s complex technical architecture.
+
+The deliverables for this phase are:
+- `js/ui/ConsoleBranding.js`
+- Mobile-responsive CSS overrides in `win95.css` and `game.css`.
+- Touch interaction handlers in `main.js`.
+
+### 11.2 Precision Mobile UI
+
+To support mobile devices, the system implements:
+1.  **Touch Delegation**: Replaces the `mousedown/mousemove` paradigm with a specialized touch-event matrix. This supports single-tap reveals, long-press flagging, and two-finger pinch-to-zoom.
+2.  **Adaptive Scaling**: Uses `@media` queries and CSS `transform` logic to ensure dialogs and windows are center-aligned on narrow viewports. Window control buttons (Minimize/Maximize) are rescaled for accessibility (larger tap targets).
+3.  **The "Sliding" Expert Mode**: For ultra-large boards (Expert), the engine prioritizes horizontal "sliding" (panning) over aggressive down-scaling. This preserves the classic 1:1 cell legibility while allowing the user to navigate the grid via touch dragging.
+
+### 11.3 Developer Branding Signature
+
+A stylized, high-visibility branding block is injected into the browser’s developer tools. This serves as a scholarly signature, documenting the use of **QuadTree spatial partitioning** and **Mulberry32 PRNG** for deterministic game states. By using CSS within `console.log`, the branding is themed with a "Bliss-inspired" gradient (Sky Blue -> Grass Green) that matches the project's visual identity, providing professional attribution and linking directly to the author's technical profile and repository.
 
 ---
 *End of Documentation*
