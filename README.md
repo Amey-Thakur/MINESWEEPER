@@ -185,7 +185,7 @@ MINESWEEPER/
   <br>
   <i>Technical oversight of the spatial management and logical solver modules.</i>
   <br><br>
-  <img src="screenshots/about_engine_dialog.png" alt="Engine UI" width="90%">
+  <img src="screenshots/about_engine_dialog.png" alt="Engine UI" width="60%">
   <br><br><br>
 
   <b>Spatial Analysis: QuadTree Modeling</b>
