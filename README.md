@@ -47,24 +47,23 @@
 <a name="overview"></a>
 ## Overview
 
-**Minesweeper Engine** is a multi-stage spatial simulation architecture designed to manage massive grid systems and generate high-fidelity board states with zero-guess guarantees. By implementing a recursive **QuadTree** framework, this project translates massive coordinate sets into a latent spatial index, which then conditions a stateless renderer to produce visual outputs with strikingly consistent frame delivery.
+**Minesweeper Engine** is a technical study in optimized spatial simulation, built to handle extremely large grid systems while guaranteeing that every generated board is logically solvable. Instead of standard 2D arrays, this engine uses a recursive **QuadTree** structure to index millions of cells, allowing a stateless Canvas renderer to draw only the visible portion of the grid at high frame rates.
 
 > [!NOTE]
 > ### 💣 Defining Minesweeper Engine Architecture
-> A **high-performance engine** in this research context is a system where the simulation of millions of interactive cells is decoupled from the browser's DOM-based rendering limits. This process involves utilizing advanced bit-packed spatial data structures, such as the **QuadTree** framework, to distillate high-density grid states into latent viewport embeddings. These embeddings then condition a stateless Canvas renderer to synthesize a classic Windows 95 interface that maintained hardware-accelerated performance even at a **1,000,000+ (One Million+) cell** scale.
+> In this project, "high-performance" refers to the ability to simulate millions of interactive elements without being limited by the browser's DOM performance. By using bit-packed data structures and a **QuadTree** for spatial indexing, the engine can manage a **1,000,000+ (One Million+) cell** grid. This approach keeps the interface responsive and ensures that rendering performance remains stable, regardless of the total board size.
 
-The repository serves as a digital study into the mechanics of spatial partitioning and signal processing, brought into a modern context via a **Progressive Web App (PWA)** interface, enabling high-performance logic execution through a decoupled engine architecture.
+The repository serves as a practical implementation of spatial partitioning and constraint logic, delivered as a **Progressive Web App (PWA)** for native-like performance in the browser.
 
 ### Simulation Heuristics
-The core engine is governed by strict **computational design patterns** ensuring fidelity and responsiveness:
-*   **Spatial Partitioning**: The encoder utilizes a linear spatial verification pipeline, incrementally distilling grid tokens into a global affective game state.
-*   **CSP Inference**: Beyond simple generation, the system integrates a **Constraint Satisfaction Problem (CSP)** solver that dynamically refines the board's solvability, simulating an organic complexity curve for complex board structures.
-*   **Real-Time Rendering**: Visual reconstruction supports both streaming and viewport-culled generation, ensuring **high-fidelity** visual response critical for interactive spatial study.
+The engine follows specific **system design patterns** to maintain stability:
+*   **Spatial Partitioning**: The engine uses a QuadTree to filter grid data, processing only the cells near the user's viewport.
+*   **CSP Logic**: To avoid "guessing," the system includes a **Constraint Satisfaction Problem (CSP)** solver that checks the board during generation and ensures a logical path to completion exists.
+*   **Decoupled Rendering**: The logic engine and the drawing pipeline are separated, ensuring that complex calculations don't block the visual updates.
 
-> [!TIP]
-> **Acoustic and Visual Precision Integration**
+> **Performance and Logic Synchronization**
 >
-> To maximize simulation clarity, the engine employs a **multi-stage logic pipeline**. **Latent filters** refine the state stream, and **bitwise weights** visualize the board's confidence vector, strictly coupling structural flair with state changes. This ensures the user's mental model is constantly synchronized with the underlying logical simulation.
+> To maintain high execution speeds, the engine uses a **multi-stage logic pipeline**. **Latent filters** refine the state stream before it reaches the renderer, and **bitwise weights** are used to manage cell states and visualize the board's logic. This ensures that the user's interactions are processed instantly and remain synchronized with the underlying simulation, even when the grid is massive.
 
 ---
 
@@ -351,14 +350,14 @@ Copyright © 2026 Amey Thakur
 
 **Created & Maintained by**: [Amey Thakur](https://github.com/Amey-Thakur)
 
-While Minesweeper is a foundational exercise in web development, this project transcends standard implementations by prioritizing **theoretical depth and algorithmic efficiency at scale**. This repository represents a personal breakthrough in **Browser-Side Virtualization** and high-performance interactive systems engineering.
+While Minesweeper is a common project for developers, this version is built to explore **how to handle massive data sets in a browser environment**. Standard implementations often struggle with performance once the grid exceeds a few thousand cells; this project aims to solve that through better data structures and rendering techniques.
 
 ### Core Contributions & Innovations
-Unlike traditional versions that rely on simple 2D arrays and DOM-bound rendering, this project introduces:
-- **Recursive QuadTree Partitioning**: A novel application of spatial data structures to facilitate sub-millisecond coordinate lookups across **1,000,000+ (One Million+) nodes**.
-- **Hardware-Accelerated Viewport Virtualization**: A decoupled simulation architecture where the game core runs independently of the render loop, allowing for fluid interaction in high-density environments.
-- **Deterministic Constraint Satisfaction (CSP)**: An integrated solver that guarantees logical solvability, eliminating the probabilistic "guess-work" inherent in classic Minesweeper logic.
-- **Zero-Dependency Vanilla JS Architecture**: A pure implementation showcasing the raw performance potential of modern JavaScript and Web APIs without the overhead of external frameworks.
+I focused on a few specific architectural areas where standard browser-based implementations typically face limitations:
+- **QuadTree Grid Management**: Moving away from 2D arrays allows the system to query and manage **1,000,000+ (One Million+) nodes** with almost no performance hit.
+- **Viewport Virtualization**: Only the visible cells are rendered to the Canvas, while the rest exist as raw data in memory, significantly reducing the rendering overhead.
+- **Logical Guarantees (CSP)**: I implemented a solver that works during board generation to ensure the user never has to guess. If a board requires a 50/50 guess, the engine rebuilds that specific section.
+- **Pure Vanilla JS Architecture**: By avoiding third-party frameworks, I was able to optimize the execution pipeline specifically for high-scale spatial simulation.
 
 **Connect:** [GitHub](https://github.com/Amey-Thakur) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/amey-thakur) &nbsp;·&nbsp; [ORCID](https://orcid.org/0000-0001-5644-1575)
 
