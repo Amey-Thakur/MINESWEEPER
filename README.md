@@ -165,7 +165,7 @@ MINESWEEPER/
 <h2>Results</h2>
 
   <div align="center">
-  <b>Main Interface: Modern Design</b>
+  <b>Main Interface: Windows 95 Design</b>
   <br>
   <i>Initial system state with clean aesthetics and synchronized brand identity.</i>
   <br>  <br>
