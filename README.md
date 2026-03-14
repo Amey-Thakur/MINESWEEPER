@@ -50,8 +50,8 @@
 **Minesweeper Engine** is a multi-stage spatial simulation architecture designed to manage massive grid systems and generate high-fidelity board states with zero-guess guarantees. By implementing a recursive **QuadTree** framework, this project translates massive coordinate sets into a latent spatial index, which then conditions a stateless renderer to produce visual outputs with strikingly consistent frame delivery.
 
 > [!NOTE]
-> ### 💣 Defining the Engine Architecture
-> A **high-performance engine** in this context is a system where the "virtualization" of millions of cells is decoupled from the hardware's rendering limits. This process involves utilizing advanced neural-style data structures, such as the **QuadTree** framework, to distillate high-dimensional grid states into viewport embeddings. These embeddings then condition a Canvas renderer to synthesize a visual interface that mirrors the original Windows 95 aesthetic with striking fidelity.
+> ### 💣 Defining Minesweeper Engine Architecture
+> A **high-performance engine** in this research context is a system where the simulation of millions of interactive cells is decoupled from the browser's DOM-based rendering limits. This process involves utilizing advanced bit-packed spatial data structures, such as the **QuadTree** framework, to distillate high-density grid states into latent viewport embeddings. These embeddings then condition a stateless Canvas renderer to synthesize a classic Windows 95 interface that maintained hardware-accelerated performance even at a **1,000,000 cell** scale.
 
 The repository serves as a digital study into the mechanics of spatial partitioning and signal processing, brought into a modern context via a **Progressive Web App (PWA)** interface, enabling high-performance logic execution through a decoupled engine architecture.
 
