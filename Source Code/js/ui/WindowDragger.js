@@ -52,6 +52,9 @@ export class WindowDragger {
         // Only react to standard primary left clicks
         if (e.type === 'mousedown' && e.button !== 0) return;
 
+        // Ignore if clicking on control buttons
+        if (e.target.closest('.title-btn')) return;
+
         // Prevents the browser from triggering default text selection or 
         // scrolling behaviors during the active drag state.
         if (e.cancelable) e.preventDefault();

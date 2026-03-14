@@ -1173,22 +1173,37 @@
  * legacy icons and scaling specialized UI nodes.
  */
 @media screen and (max-width: 600px) {
+    /* Restore and scale desktop icons for mobile density */
     .desktop-icons {
-        display: none;
+        left: 10px;
+        top: 10px;
+        gap: 10px;
     }
 
+    .desktop-icon {
+        width: 50px;
+    }
+
+    .desktop-icon .retro-icon,
+    .desktop-icon .icon-img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .desktop-icon .icon-label {
+        font-size: 9px;
+    }
+
+    /* Scaling taskbar for accessibility */
     .taskbar-app-tab {
-        min-width: 40px;
+        min-width: 36px;
         width: auto;
         flex: 1;
         padding: 2px 4px;
         font-size: 10px;
     }
 
-    .taskbar-app-tab span {
-        display: none;
-    }
-
+    .taskbar-app-tab span,
     .start-button span {
         display: none;
     }
@@ -1198,10 +1213,26 @@
         min-width: 32px;
     }
 
-    .win95-window:not(.maximized),
+    /* Surgical centering for dialogs and floated windows */
     .win95-dialog {
-        max-width: 98vw !important;
-        left: 1vw !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 95vw !important;
+        max-width: none !important;
+    }
+
+    .win95-window:not(.maximized) {
+        width: 95vw !important;
+        left: 2.5vw !important;
+        /* Ensure top is manageable */
+        top: 10% !important;
+    }
+
+    .win95-dialog-body,
+    .win95-window-body {
+        width: 100% !important;
+        max-width: 100% !important;
     }
     
     .status-bar-pane:last-child {
