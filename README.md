@@ -280,42 +280,38 @@ MINESWEEPER/
 >
 > The simulation engine relies on modular JS imports. Ensure you serve the repository through a local server (e.g., Python `http.server`). Failure to synchronize this protocol will result in CORS initialization errors.
 
-### 2. Installation & Setup
+### 2. Implementation Workflow
 
-#### Step 1: Clone the Repository
-Open your terminal and clone the repository:
+#### Step 1: Repository Acquisition
+Initialize the local environment by cloning the primary research repository:
 ```bash
 git clone https://github.com/Amey-Thakur/MINESWEEPER.git
 cd MINESWEEPER
 ```
 
-#### Step 2: Configure Environment
-Serve the code via an isolated local environment:
+#### Step 2: Environment Configuration
+The simulation engine requires a server context to resolve modular ES6 imports. Deploy the application layer using either Python or Node.js logic:
 
-**Python (CLI):**
+**Python (Terminal / System CLI):**
 ```bash
 python -m http.server 8000
 ```
 
-**Node.js (Terminal):**
+**Node.js (Terminal / Shell):**
 ```bash
 npx live-server "Source Code"
 ```
 
-### 3. Execution
+#### Step 3: Engine Initialization
+Once the server is operational, initialize the spatial simulation by navigating to the local address in a compatible browser:
+`http://localhost:8000`
 
-#### A. Interactive Shell (PWA)
-Launch the primary browser engine:
-Navigate to `http://localhost:8000`
-
-**PWA Installation**: Once the studio is running, you can click the "Install" icon in your browser's address bar to add the **Minesweeper Engine** to your desktop as a standalone application.
-
-> [!TIP]
-> ### Spatial Logic Synthesis | Minesweeper Engine
+> [!IMPORTANT]
+> **Spatial Logic Synthesis | Minesweeper Engine**
 >
-> Experience the interactive **Minesweeper** environment directly in your browser through the working **GitHub Pages** deployment. This platform features a **Recursive QuadTree** architecture integrated with a **Mulberry32 PRNG** to synthesize continuous 1,000,000+ (One Million+) node grids, providing a visual demonstration of spatial partitioning and deterministic state boundaries.
+> To bypass local server configuration, you may execute the engine directly via the hosted **GitHub Pages** environment. This portal provides immediate access to the **One Million+ node** spatial partitioning simulation and recursive QuadTree benchmarks.
 >
-> **[Launch Minesweeper Engine on GitHub Pages](https://amey-thakur.github.io/MINESWEEPER/)**
+> **[Initialize Minesweeper Engine Production Environment](https://amey-thakur.github.io/MINESWEEPER/)**
 
 ---
 
