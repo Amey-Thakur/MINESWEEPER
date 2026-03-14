@@ -2,7 +2,7 @@
 
 ## Architectural Overview
 
-**Minesweeper Engine** is a high-performance, zero-dependency web application designed to demonstrate advanced spatial partitioning and algorithmic optimization. The architecture prioritizes memory efficiency and low-latency rendering, enabling the simulation of grids exceeding 1,000,000 nodes while maintaining a consistent 60 FPS delivery.
+**Minesweeper Engine** is a high-performance, zero-dependency web application designed to demonstrate advanced spatial partitioning and algorithmic optimization. The architecture prioritizes memory efficiency and low-latency rendering, enabling the simulation of grids exceeding 1,000,000 (1 million) nodes while maintaining a consistent 60 FPS delivery.
 
 ### Structural Data Flow
 
