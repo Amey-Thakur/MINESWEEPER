@@ -17,7 +17,6 @@
 
 export function printBranding() {
     const title = '  WINDOWS 95 MINESWEEPER ENGINE  ';
-    const author = 'Designed and developed by Amey Thakur';
     const message = 'Engineering a deterministic zero-guess game state through recursive QuadTree spatial partitioning and high-performance grid algorithms. Exploring the intersection of legacy UI paradigms and modern computational efficiency.';
     const repo = 'https://github.com/Amey-Thakur/MINESWEEPER';
     const profile = 'https://github.com/Amey-Thakur';
@@ -56,12 +55,17 @@ export function printBranding() {
             'border: 2px solid #000080',
             'border-top: none',
             'display: block',
-            'text-shadow: 0px 0px 1px rgba(255,255,255,0.5)'
+            'text-shadow: 0px 0px 1px rgba(255,255,255,0.3)'
         ].join(';'),
-        link: 'color: #0000ee; text-decoration: underline;'
+        link: [
+            'color: #0000ee',
+            'text-decoration: underline',
+            'background: #32cd32',
+            'font-weight: bold'
+        ].join(';')
     };
 
     console.log(`%c${title.trim()}`, styles.top);
-    console.log(`%cDetermined & Designed by: ${author}\n\n${message}`, styles.mid);
+    console.log(`%cDesigned and developed by Amey Thakur\n\n${message}`, styles.mid);
     console.log(`%cRepository: %c${repo}%c\nProfile:    %c${profile}`, styles.bot, styles.link, styles.bot, styles.link);
 }
