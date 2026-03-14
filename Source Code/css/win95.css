@@ -1234,6 +1234,12 @@
         width: 100% !important;
         max-width: 100% !important;
     }
+
+    .title-btn {
+        width: 22px;
+        height: 20px;
+        font-size: 14px;
+    }
     
     .status-bar-pane:last-child {
         display: none;
