@@ -11,56 +11,56 @@ This document provides a comprehensive technical analysis of the **Minesweeper E
 
 ---
 
-## 1. Table of Contents
+## Table of Contents
 
-1. [**Introduction: Technical Motivation**](#2-introduction-technical-motivation)
-2. [**Phase 1: Project Scaffolding and Infrastructure**](#3-phase-1-project-scaffolding-and-infrastructure)
-    * [1.1 Development Philosophy](#31-development-philosophy)
-    * [1.2 The Case for Zero Dependencies](#32-the-case-for-zero-dependencies)
-    * [1.3 Project Directory Structure](#33-project-directory-structure)
-3. [**Phase 2: Spatial Partitioning (QuadTree)**](#4-phase-2-spatial-partitioning-quadtree)
-    * [2.1 The Coordinate Overhead Problem](#41-the-coordinate-overhead-problem)
-    * [2.2 Functional Logic and Subdivisions](#42-functional-logic-and-subdivisions)
-    * [2.3 Complexity Analysis](#43-complexity-analysis)
-4. [**Phase 4: Bit-Packed Memory Management**](#5-phase-4-bit-packed-memory-management)
-    * [3.1 Memory Allocation Challenges](#51-memory-allocation-challenges)
-    * [3.2 State Bitmasking Logic](#52-state-bitmasking-logic)
-5. [**Phase 5: Iterative Traversal (BFS)**](#6-phase-5-iterative-traversal-bfs)
-    * [4.1 Recursive Stack Limitations](#61-recursive-stack-limitations)
-    * [4.2 Index Tracing and Performance](#62-index-tracing-and-performance)
-6. [**Phase 6: Constraint Satisfaction Problem (CSP)**](#7-phase-6-constraint-satisfaction-problem-csp)
-    * [5.1 Logical Solvability Gap](#71-logical-solvability-gap)
-    * [5.2 Deterministic Validation](#72-deterministic-validation)
-7. [**Phase 7: High-Performance Canvas Rendering**](#8-phase-7-high-performance-canvas-rendering)
-    * [6.1 Viewport Virtualization](#81-viewport-virtualization)
-    * [6.2 Sprite Cache Serialization](#82-sprite-cache-serialization)
-8. [**Phase 8: Threading via Web Workers**](#9-phase-8-threading-via-web-workers)
-    * [7.1 Main Thread Preservation](#91-main-thread-preservation)
-    * [7.2 Asynchronous State Updates](#92-asynchronous-state-updates)
-9. [**Phase 9: Workspace Emulation (Win95 UI)**](#10-phase-9-workspace-emulation-win95-ui)
-    * [8.1 Desktop Orchestration](#101-desktop-orchestration)
-    * [8.2 Beveling and Aesthetics](#102-beveling-and-aesthetics)
-10. [**Phase 10: Deterministic Seed Restoration**](#11-phase-10-deterministic-seed-restoration)
-    * [9.1 PRNG Architecture](#111-prng-architecture)
-    * [9.2 URL Hash Integration](#112-url-hash-integration)
-11. [**Phase 11: System Integration and Final Polish**](#12-phase-11-system-integration-and-final-polish)
-12. [**Phase 12: Cross-Platform Adaptation (Mobile/PWA)**](#13-phase-12-cross-platform-adaptation-mobilepwa)
+1. [**Introduction: Technical Motivation**](#1-introduction-technical-motivation)
+2. [**Phase 1: Project Scaffolding and Infrastructure**](#2-phase-1-project-scaffolding-and-infrastructure)
+    * [2.1 Development Philosophy](#21-development-philosophy)
+    * [2.2 The Case for Zero Dependencies](#22-the-case-for-zero-dependencies)
+    * [2.3 Project Directory Structure](#23-project-directory-structure)
+3. [**Phase 2: Spatial Partitioning (QuadTree)**](#3-phase-2-spatial-partitioning-quadtree)
+    * [3.1 The Coordinate Overhead Problem](#31-the-coordinate-overhead-problem)
+    * [3.2 Functional Logic and Subdivisions](#32-functional-logic-and-subdivisions)
+    * [3.3 Complexity Analysis](#33-complexity-analysis)
+4. [**Phase 3: Bit-Packed Memory Management**](#4-phase-3-bit-packed-memory-management)
+    * [4.1 Memory Allocation Challenges](#41-memory-allocation-challenges)
+    * [4.2 State Bitmasking Logic](#42-state-bitmasking-logic)
+5. [**Phase 4: Iterative Traversal (BFS)**](#5-phase-4-iterative-traversal-bfs)
+    * [5.1 Recursive Stack Limitations](#51-recursive-stack-limitations)
+    * [5.2 Index Tracing and Performance](#52-index-tracing-and-performance)
+6. [**Phase 5: Constraint Satisfaction Problem (CSP)**](#6-phase-5-constraint-satisfaction-problem-csp)
+    * [6.1 Logical Solvability Gap](#61-logical-solvability-gap)
+    * [6.2 Deterministic Validation](#62-deterministic-validation)
+7. [**Phase 6: High-Performance Canvas Rendering**](#7-phase-6-high-performance-canvas-rendering)
+    * [7.1 Viewport Virtualization](#71-viewport-virtualization)
+    * [7.2 Sprite Cache Serialization](#72-sprite-cache-serialization)
+8. [**Phase 7: Threading via Web Workers**](#8-phase-7-threading-via-web-workers)
+    * [8.1 Main Thread Preservation](#81-main-thread-preservation)
+    * [8.2 Asynchronous State Updates](#82-asynchronous-state-updates)
+9. [**Phase 8: Workspace Emulation (Win95 UI)**](#9-phase-8-workspace-emulation-win95-ui)
+    * [9.1 Desktop Orchestration](#91-desktop-orchestration)
+    * [9.2 Beveling and Aesthetics](#92-beveling-and-aesthetics)
+10. [**Phase 9: Deterministic Seed Restoration**](#10-phase-9-deterministic-seed-restoration)
+    * [10.1 PRNG Architecture](#101-prng-architecture)
+    * [10.2 URL Hash Integration](#102-url-hash-integration)
+11. [**Phase 10: System Integration and Final Polish**](#11-phase-10-system-integration-and-final-polish)
+12. [**Phase 11: Cross-Platform Adaptation (Mobile/PWA)**](#12-phase-11-cross-platform-adaptation-mobilepwa)
 
 ---
 
-## 2. Introduction: Technical Motivation
+## 1. Introduction: Technical Motivation
 
 Standard implementations of Minesweeper typically rely on two-dimensional arrays and DOM-based rendering. While sufficient for small boards (such as 30x16), these methods fail when handling large-scale grids due to memory overhead and layout thrashing. The goal of this project was to build an engine capable of managing millions of cells while maintaining a stable 60 FPS refresh rate. This required a fundamental shift toward low-level memory control and hierarchical space partitioning.
 
 ---
 
-## 3. Phase 1: Project Scaffolding and Infrastructure
+## 2. Phase 1: Project Scaffolding and Infrastructure
 
-### 3.1 Development Philosophy
+### 2.1 Development Philosophy
 
 Phase 1 establishes the structural foundation of the project. A primary objective was to avoid "dependency bloat" by utilizing standard browser APIs exclusively. This ensures that the codebase remains portable and functional without requiring a build step or package manager.
 
-### 3.2 The Case for Zero Dependencies
+### 2.2 The Case for Zero Dependencies
 
 Choosing to work without external libraries (such as React or Vite) was a deliberate engineering decision based on three factors:
 
@@ -73,7 +73,7 @@ Choosing to work without external libraries (such as React or Vite) was a delibe
 >
 > To maintain a clean organization within a zero-dependency environment, the project uses native ES6 modules. This provides scoping for individual files and handles dependency resolution without the need for an external bundler.
 
-### 3.3 Project Directory Structure
+### 2.3 Project Directory Structure
 
 The repository follows a strict modular hierarchy to separate logic, presentation, and data:
 
@@ -93,13 +93,13 @@ MINESWEEPER/
 
 ---
 
-## 4. Phase 2: Spatial Partitioning (QuadTree)
+## 3. Phase 2: Spatial Partitioning (QuadTree)
 
-### 4.1 The Coordinate Overhead Problem
+### 3.1 The Coordinate Overhead Problem
 
 On a 1,000x1,000 grid, there are 1,000,000 individual nodes. Iterating through all of them every frame to check for visibility would be computationally expensive. To optimize this, the engine implements a **Recursive QuadTree**.
 
-### 4.2 Functional Logic and Subdivisions
+### 3.2 Functional Logic and Subdivisions
 
 The QuadTree partitions the two-dimensional plane into quadrants. When a node accumulates more points than its capacity, it subdivides into four smaller rectangles. This creates an adaptive tree where deep branches represent high-density areas.
 
@@ -108,7 +108,7 @@ The QuadTree partitions the two-dimensional plane into quadrants. When a node ac
 >
 > During rendering, the system queries the QuadTree for only the cells within the current "view rectangle." This reduces the rendering cost from O(N) to O(log N + k), where k is the number of visible units.
 
-### 4.3 Complexity Analysis
+### 3.3 Complexity Analysis
 
 The implementation consists of two classes: `Rectangle` for boundary logic and `QuadTree` for node management.
 
@@ -118,13 +118,13 @@ The implementation consists of two classes: `Rectangle` for boundary logic and `
 
 ---
 
-## 5. Phase 3: Bit-Packed Memory Management
+## 4. Phase 3: Bit-Packed Memory Management
 
-### 5.1 Memory Allocation Challenges
+### 4.1 Memory Allocation Challenges
 
 Managing millions of objects in JavaScript can lead to memory exhaustion and frequent Garbage Collection (GC) pauses. Each object carries internal metadata that increases the memory footprint.
 
-### 5.2 State Bitmasking Logic
+### 4.2 State Bitmasking Logic
 
 The engine uses a **Uint8Array** (Typed Array) to store cell states. Each cell is represented by exactly one byte (8 bits).
 
@@ -140,13 +140,13 @@ The engine uses a **Uint8Array** (Typed Array) to store cell states. Each cell i
 
 ---
 
-## 6. Phase 4: Iterative Traversal (BFS)
+## 5. Phase 4: Iterative Traversal (BFS)
 
-### 6.1 Recursive Stack Limitations
+### 5.1 Recursive Stack Limitations
 
 A common failure point in large-scale Minesweeper games is the use of recursion for the "flood-fill" algorithm. On massive grids, a single cascade can exceed the JavaScript engine's call stack limit.
 
-### 6.2 Index Tracing and Performance
+### 5.2 Index Tracing and Performance
 
 The engine implements an iterative **Breadth-First Search (BFS)** using a queue. We avoid `Array.shift()` because it has O(N) complexity; instead, we use a "Head Tracing" approach where a pointer moves forward along an array, keeping all operations O(1).
 
@@ -157,13 +157,13 @@ The engine implements an iterative **Breadth-First Search (BFS)** using a queue.
 
 ---
 
-## 7. Phase 5: Constraint Satisfaction Problem (CSP)
+## 6. Phase 5: Constraint Satisfaction Problem (CSP)
 
-### 7.1 Logical Solvability Gap
+### 6.1 Logical Solvability Gap
 
 Standard Minesweeper games often force the user to guess in 50/50 scenarios. This occurs when two hidden cells have equal probability of containing a mine.
 
-### 7.2 Deterministic Validation
+### 6.2 Deterministic Validation
 
 The engine integrates a **Constraint Satisfaction Problem (CSP)** solver that analyzes hidden variables against known clues.
 
@@ -177,61 +177,61 @@ The engine integrates a **Constraint Satisfaction Problem (CSP)** solver that an
 
 ---
 
-## 8. Phase 6: High-Performance Canvas Rendering
+## 7. Phase 6: High-Performance Canvas Rendering
 
-### 8.1 Viewport Virtualization
+### 7.1 Viewport Virtualization
 
 Rendering 1,000,000 cells as individual DOM elements would cause the browser to stop responding. The engine utilizes a single **HTML5 Canvas API** managed by a virtual camera.
 
-### 8.2 Sprite Cache Serialization
+### 7.2 Sprite Cache Serialization
 
 To maximize performance, every graphical asset (numbers, flags, mines) is pre-rendered onto an off-screen "Sprite Cache" at startup. This allows the main renderer to perform hardware-accelerated pixel block transfers (blit) rather than redraw operations.
 
 ---
 
-## 9. Phase 7: Threading via Web Workers
+## 8. Phase 7: Threading via Web Workers
 
-### 9.1 Main Thread Preservation
+### 8.1 Main Thread Preservation
 
 Massive operations like board generation or 100,000-node flood-fills can block the main thread, causing visual stuttering.
 
-### 9.2 Asynchronous State Updates
+### 8.2 Asynchronous State Updates
 
 The logic engine resides within a **Web Worker**. All major calculations are performed in the background, and the UI thread only processes the visual updates. This ensures a fluid 60 FPS interaction regardless of computational load.
 
 ---
 
-## 10. Phase 8: Workspace Emulation (Win95 UI)
+## 9. Phase 8: Workspace Emulation (Win95 UI)
 
-### 10.1 Desktop Orchestration
+### 9.1 Desktop Orchestration
 
 The project implements a full windowing system where the game operates within a draggable, resizable window. This includes a functional taskbar and desktop icons.
 
-### 10.2 Beveling and Aesthetics
+### 9.2 Beveling and Aesthetics
 
 The classic Windows 95 aesthetic is achieved via CSS border-shading. By using specific light and shadow variables, we simulate 3D depth without using expensive shadow rendering.
 
 ---
 
-## 11. Phase 9: Deterministic Seed Restoration
+## 10. Phase 9: Deterministic Seed Restoration
 
-### 11.1 PRNG Architecture
+### 10.1 PRNG Architecture
 
 The engine uses the **Mulberry32 PRNG** algorithm. Unlike `Math.random()`, this generator is deterministic; given the same seed, it will produce the exact same sequence of numbers.
 
-### 11.2 URL Hash Integration
+### 10.2 URL Hash Integration
 
 Board configurations are encoded into URL parameters. This allows for peer-to-peer sharing of specific map layouts. A single link can reconstruct a 1,000x1,000 grid with identical mine placement across different browsers.
 
 ---
 
-## 12. Phase 10: System Integration and Final Polish
+## 11. Phase 10: System Integration and Final Polish
 
 The final integration phase involves synchronizing the Web Worker, the Renderer, and the UI Shell. The application is stress-tested against extremely high-density boards to ensure stability and memory safety.
 
 ---
 
-## 13. Phase 12: Cross-Platform Adaptation (Mobile/PWA)
+## 12. Phase 11: Cross-Platform Adaptation (Mobile/PWA)
 
 To support mobile devices, the system implements a touch-event matrix for flagging and revealing. The engine is certified as a **Progressive Web App (PWA)**, enabling it to be "installed" on mobile home screens with offline capabilities.
 
@@ -241,14 +241,8 @@ To support mobile devices, the system implements a touch-event matrix for flaggi
 
   ### Navigation & Links
 
-  [↑ **Back to Top**](#top) &nbsp;·&nbsp; [← **Back to Home (README)**](README.md)
+  [↑ **Back to Top**](#top) &nbsp;·&nbsp; [← **Back to Home (README)**](README.md) &nbsp;·&nbsp; [🎮 **Play Minesweeper**](https://amey-thakur.github.io/MINESWEEPER/)
   
-  <br>
-
-  <a href="https://amey-thakur.github.io/MINESWEEPER/">
-    <img src="https://img.shields.io/badge/🎮%20Play_Minesweeper-000000?style=for-the-badge&logo=gamepad&logoColor=white" alt="Play Minesweeper">
-  </a>
-
 </div>
 
 ---
