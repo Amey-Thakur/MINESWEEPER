@@ -61,7 +61,8 @@ The engine follows specific **system design patterns** to maintain stability:
 *   **CSP Logic**: To avoid "guessing," the system includes a **Constraint Satisfaction Problem (CSP)** solver that checks the board during generation and ensures a logical path to completion exists.
 *   **Decoupled Rendering**: The logic engine and the drawing pipeline are separated, ensuring that complex calculations don't block the visual updates.
 
-> **Performance and Logic Synchronization**
+> [!TIP]
+> ### Performance and Logic Synchronization
 >
 > To maintain high execution speeds, the engine uses a **multi-stage logic pipeline**. **Latent filters** refine the state stream before it reaches the renderer, and **bitwise weights** are used to manage cell states and visualize the board's logic. This ensures that the user's interactions are processed instantly and remain synchronized with the underlying simulation, even when the grid is massive.
 
