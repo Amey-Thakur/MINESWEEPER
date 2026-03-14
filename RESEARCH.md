@@ -96,6 +96,7 @@ MINESWEEPER/
 │   └── index.html          # Entry point
 ├── docs/                   # Specifications
 ├── CITATION.cff            # Scholarly Citation Metadata
+├── codemeta.json           # Machine-Readable Software Metadata
 └── RESEARCH.md             # Technical analysis
 ```
 

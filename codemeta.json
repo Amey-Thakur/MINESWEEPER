@@ -1,0 +1,39 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "name": "Minesweeper Engine",
+    "description": "A high-performance Minesweeper engine featuring QuadTree spatial partitioning, bit-packed memory management, and deterministic generation for simulating millions of nodes at 60 FPS. The system leverages viewport virtualization and an iterative flood-fill architecture to handle massive spatial data in a zero-dependency environment.",
+    "identifier": "MINESWEEPER",
+    "license": "https://spdx.org/licenses/MIT.html",
+    "programmingLanguage": [
+        "JavaScript",
+        "CSS",
+        "HTML"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Amey",
+            "familyName": "Thakur",
+            "id": "https://orcid.org/0000-0001-5644-1575"
+        }
+    ],
+    "dateReleased": "2026-03-05",
+    "codeRepository": "https://github.com/Amey-Thakur/MINESWEEPER",
+    "developmentStatus": "complete",
+    "runtimePlatform": [
+        "Modern Evergreen Browsers",
+        "Canvas API",
+        "PWA"
+    ],
+    "applicationCategory": "Spatial Simulation / Game Engine",
+    "keywords": [
+        "Minesweeper",
+        "QuadTree",
+        "Spatial Partitioning",
+        "Big Data Visualization",
+        "JavaScript Engine",
+        "Constraint Satisfaction Problem",
+        "Optimization"
+    ]
+}
