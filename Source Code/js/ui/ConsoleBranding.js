@@ -16,52 +16,54 @@
  */
 
 export function printBranding() {
-    const title = ' WINDOWS 95 MINESWEEPER ENGINE ';
+    const title = '  WINDOWS 95 MINESWEEPER ENGINE  ';
     const author = 'Designed and developed by Amey Thakur';
+    const message = 'Engineering a deterministic zero-guess game state through recursive QuadTree spatial partitioning and high-performance grid algorithms. Exploring the intersection of legacy UI paradigms and modern computational efficiency.';
     const repo = 'https://github.com/Amey-Thakur/MINESWEEPER';
     const profile = 'https://github.com/Amey-Thakur';
-    const message = 'Engineering a deterministic zero-guess game state through recursive QuadTree spatial partitioning and high-performance grid algorithms. Exploring the intersection of legacy UI paradigms and modern computational efficiency.';
+
+    const wallpaperUrl = './img/wallpaper.jpg';
 
     const styles = {
-        title: [
+        titleBar: [
             'background: #000080',
             'color: #ffffff',
             'padding: 5px 10px',
             'font-weight: bold',
-            'font-size: 14px',
+            'font-size: 16px',
             'border: 2px solid #000000',
-            'font-family: "Segoe UI", Tahoma, sans-serif'
+            'font-family: serif',
+            'display: block',
+            'width: 100%'
         ].join(';'),
-        author: [
-            'color: #000000',
-            'font-weight: bold',
+        content: [
+            `background-image: url("${wallpaperUrl}")`,
+            'background-size: cover',
+            'background-position: center',
+            'color: #ffffff',
+            'padding: 20px',
             'font-size: 12px',
-            'margin-top: 10px',
-            'display: block'
-        ].join(';'),
-        scholarly: [
-            'color: #808080',
-            'font-style: italic',
-            'font-size: 11px',
-            'line-height: 1.4',
-            'margin: 10px 0'
+            'line-height: 1.6',
+            'font-family: "Segoe UI", Tahoma, sans-serif',
+            'text-shadow: 1px 1px 2px #000000, 0 0 5px #000000',
+            'display: block',
+            'border: 2px solid #000000',
+            'border-top: none'
         ].join(';'),
         link: [
-            'color: #0000ee',
+            'color: #00ffff',
             'text-decoration: underline',
-            'font-size: 11px'
-        ].join(';'),
-        label: [
-            'color: #000000',
-            'font-weight: bold',
-            'font-size: 11px'
+            'font-weight: bold'
         ].join(';')
     };
 
-    console.log(`%c${title}`, styles.title);
-    console.log(`%c${author}`, styles.author);
-    console.log(`%c${message}`, styles.scholarly);
-    console.log(`%cRepository: %c${repo}`, styles.label, styles.link);
-    console.log(`%cProfile:    %c${profile}`, styles.label, styles.link);
-    console.log('\n');
+    console.log(`%c${title}`, styles.titleBar);
+    console.log(
+        `%c${author}\n\n${message}\n\n%cRepository: %c${repo}\n%cProfile:    %c${profile}`,
+        styles.content,
+        'font-weight: bold; color: #ffffff;',
+        styles.link,
+        'font-weight: bold; color: #ffffff;',
+        styles.link
+    );
 }
