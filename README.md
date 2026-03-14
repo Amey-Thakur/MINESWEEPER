@@ -148,6 +148,13 @@ MINESWEEPER/
   <sub><i>💡 <b>Interactive Element:</b> Fully functional taskbar and draggable window management system.</i></sub>
   <br><br><br>
 
+  <b>Authentic Shell: Desktop Emulation</b>
+  <br>
+  <i>Pixel-perfect reconstruction of the Windows 95 visual language and workspace.</i>
+  <br><br>
+  <img src="screenshots/desktop_interface.png" alt="Desktop Interface" width="90%">
+  <br><br><br>
+
   <b>Interactive Polish: Engine Integration</b>
   <br>
   <i>Technical oversight of the spatial management and logical solver modules.</i>
