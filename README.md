@@ -10,7 +10,7 @@
 
   A zero-dependency, high-performance Minesweeper engine implementing recursive QuadTree spatial partitioning and bit-packed state management for deterministic 1,000,000+ (One Million+) node grid simulation.
 
-  **[Source Code](Source%20Code/)** &nbsp;·&nbsp; **[Technical Specification](docs/SPECIFICATION.md)** &nbsp;·&nbsp; **[Documentation](DOCUMENTATION.md)** &nbsp;·&nbsp; **[Live Demo](https://amey-thakur.github.io/MINESWEEPER/)**
+  **[Source Code](Source%20Code/)** &nbsp;·&nbsp; **[Technical Specification](docs/SPECIFICATION.md)** &nbsp;·&nbsp; **[Architectural Research](RESEARCH.md)** &nbsp;·&nbsp; **[Live Demo](https://amey-thakur.github.io/MINESWEEPER/)**
 
   <br>
 
@@ -155,7 +155,7 @@ MINESWEEPER/
 │
 ├── .gitattributes                      # Repository attribute & normalization
 ├── .gitignore                          # Development exclusion & build logic
-├── DOCUMENTATION.md                    # Engineering report & performance log
+├── RESEARCH.md                         # Architectural research & engineering analysis
 ├── SECURITY.md                         # Security protocols & disclosure policy
 ├── LICENSE                             # MIT Open Source License distribution
 └── README.md                           # Primary entrance & architectural hub

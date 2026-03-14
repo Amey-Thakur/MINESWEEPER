@@ -88,7 +88,7 @@ MINESWEEPER/
 │   ├── css/                # Visual design system
 │   └── index.html          # Entry point
 ├── docs/                   # Specifications
-└── DOCUMENTATION.md        # Technical analysis
+└── RESEARCH.md             # Technical analysis
 ```
 
 ---
