@@ -32,44 +32,51 @@ export function printBranding() {
             'border: 2px solid #000080',
             'border-bottom: none',
             'display: block',
-            'width: 550px',
+            'width: 510px',
             'text-shadow: 1px 1px 2px #000000'
         ].join(';'),
         mid: [
             'background: #ffffff',
             'color: #000000',
-            'padding: 10px 20px',
+            'padding: 12px 20px',
             'font-family: "Segoe UI", Tahoma, sans-serif',
             'font-size: 13px',
             'line-height: 1.6',
             'border-left: 2px solid #000080',
             'border-right: 2px solid #000080',
             'display: block',
-            'width: 550px'
+            'width: 510px'
         ].join(';'),
-        bot: [
+        botLabel: [
             'background: #32cd32',
             'color: #000000',
-            'padding: 10px 20px',
+            'padding: 12px 0 12px 20px',
             'font-family: "Segoe UI", Tahoma, sans-serif',
             'font-size: 13px',
             'font-weight: bold',
-            'border: 2px solid #000080',
-            'border-top: none',
-            'display: block',
-            'width: 550px'
+            'border-left: 2px solid #000080',
+            'display: inline-block',
+            'width: 100px'
         ].join(';'),
-        link: [
-            'color: #000080', // Dark Navy for contrast on green
-            'text-decoration: underline',
+        botLink: [
             'background: #32cd32',
-            'font-weight: bold'
+            'color: #000080',
+            'padding: 12px 20px 12px 0',
+            'font-family: "Segoe UI", Tahoma, sans-serif',
+            'font-size: 13px',
+            'font-weight: bold',
+            'border-right: 2px solid #000080',
+            'display: inline-block',
+            'width: 410px',
+            'text-decoration: underline'
         ].join(';')
     };
+
+    const borderBot = 'border-bottom: 2px solid #000080;';
 
     console.log(`%c${title.trim()}`, styles.top);
     console.log(`%cDesigned and developed by Amey Thakur`, styles.mid);
     console.log(`%c${message}`, styles.mid);
-    console.log(`%cRepository: %c${repo}`, `${styles.bot}; border-bottom: none;`, styles.link);
-    console.log(`%cProfile:    %c${profile}`, styles.bot, styles.link);
+    console.log(`%cRepository: %c${repo}`, styles.botLabel, styles.botLink);
+    console.log(`%cProfile:    %c${profile}`, `${styles.botLabel}; ${borderBot}`, `${styles.botLink}; ${borderBot}`);
 }
