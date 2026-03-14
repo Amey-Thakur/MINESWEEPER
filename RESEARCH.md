@@ -94,6 +94,7 @@ MINESWEEPER/
 │   ├── css/                # Visual design system
 │   └── index.html          # Entry point
 ├── docs/                   # Specifications
+├── CITATION.cff            # Scholarly Citation Metadata
 └── RESEARCH.md             # Technical analysis
 ```
 
@@ -240,6 +241,25 @@ The final integration phase involves synchronizing the Web Worker, the Renderer,
 ## 12. Phase 11: Cross-Platform Adaptation (Mobile/PWA)
 
 To support mobile devices, the system implements a touch-event matrix for flagging and revealing. The engine is certified as a **Progressive Web App (PWA)**, enabling it to be "installed" on mobile home screens with offline capabilities.
+
+---
+
+## Citation
+
+If you use this research or the associated engine architecture in your work, please cite it using the following metadata:
+
+```bibtex
+@research{Thakur_Minesweeper_Engine_2026,
+  author = {Thakur, Amey},
+  title = {{Minesweeper Engine: Architectural Research and Engineering Analysis}},
+  year = {2026},
+  month = {3},
+  version = {1.0.0},
+  url = {https://github.com/Amey-Thakur/MINESWEEPER}
+}
+```
+
+For automated metadata resolution, refer to the [**CITATION.cff**](CITATION.cff) file included in the root directory.
 
 ---
 

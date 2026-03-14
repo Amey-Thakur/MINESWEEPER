@@ -159,6 +159,7 @@ MINESWEEPER/
 │
 ├── .gitattributes                      # Repository attribute & normalization
 ├── .gitignore                          # Development exclusion & build logic
+├── CITATION.cff                        # Scholarly Citation Metadata
 ├── RESEARCH.md                         # Architectural research & engineering analysis
 ├── SECURITY.md                         # Security protocols & disclosure policy
 ├── LICENSE                             # MIT Open Source License distribution
