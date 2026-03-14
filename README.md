@@ -117,6 +117,8 @@ MINESWEEPER/
 │   ├── complexity_analysis_notepad.png # Algorithmic complexity benchmarks
 │   ├── seed_manager_sharing.png        # Deterministic board state sharing
 │   ├── shutdown_screen.png             # OS termination & shutdown sequence
+│   ├── gameplay_initial.png            # Initial engine state verification
+│   ├── game_menu_options.png           # Difficulty & utility menu overview
 │   └── ...                             # Supplemental UI/UX state screenshots
 │
 ├── Source Code/                        # Integrated simulation application layer
@@ -207,6 +209,13 @@ MINESWEEPER/
   <i>The engine's initial state ready for high-fidelity interactive spatial study.</i>
   <br><br>
   <img src="screenshots/gameplay_initial.png" alt="Gameplay Initial" width="60%">
+  <br><br><br>
+
+  <b>Game Configuration: Difficulty and Tools</b>
+  <br>
+  <i>Integrated menu system providing rapid access to standard difficulty levels and technical seed management utilities.</i>
+  <br><br>
+  <img src="screenshots/game_menu_options.png" alt="Game Menu" width="60%">
   <br><br><br>
 
   <b>User Guidance: Control Protocols</b>
