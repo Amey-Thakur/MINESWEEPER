@@ -8,14 +8,14 @@
   [![Technology](https://img.shields.io/badge/Technology-Vanilla%20JS%20%7C%20Canvas%20API-blueviolet)](https://github.com/Amey-Thakur/MINESWEEPER)
   [![Developed by Amey Thakur](https://img.shields.io/badge/Developed%20by-Amey%20Thakur-blue.svg)](https://github.com/Amey-Thakur/MINESWEEPER)
 
-  A high-performance, zero-dependency web application implementing recursive QuadTree spatial partitioning and bit-packed state management for deterministic 1,000,000 node grid simulation.
+  A high-performance, zero-dependency web application implementing recursive QuadTree spatial partitioning and bit-packed state management for deterministic 1,000,000 (1 million) node grid simulation.
 
   **[Source Code](Source%20Code/)** &nbsp;·&nbsp; **[Technical Specification](docs/SPECIFICATION.md)** &nbsp;·&nbsp; **[Documentation](DOCUMENTATION.md)** &nbsp;·&nbsp; **[Live Demo](https://amey-thakur.github.io/MINESWEEPER/)**
 
   <br>
 
   <a href="https://amey-thakur.github.io/MINESWEEPER/">
-    <img src="screenshots/desktop_interface.png" alt="Minesweeper Engine" width="90%">
+    <img src="screenshots/grid_simulation_1m.png" alt="Minesweeper Engine" width="90%">
   </a>
 
 </div>
@@ -136,14 +136,14 @@ MINESWEEPER/
 ---
 
 <a name="results"></a>
-## Results
+<h2>Results</h2>
 
   <div align="center">
   <b>Main Interface: Modern Design</b>
   <br>
   <i>Initial system state with clean aesthetics and synchronized brand identity.</i>
-  <br><br>
-  <img src="screenshots/desktop_interface.png" alt="Landing Page" width="90%">
+  <br>  <br>
+  <img src="screenshots/grid_simulation_1m.png" alt="Landing Page" width="90%">
   <br>
   <sub><i>💡 <b>Interactive Element:</b> Fully functional taskbar and draggable window management system.</i></sub>
   <br><br><br>
