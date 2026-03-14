@@ -105,52 +105,58 @@ The core engine is governed by strict **computational design patterns** ensuring
 ```python
 MINESWEEPER/
 │
-├── docs/                               # Academic & Technical documentation suite
-│   └── SPECIFICATION.md                # Comprehensive system architecture & phase logic
+├── .github/                            # Global GitHub configuration & workflows
+├── docs/                               # Formal academic & technical documentation
+│   └── SPECIFICATION.md                # System engineering & architectural roadmap
 │
-├── screenshots/                        # Visual results & system verification gallery
-│   ├── grid_simulation_1m.png          # High-density 1M node spatial visualization
-│   ├── desktop_interface.png           # Primary Windows 95 shell emulation
-│   ├── about_engine_dialog.png         # Internal engine specification dialogue
-│   ├── quadtree_docs_notepad.png       # Recursive spatial partitioning theory docs
-│   ├── complexity_analysis_notepad.png # Algorithmic complexity & performance metrics
-│   └── shutdown_screen.png             # System finality & termination sequence
+├── screenshots/                        # High-fidelity visual verification gallery
+│   ├── grid_simulation_1m.png          # 1M node spatial density visualization
+│   ├── desktop_interface.png           # Pixel-perfect Windows 95 shell landing
+│   ├── about_engine_dialog.png         # Technical engine specification oversight
+│   ├── quadtree_docs_notepad.png       # Recursive spatial partitioning theory
+│   ├── complexity_analysis_notepad.png # Algorithmic complexity benchmarks
+│   ├── seed_manager_sharing.png        # Deterministic board state sharing
+│   ├── shutdown_screen.png             # OS termination & shutdown sequence
+│   └── ...                             # Supplemental UI/UX state screenshots
 │
-├── Source Code/                        # Primary high-performance application layer
-│   │
-│   ├── js/                             # Modular JavaScript logic engine (ES6)
-│   │   ├── engine/                     # Core computational & algorithmic logic
-│   │   │   ├── QuadTree.js             # Recursive spatial partitioning implementation
-│   │   │   ├── CSPSolver.js            # Constraint Satisfaction Problem board logic
-│   │   │   ├── BoardEngine.js          # Main board state & bit-packed management
-│   │   │   ├── FloodFill.js            # High-scale iterative BFS traversal
-│   │   │   └── SeedRNG.js              # Deterministic Mulberry32 PRNG logic
-│   │   │
-│   │   ├── renderer/                   # Hardware-accelerated Canvas rendering
-│   │   │   ├── GameRenderer.js         # Primary stateless render orchestration
-│   │   │   ├── Camera.js               # Viewport virtualization & coordinate mapping
-│   │   │   └── SpriteSheet.js          # Pixel-perfect asset memory caching
-│   │   │
-│   │   ├── ui/                         # Interaction & shell interface controllers
-│   │   │   ├── UIController.js         # Desktop & window management orchestration
-│   │   │   ├── DocController.js        # Integrated Technical Library management
-│   │   │   ├── MenuController.js       # Nested Win95 menu system logic
-│   │   │   ├── SeedController.js       # Deterministic state sharing logic
-│   │   │   └── ConsoleBranding.js      # Developer attribution & signature logic
-│   │   │
-│   │   └── main.js                     # High-level system orchestrator & entry
-│   │
-│   ├── css/                            # Multi-layered thematic design system
-│   │   ├── win95.css                   # Core legacy shell aesthetic tokens
+├── Source Code/                        # Integrated simulation application layer
+│   ├── assets/                         # Global system resources & static icons
+│   ├── css/                            # Thematic design & Win95 styling indices
+│   │   ├── win95.css                   # Core shell aesthetic & layout tokens
 │   │   ├── game.css                    # Engine-specific interactive styles
-│   │   └── reset.css                   # Critical cross-browser normalization
-│   │
-│   └── index.html                      # Application entrance & PWA manifest context
+│   │   └── reset.css                   # Low-level browser normalization
+│   ├── img/                            # High-resolution visual foundation assets
+│   ├── js/                             # Decoupled ES6 modular logic engine
+│   │   ├── engine/                     # Backend computational logic & state
+│   │   │   ├── QuadTree.js             # Spatial partitioning core engine
+│   │   │   ├── CSPSolver.js            # Constraint Satisfaction Problem logic
+│   │   │   ├── BoardEngine.js          # Bit-packed state & memory management
+│   │   │   ├── FloodFill.js            # Iterative BFS traversal logic
+│   │   │   └── SeedRNG.js              # Deterministic Mulberry32 generator
+│   │   ├── renderer/                   # Hardware-accelerated Canvas pipelines
+│   │   │   ├── GameRenderer.js         # Stateless frame reconstruction logic
+│   │   │   ├── Camera.js               # Viewport virtualization bridge
+│   │   │   └── SpriteSheet.js          # Pixel-perfect unit memory buffers
+│   │   ├── ui/                         # Interaction & shell control system
+│   │   │   ├── UIController.js         # System window & taskbar orchestrator
+│   │   │   ├── DocController.js        # Integrated library logic manager
+│   │   │   ├── MenuController.js       # Global menu & routing logic
+│   │   │   ├── ScoreController.js      # Stat tracking & scoreboard management
+│   │   │   ├── SeedController.js       # Board seed & PRNG configuration
+│   │   │   ├── TimerController.js      # Performance-safe system timing
+│   │   │   ├── ConsoleBranding.js      # Developer attribution & signature
+│   │   │   └── WindowDragger.js        # Desktop interaction management
+│   │   └── main.js                     # Root entry-point & system bootloader
+│   ├── index.html                      # System entrance & PWA bootstrap index
+│   ├── manifest.json                   # Web Application manifest & PWA identity
+│   └── sw.js                           # Service Worker & offline cache logic
 │
-├── DOCUMENTATION.md                    # Engineering report & implementation log
-├── SECURITY.md                         # Security protocols & vulnerability policy
+├── .gitattributes                      # Repository attribute & normalization
+├── .gitignore                          # Development exclusion & build logic
+├── DOCUMENTATION.md                    # Engineering report & performance log
+├── SECURITY.md                         # Security protocols & disclosure policy
 ├── LICENSE                             # MIT Open Source License distribution
-└── README.md                           # Project entrance & architectural hub
+└── README.md                           # Primary entrance & architectural hub
 ```
 
 ---
