@@ -86,7 +86,7 @@ The core engine is governed by strict **computational design patterns** ensuring
 
 > [!NOTE]
 > ### Interactive Polish: The Procedural Singularity
-> We have engineered a **Logic-Driven State Manager** that calibrates board scores across multiple vectors to simulate human-like difficulty scaling. The visual language focuses on the minimalist "Windows 95" aesthetic, ensuring maximum focus on the interactive spatial trajectory.
+> We have engineered a **Logic-Driven State Manager** that calibrates board scores across multiple vectors to simulate human-like difficulty scaling. Beyond pure simulation, a **Technical Library** is integrated directly within the desktop environment to provide quick, in-situ documentation of the engine's recursive architecture and spatial logic.
 
 ### Tech Stack
 - **Language**: Vanilla JavaScript (ES6 Modules)
