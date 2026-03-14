@@ -8,7 +8,7 @@
   [![Technology](https://img.shields.io/badge/Technology-Vanilla%20JS%20%7C%20Canvas%20API-blueviolet)](https://github.com/Amey-Thakur/MINESWEEPER)
   [![Developed by Amey Thakur](https://img.shields.io/badge/Developed%20by-Amey%20Thakur-blue.svg)](https://github.com/Amey-Thakur/MINESWEEPER)
 
-  A zero-dependency, high-performance Minesweeper engine implementing recursive QuadTree spatial partitioning and bit-packed state management for deterministic 1,000,000 (1 million) node grid simulation.
+  A zero-dependency, high-performance Minesweeper engine implementing recursive QuadTree spatial partitioning and bit-packed state management for deterministic 1,000,000+ (One Million+) node grid simulation.
 
   **[Source Code](Source%20Code/)** &nbsp;·&nbsp; **[Technical Specification](docs/SPECIFICATION.md)** &nbsp;·&nbsp; **[Documentation](DOCUMENTATION.md)** &nbsp;·&nbsp; **[Live Demo](https://amey-thakur.github.io/MINESWEEPER/)**
 
@@ -51,7 +51,7 @@
 
 > [!NOTE]
 > ### 💣 Defining Minesweeper Engine Architecture
-> A **high-performance engine** in this research context is a system where the simulation of millions of interactive cells is decoupled from the browser's DOM-based rendering limits. This process involves utilizing advanced bit-packed spatial data structures, such as the **QuadTree** framework, to distillate high-density grid states into latent viewport embeddings. These embeddings then condition a stateless Canvas renderer to synthesize a classic Windows 95 interface that maintained hardware-accelerated performance even at a **1,000,000 cell** scale.
+> A **high-performance engine** in this research context is a system where the simulation of millions of interactive cells is decoupled from the browser's DOM-based rendering limits. This process involves utilizing advanced bit-packed spatial data structures, such as the **QuadTree** framework, to distillate high-density grid states into latent viewport embeddings. These embeddings then condition a stateless Canvas renderer to synthesize a classic Windows 95 interface that maintained hardware-accelerated performance even at a **1,000,000+ (One Million+) cell** scale.
 
 The repository serves as a digital study into the mechanics of spatial partitioning and signal processing, brought into a modern context via a **Progressive Web App (PWA)** interface, enabling high-performance logic execution through a decoupled engine architecture.
 
@@ -110,7 +110,7 @@ MINESWEEPER/
 │   └── SPECIFICATION.md                # System engineering & architectural roadmap
 │
 ├── screenshots/                        # High-fidelity visual verification gallery
-│   ├── grid_simulation_1m.png          # One Million node spatial density visualization
+│   ├── grid_simulation_1m.png          # 1,000,000+ (One Million+) node spatial visualization
 │   ├── desktop_interface.png           # Pixel-perfect Windows 95 shell landing
 │   ├── about_engine_dialog.png         # Technical engine specification oversight
 │   ├── quadtree_docs_notepad.png       # Recursive spatial partitioning theory
@@ -172,9 +172,9 @@ MINESWEEPER/
   <img src="screenshots/wallpaper.jpg" alt="Bliss Wallpaper" width="90%">
   <br><br><br>
 
-  <b>Minesweeper Engine: One Million Node Performance</b>
+  <b>Minesweeper Engine: 1,000,000+ (One Million+) Node Performance</b>
   <br>
-  <i>Deterministic spatial simulation managing 1,000,000 (1 million) cells via recursive QuadTree.</i>
+  <i>Deterministic spatial simulation managing 1,000,000+ (One Million+) cells via recursive QuadTree partitioning.</i>
   <br><br>
   <img src="screenshots/grid_simulation_1m.png" alt="Grid Simulation" width="90%">
   <br>
@@ -216,27 +216,6 @@ MINESWEEPER/
   <img src="screenshots/how_to_play_instructions.png" alt="Instructions" width="60%">
   <br><br><br>
 
-  <b>Spatial Analysis: QuadTree Modeling</b>
-  <br>
-  <i>In-depth documentation of the recursive partitioning used for One Million node culling.</i>
-  <br><br>
-  <img src="screenshots/quadtree_docs_notepad.png" alt="QuadTree Analysis" width="60%">
-  <br><br><br>
-
-  <b>Performance Metrics: Complexity Benchmarks</b>
-  <br>
-  <i>Quantifying retrieval and state lookup efficiency under high-density board states.</i>
-  <br><br>
-  <img src="screenshots/complexity_analysis_notepad.png" alt="Benchmarks" width="60%">
-  <br><br><br>
-
-  <b>Shell Utility: System Execution</b>
-  <br>
-  <i>Simulating low-level command execution via the classic "Run" dialogue interface.</i>
-  <br><br>
-  <img src="screenshots/run_dialog.png" alt="Run Dialog" width="60%">
-  <br><br><br>
-
   <b>State Control: Seed Management</b>
   <br>
   <i>Configuring deterministic board states via precise hexadecimal and integer seed input.</i>
@@ -251,11 +230,32 @@ MINESWEEPER/
   <img src="screenshots/seed_manager_sharing.png" alt="Seed Sharing" width="60%">
   <br><br><br>
 
+  <b>Shell Utility: System Execution</b>
+  <br>
+  <i>Simulating low-level command execution via the classic "Run" dialogue interface.</i>
+  <br><br>
+  <img src="screenshots/run_dialog.png" alt="Run Dialog" width="60%">
+  <br><br><br>
+
   <b>Technical Repository: File Management</b>
   <br>
   <i>Browsing the scholarly documentation suite within the simulated "Technical Documents" folder.</i>
   <br><br>
   <img src="screenshots/technical_docs_folder.png" alt="Technical Folder" width="60%">
+  <br><br><br>
+
+  <b>Spatial Analysis: QuadTree Modeling</b>
+  <br>
+  <i>In-depth documentation of the recursive partitioning used for 1,000,000+ (One Million+) node culling.</i>
+  <br><br>
+  <img src="screenshots/quadtree_docs_notepad.png" alt="QuadTree Analysis" width="60%">
+  <br><br><br>
+
+  <b>Performance Metrics: Complexity Benchmarks</b>
+  <br>
+  <i>Quantifying retrieval and state lookup efficiency under high-density board states.</i>
+  <br><br>
+  <img src="screenshots/complexity_analysis_notepad.png" alt="Benchmarks" width="60%">
   <br><br><br>
 
   <b>System Finality: Exit Sequence</b>
@@ -313,7 +313,7 @@ Navigate to `http://localhost:8000`
 > [!TIP]
 > ### Spatial Logic Synthesis | Minesweeper Engine
 >
-> Experience the interactive **Minesweeper** environment directly in your browser through the working **GitHub Pages** deployment. This platform features a **Recursive QuadTree** architecture integrated with a **Mulberry32 PRNG** to synthesize continuous 1M+ node grids, providing a visual demonstration of spatial partitioning and deterministic state boundaries.
+> Experience the interactive **Minesweeper** environment directly in your browser through the working **GitHub Pages** deployment. This platform features a **Recursive QuadTree** architecture integrated with a **Mulberry32 PRNG** to synthesize continuous 1,000,000+ (One Million+) node grids, providing a visual demonstration of spatial partitioning and deterministic state boundaries.
 >
 > **[Launch Minesweeper Engine on GitHub Pages](https://amey-thakur.github.io/MINESWEEPER/)**
 
