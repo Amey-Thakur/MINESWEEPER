@@ -16,54 +16,54 @@
  */
 
 export function printBranding() {
-    const title = '  WINDOWS 95 MINESWEEPER ENGINE  ';
+    const title = ' WINDOWS 95 MINESWEEPER ENGINE ';
     const author = 'Designed and developed by Amey Thakur';
     const message = 'Engineering a deterministic zero-guess game state through recursive QuadTree spatial partitioning and high-performance grid algorithms. Exploring the intersection of legacy UI paradigms and modern computational efficiency.';
     const repo = 'https://github.com/Amey-Thakur/MINESWEEPER';
     const profile = 'https://github.com/Amey-Thakur';
 
-    const wallpaperUrl = './img/wallpaper.jpg';
-
     const styles = {
-        titleBar: [
+        title: [
             'background: #000080',
             'color: #ffffff',
-            'padding: 5px 10px',
+            'padding: 8px 12px',
             'font-weight: bold',
             'font-size: 16px',
             'border: 2px solid #000000',
             'font-family: serif',
-            'display: block',
-            'width: 100%'
+            'text-transform: uppercase',
+            'display: block'
         ].join(';'),
-        content: [
-            `background-image: url("${wallpaperUrl}")`,
-            'background-size: cover',
-            'background-position: center',
-            'color: #ffffff',
-            'padding: 20px',
+        body: [
+            'background: #c0c0c0',
+            'color: #000000',
+            'padding: 15px',
             'font-size: 12px',
-            'line-height: 1.6',
             'font-family: "Segoe UI", Tahoma, sans-serif',
-            'text-shadow: 1px 1px 2px #000000, 0 0 5px #000000',
-            'display: block',
             'border: 2px solid #000000',
-            'border-top: none'
+            'border-top: none',
+            'line-height: 1.5',
+            'display: block'
+        ].join(';'),
+        highlight: [
+            'font-weight: bold',
+            'color: #000080'
         ].join(';'),
         link: [
-            'color: #00ffff',
+            'color: #0000ee',
             'text-decoration: underline',
             'font-weight: bold'
         ].join(';')
     };
 
-    console.log(`%c${title}`, styles.titleBar);
+    console.log(`%c${title}`, styles.title);
     console.log(
-        `%c${author}\n\n${message}\n\n%cRepository: %c${repo}\n%cProfile:    %c${profile}`,
-        styles.content,
-        'font-weight: bold; color: #ffffff;',
+        `%c${author}\n\n%c${message}\n\n%cRepository: %c${repo}\n%cProfile:    %c${profile}`,
+        styles.body,
+        'font-style: italic; color: #444;',
+        'font-weight: bold; color: #000;',
         styles.link,
-        'font-weight: bold; color: #ffffff;',
+        'font-weight: bold; color: #000;',
         styles.link
     );
 }
