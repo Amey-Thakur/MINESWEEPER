@@ -77,6 +77,7 @@ The core engine is governed by strict **computational design patterns** ensuring
 | **QuadTree Core** | Combines **Recursive Partitioning** with **Viewport Culling** for comprehensive grid management. |
 | **PWA Architecture** | Implements a robust standalone installable interface for immediate spatial simulation study. |
 | **Academic Clarity** | In-depth and detailed comments integrated throughout the codebase for transparent logic study. |
+| **Technical Library** | Seamlessly integrated in-app documentation providing immediate access to algorithmic and architectural insights. |
 | **Neural Topology** | Efficient **Decoupled Engine execution** via Bit-Packed TypedArrays for native high-performance access. |
 | **Inference Pipeline** | Asynchronous architecture ensuring **stability** and responsiveness on local clients. |
 | **Visual Feedback** | **Interactive Status Monitors** that trigger on state events for sensory reward. |
