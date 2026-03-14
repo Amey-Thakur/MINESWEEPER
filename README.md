@@ -49,10 +49,6 @@
 
 **Minesweeper Engine** is a multi-stage spatial simulation architecture designed to manage massive grid systems and generate high-fidelity board states with zero-guess guarantees. By implementing a recursive **QuadTree** framework, this project translates massive coordinate sets into a latent spatial index, which then conditions a stateless renderer to produce visual outputs with strikingly consistent frame delivery.
 
-> [!IMPORTANT]
-> ### Attribution
-> This project is a proprietary technical study into the limits of browser-side virtualization and algorithmic optimization, developed by **[Amey Thakur](https://github.com/Amey-Thakur)**.
-
 > [!NOTE]
 > ### 💣 Defining the Engine Architecture
 > A **high-performance engine** in this context is a system where the "virtualization" of millions of cells is decoupled from the hardware's rendering limits. This process involves utilizing advanced neural-style data structures, such as the **QuadTree** framework, to distillate high-dimensional grid states into viewport embeddings. These embeddings then condition a Canvas renderer to synthesize a visual interface that mirrors the original Windows 95 aesthetic with striking fidelity.
@@ -315,4 +311,4 @@ ESWEEPER/)**
 
   *Semester-wise curriculum, laboratories, projects, and academic notes.*
 
-</div>
+</div>
