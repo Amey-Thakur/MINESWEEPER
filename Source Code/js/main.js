@@ -36,6 +36,7 @@ import { initMenus } from './ui/MenuController.js';
 import { initSeedDialog, setSeedState, showSeedDialog } from './ui/SeedController.js';
 import { initDocSystem } from './ui/DocController.js';
 import { initScoreDialogs, showBestTimes, checkHighScoreAndPrompt } from './ui/ScoreController.js';
+import { printBranding } from './ui/ConsoleBranding.js';
 
 // -------------------------------------------------------
 // Constants
@@ -110,6 +111,7 @@ function init() {
      * Time Complexity  : O(1) - Surface level binding of event listeners.
      * Space Complexity : O(1) - Finite state pointer allocations.
      */
+    printBranding();
     initScoreDialogs();
 
     initMenus({
