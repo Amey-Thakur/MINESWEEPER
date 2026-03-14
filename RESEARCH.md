@@ -250,12 +250,11 @@ To support mobile devices, the system implements a touch-event matrix for flaggi
 If you use this research or the associated engine architecture in your work, please cite it using the following metadata:
 
 ```bibtex
-@research{Thakur_Minesweeper_Engine_2026,
-  author = {Thakur, Amey},
+@research{Amey_Thakur_2026,
+  author = {Amey Thakur},
   title = {{Minesweeper Engine: Architectural Research and Engineering Analysis}},
   year = {2026},
-  month = {3},
-  version = {1.0.0},
+  month = {March},
   url = {https://github.com/Amey-Thakur/MINESWEEPER}
 }
 ```
