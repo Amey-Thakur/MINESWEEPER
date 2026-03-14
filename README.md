@@ -192,21 +192,21 @@ MINESWEEPER/
   <br>
   <i>In-depth documentation of the recursive partitioning used for coordinate culling.</i>
   <br><br>
-  <img src="screenshots/quadtree_docs_notepad.png" alt="QuadTree Analysis" width="90%">
+  <img src="screenshots/quadtree_docs_notepad.png" alt="QuadTree Analysis" width="60%">
   <br><br><br>
 
   <b>Performance Metrics: Real-Time Benchmarks</b>
   <br>
   <i>Quantifying retrieval and state lookup efficiency under high-density states.</i>
   <br><br>
-  <img src="screenshots/complexity_analysis_notepad.png" alt="Benchmarks" width="90%">
+  <img src="screenshots/complexity_analysis_notepad.png" alt="Benchmarks" width="60%">
   <br><br><br>
 
   <b>Deterministic Networking: URL Sharing</b>
   <br>
   <i>Sharing exact board configurations via encoded URL parameters for competition.</i>
   <br><br>
-  <img src="screenshots/seed_manager_sharing.png" alt="Seed Manager" width="90%">
+  <img src="screenshots/seed_manager_sharing.png" alt="Seed Manager" width="60%">
   <br><br><br>
 
   <b>System Finality: Exit Sequence</b>
