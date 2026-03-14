@@ -51,6 +51,7 @@ This document provides a comprehensive technical analysis of the **Minesweeper E
     * [10.2 URL Hash Integration](#102-url-hash-integration)
 11. [**Phase 10: System Integration and Final Polish**](#11-phase-10-system-integration-and-final-polish)
 12. [**Phase 11: Cross-Platform Adaptation (Mobile/PWA)**](#12-phase-11-cross-platform-adaptation-mobilepwa)
+13. [**Citation**](#citation)
 
 ---
 
