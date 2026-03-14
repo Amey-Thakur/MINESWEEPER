@@ -23,30 +23,30 @@ export function printBranding() {
     const profile = 'https://github.com/Amey-Thakur';
 
     const style = [
-        'display: block',
-        'background: linear-gradient(135deg, #3a91ff 0%, #20bf55 100%)', // Sky blue to Grass green gradient
-        'color: #ffffff',
-        'padding: 24px',
-        'font-family: serif',
+        'background: linear-gradient(180deg, #1e90ff 0%, #ffffff 45%, #ffffff 55%, #32cd32 100%)', // Sky -> Cloud -> Grass
+        'color: #000000',
+        'padding: 25px 35px',
+        'font-family: "Segoe UI", Tahoma, sans-serif',
         'font-size: 14px',
-        'line-height: 1.6',
+        'line-height: 1.8',
         'border: 4px solid #000080',
-        'text-shadow: 1px 1px 2px #000000, 0 0 5px #000000',
+        'border-radius: 10px',
         'font-weight: bold',
-        'border-radius: 8px',
-        'width: fit-content'
+        'text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8)',
+        'display: inline-block',
+        'text-align: left'
     ].join(';');
 
-    const content = `
-${title}
-----------------------------------------
-${author}
-
-${message}
-
-Repository: ${repo}
-Profile:    ${profile}
-    `;
+    const content = [
+        title.trim(),
+        '-------------------------------------------------------',
+        `Determined & Designed by: ${author}`,
+        '',
+        message,
+        '',
+        `Repository: ${repo}`,
+        `Profile:    ${profile}`
+    ].join('\n');
 
     console.log(`%c${content}`, style);
 }
