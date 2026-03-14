@@ -1,6 +1,10 @@
 # Minesweeper Engine: Architectural Analysis and Implementation
 *Architectural Research and Engineering Analysis*
 
+**Author:** [**Amey Thakur**](https://github.com/Amey-Thakur)  
+**License:** MIT (c) 2026 Amey Thakur  
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0001--5644--1575-green.svg)](https://orcid.org/0000-0001-5644-1575)
+
 ---
 
 <a name="top"></a>
