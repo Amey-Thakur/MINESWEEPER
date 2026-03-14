@@ -25,40 +25,42 @@ export function printBranding() {
         top: [
             'background: #1e90ff',
             'color: #ffffff',
-            'padding: 12px 20px',
+            'padding: 15px 20px',
             'font-family: serif',
             'font-size: 16px',
             'font-weight: bold',
             'border: 2px solid #000080',
             'border-bottom: none',
             'display: block',
+            'width: 550px',
             'text-shadow: 1px 1px 2px #000000'
         ].join(';'),
         mid: [
             'background: #ffffff',
             'color: #000000',
-            'padding: 15px 20px',
+            'padding: 10px 20px',
             'font-family: "Segoe UI", Tahoma, sans-serif',
             'font-size: 13px',
             'line-height: 1.6',
             'border-left: 2px solid #000080',
             'border-right: 2px solid #000080',
-            'display: block'
+            'display: block',
+            'width: 550px'
         ].join(';'),
         bot: [
             'background: #32cd32',
             'color: #000000',
-            'padding: 15px 20px',
+            'padding: 10px 20px',
             'font-family: "Segoe UI", Tahoma, sans-serif',
             'font-size: 13px',
             'font-weight: bold',
             'border: 2px solid #000080',
             'border-top: none',
             'display: block',
-            'text-shadow: 0px 0px 1px rgba(255,255,255,0.3)'
+            'width: 550px'
         ].join(';'),
         link: [
-            'color: #0000ee',
+            'color: #000080', // Dark Navy for contrast on green
             'text-decoration: underline',
             'background: #32cd32',
             'font-weight: bold'
@@ -66,6 +68,8 @@ export function printBranding() {
     };
 
     console.log(`%c${title.trim()}`, styles.top);
-    console.log(`%cDesigned and developed by Amey Thakur\n\n${message}`, styles.mid);
-    console.log(`%cRepository: %c${repo}%c\nProfile:    %c${profile}`, styles.bot, styles.link, styles.bot, styles.link);
+    console.log(`%cDesigned and developed by Amey Thakur`, styles.mid);
+    console.log(`%c${message}`, styles.mid);
+    console.log(`%cRepository: %c${repo}`, `${styles.bot}; border-bottom: none;`, styles.link);
+    console.log(`%cProfile:    %c${profile}`, styles.bot, styles.link);
 }
