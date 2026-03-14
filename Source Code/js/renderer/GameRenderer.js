@@ -109,8 +109,17 @@ export class GameRenderer {
         const zoomX = logicalW / boardW;
         const zoomY = logicalH / boardH;
 
-        // Use the smaller coefficient to ensure the whole board fits, but scales up to touch edges
-        this.camera.zoom = Math.min(zoomX, zoomY);
+        let targetZoom = Math.min(zoomX, zoomY);
+
+        // On mobile devices, avoid aggressive scaling that makes cells too small to interact with.
+        // If the calculated fit results in a zoom below 0.7, we clamp to 0.8 to facilitate "sliding" (panning).
+        if (window.innerWidth < 600 && targetZoom < 0.7) {
+            targetZoom = 0.8;
+        }
+
+        this.camera.zoom = targetZoom;
+        this.camera.maxZoom = Math.max(4.0, targetZoom * 2);
+        this.camera.minZoom = Math.min(0.5, targetZoom);
 
         // Center the board within the larger canvas
         this.camera.x = (boardW - (logicalW / this.camera.zoom)) / 2;

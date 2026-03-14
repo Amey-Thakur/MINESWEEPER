@@ -1213,26 +1213,33 @@
         min-width: 32px;
     }
 
-    /* Surgical centering for dialogs and floated windows */
+    /* Centering for dialogs without forcing gaps */
     .win95-dialog {
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
-        width: 95vw !important;
-        max-width: none !important;
+        width: auto !important;
+        max-width: 95vw !important;
+        min-width: 250px;
+        position: fixed !important;
     }
 
+    /* Ensure windows fit their content tightly on mobile */
     .win95-window:not(.maximized) {
-        width: 95vw !important;
-        left: 2.5vw !important;
-        /* Ensure top is manageable */
-        top: 10% !important;
+        width: auto !important;
+        max-width: 95vw !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        position: relative !important; /* Allow desktop flex centering to work */
     }
 
+    /* Prevent content overflow in small containers by forcing wrap/scroll */
     .win95-dialog-body,
     .win95-window-body {
-        width: 100% !important;
+        width: auto !important;
         max-width: 100% !important;
+        overflow-x: auto;
     }
 
     .title-btn {
