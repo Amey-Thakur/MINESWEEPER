@@ -1166,3 +1166,45 @@
 .mermaid-diagram {
     user-select: text;
 }
+
+/* 
+ * Responsive adjustments for mobile environments 
+ * Optimizes the desktop layout for narrow viewports by hiding non-essential 
+ * legacy icons and scaling specialized UI nodes.
+ */
+@media screen and (max-width: 600px) {
+    .desktop-icons {
+        display: none;
+    }
+
+    .taskbar-app-tab {
+        min-width: 40px;
+        width: auto;
+        flex: 1;
+        padding: 2px 4px;
+        font-size: 10px;
+    }
+
+    .taskbar-app-tab span {
+        display: none;
+    }
+
+    .start-button span {
+        display: none;
+    }
+
+    .start-button {
+        padding: 2px 4px;
+        min-width: 32px;
+    }
+
+    .win95-window:not(.maximized),
+    .win95-dialog {
+        max-width: 98vw !important;
+        left: 1vw !important;
+    }
+    
+    .status-bar-pane:last-child {
+        display: none;
+    }
+}

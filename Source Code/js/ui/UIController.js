@@ -81,12 +81,16 @@ window.bringToFront = function (el) {
 
 // Global event delegation for window focus
 // Utilizes the capturing phase to intercept input prior to module-specific suppression
-document.addEventListener('mousedown', (e) => {
-    const win = e.target.closest('.win95-window, .win95-dialog');
-    if (win) {
-        window.bringToFront(win);
-    }
-}, true);
+// Global event delegation for window focus
+// Utilizes the capturing phase to intercept input prior to module-specific suppression
+['mousedown', 'touchstart'].forEach(type => {
+    document.addEventListener(type, (e) => {
+        const win = e.target.closest('.win95-window, .win95-dialog');
+        if (win) {
+            window.bringToFront(win);
+        }
+    }, { capture: true, passive: true });
+});
 
 export class UIController {
 

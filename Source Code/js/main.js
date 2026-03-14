@@ -92,6 +92,14 @@ let boardWorker = null;
 let quadTree = null;
 let shadowBoard = null;
 
+// Touch interaction state mapping
+let touchStartTime = 0;
+let touchStartPos = { x: 0, y: 0 };
+let isTouchPanning = false;
+let initialPinchDist = 0;
+let initialPinchZoom = 1;
+let touchTimeout = null;
+
 // -------------------------------------------------------
 // Initialization
 // -------------------------------------------------------
@@ -285,6 +293,9 @@ function bindCanvasEvents() {
     dom.canvas.addEventListener('mouseup', handleMouseUp);
     dom.canvas.addEventListener('mousemove', handleMouseMove);
     dom.canvas.addEventListener('wheel', handleWheel);
+    dom.canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+    dom.canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+    dom.canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
     dom.canvas.addEventListener('mouseleave', () => ui.updateSmiley(gameState === GAME_STATE.IDLE || gameState === GAME_STATE.PLAYING ? SMILEY.IDLE : (gameState === GAME_STATE.WON ? SMILEY.WON : SMILEY.LOST)));
 }
 
@@ -362,6 +373,96 @@ function handleWheel(e) {
     // Calculate logarithmic scaling projection
     const zoomFactor = -e.deltaY > 0 ? 1.1 : 0.9;
     renderer.camera.setZoom(renderer.camera.zoom * zoomFactor, x, y);
+}
+
+function handleTouchStart(e) {
+    if (gameState === GAME_STATE.WON || gameState === GAME_STATE.LOST) return;
+
+    if (e.touches.length === 1) {
+        touchStartTime = Date.now();
+        touchStartPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        isTouchPanning = false;
+
+        ui.updateSmiley(SMILEY.PRESSING);
+
+        // Long press detection for flagging
+        touchTimeout = setTimeout(() => {
+            if (!isTouchPanning) {
+                const pos = getGridPos(e.touches[0]);
+                if (pos && !shadowBoard.isRevealed(pos.index)) {
+                    shadowBoard.toggleFlag(pos.index);
+                    ui.updateMineCounter(currentDifficulty.mines, shadowBoard.flagsCount);
+                    if (window.navigator.vibrate) window.navigator.vibrate(50);
+                    isTouchPanning = true; // Prevent tap on release
+                }
+            }
+        }, 500);
+
+    } else if (e.touches.length === 2) {
+        clearTimeout(touchTimeout);
+        isTouchPanning = true;
+        initialPinchDist = Math.hypot(
+            e.touches[1].clientX - e.touches[0].clientX,
+            e.touches[1].clientY - e.touches[0].clientY
+        );
+        initialPinchZoom = renderer.camera.zoom;
+    }
+}
+
+function handleTouchMove(e) {
+    if (e.touches.length === 1) {
+        const dx = e.touches[0].clientX - touchStartPos.x;
+        const dy = e.touches[0].clientY - touchStartPos.y;
+
+        if (Math.hypot(dx, dy) > 10) {
+            if (e.cancelable) e.preventDefault();
+            isTouchPanning = true;
+            clearTimeout(touchTimeout);
+            renderer.camera.pan(dx, dy);
+            touchStartPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+    } else if (e.touches.length === 2) {
+        if (e.cancelable) e.preventDefault();
+        const dist = Math.hypot(
+            e.touches[1].clientX - e.touches[0].clientX,
+            e.touches[1].clientY - e.touches[0].clientY
+        );
+        const zoomFactor = dist / initialPinchDist;
+
+        const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+        const rect = dom.canvas.getBoundingClientRect();
+        renderer.camera.setZoom(initialPinchZoom * zoomFactor, centerX - rect.left, centerY - rect.top);
+    }
+}
+
+function handleTouchEnd(e) {
+    clearTimeout(touchTimeout);
+    ui.updateSmiley(SMILEY.IDLE);
+
+    if (!isTouchPanning && e.changedTouches.length === 1) {
+        const pos = getGridPos(e.changedTouches[0]);
+        if (pos) {
+            // Trigger cell reveal logic
+            if (gameState === GAME_STATE.IDLE) {
+                gameState = GAME_STATE.PLAYING;
+                startTimer((s) => ui.updateTimer(s));
+                shadowBoard.placeMines(currentDifficulty.mines, pos.row, pos.col);
+            }
+
+            if (!shadowBoard.isRevealed(pos.index) && !shadowBoard.isFlagged(pos.index)) {
+                if (shadowBoard.isMine(pos.index)) {
+                    handleGameOver(pos.index);
+                } else {
+                    import('./engine/FloodFill.js').then(({ floodFill }) => {
+                        floodFill(shadowBoard, pos.row, pos.col);
+                        checkWinCondition();
+                    });
+                }
+            }
+        }
+    }
 }
 
 // -------------------------------------------------------
