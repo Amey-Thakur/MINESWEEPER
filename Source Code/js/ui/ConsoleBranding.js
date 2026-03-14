@@ -22,31 +22,46 @@ export function printBranding() {
     const repo = 'https://github.com/Amey-Thakur/MINESWEEPER';
     const profile = 'https://github.com/Amey-Thakur';
 
-    const style = [
-        'background: linear-gradient(180deg, #1e90ff 0%, #ffffff 45%, #ffffff 55%, #32cd32 100%)', // Sky -> Cloud -> Grass
-        'color: #000000',
-        'padding: 25px 35px',
-        'font-family: "Segoe UI", Tahoma, sans-serif',
-        'font-size: 14px',
-        'line-height: 1.8',
-        'border: 4px solid #000080',
-        'border-radius: 10px',
-        'font-weight: bold',
-        'text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8)',
-        'display: inline-block',
-        'text-align: left'
-    ].join(';');
+    const styles = {
+        top: [
+            'background: #1e90ff',
+            'color: #ffffff',
+            'padding: 12px 20px',
+            'font-family: serif',
+            'font-size: 16px',
+            'font-weight: bold',
+            'border: 2px solid #000080',
+            'border-bottom: none',
+            'display: block',
+            'text-shadow: 1px 1px 2px #000000'
+        ].join(';'),
+        mid: [
+            'background: #ffffff',
+            'color: #000000',
+            'padding: 15px 20px',
+            'font-family: "Segoe UI", Tahoma, sans-serif',
+            'font-size: 13px',
+            'line-height: 1.6',
+            'border-left: 2px solid #000080',
+            'border-right: 2px solid #000080',
+            'display: block'
+        ].join(';'),
+        bot: [
+            'background: #32cd32',
+            'color: #000000',
+            'padding: 15px 20px',
+            'font-family: "Segoe UI", Tahoma, sans-serif',
+            'font-size: 13px',
+            'font-weight: bold',
+            'border: 2px solid #000080',
+            'border-top: none',
+            'display: block',
+            'text-shadow: 0px 0px 1px rgba(255,255,255,0.5)'
+        ].join(';'),
+        link: 'color: #0000ee; text-decoration: underline;'
+    };
 
-    const content = [
-        title.trim(),
-        '-------------------------------------------------------',
-        `Determined & Designed by: ${author}`,
-        '',
-        message,
-        '',
-        `Repository: ${repo}`,
-        `Profile:    ${profile}`
-    ].join('\n');
-
-    console.log(`%c${content}`, style);
+    console.log(`%c${title.trim()}`, styles.top);
+    console.log(`%cDetermined & Designed by: ${author}\n\n${message}`, styles.mid);
+    console.log(`%cRepository: %c${repo}%c\nProfile:    %c${profile}`, styles.bot, styles.link, styles.bot, styles.link);
 }
