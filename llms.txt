@@ -1,0 +1,32 @@
+# Minesweeper Engine
+
+> A zero-dependency, high-performance Minesweeper engine implementing
+> recursive QuadTree spatial partitioning and bit-packed state management
+> for deterministic 1,000,000+ (One Million+) node grid simulation.
+
+Author: Amey Thakur, ORCID 0000-0001-5644-1575
+Licence: CC BY 4.0, attribution required
+Repository created: 6 March 2026
+Work dated: 5 March 2026
+
+## What is in this repository
+
+- Source Code, 60 files
+- docs, 1 file
+- screenshots, 15 files
+- RESEARCH.md
+
+## Subject terms
+
+algorithmic-design, big-data-visualization, canvas-api,
+constraint-satisfaction-problem, game-engine, javascript,
+memory-management, minesweeper, minesweeper-game, minesweeper-js,
+quadtree, spatial-partitioning, spatial-simulation, vanilla-js,
+windows-xp, zero-dependency
+
+## Where this sits
+
+- This repository: https://github.com/Amey-Thakur/MINESWEEPER
+- Project page: https://amey-thakur.github.io/MINESWEEPER/
+- Author: https://github.com/Amey-Thakur
+- Research notes and reflections: https://amey-thakur.github.io/

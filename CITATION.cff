@@ -8,3 +8,7 @@ title: "Minesweeper Engine: Architectural Research and Engineering Analysis"
 version: 1.0.0
 date-released: 2026-03-05
 url: "https://github.com/Amey-Thakur/MINESWEEPER"
+identifiers:
+  - type: other
+    value: "2026-03-06"
+    description: "Date this repository was created on GitHub."
